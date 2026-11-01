@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ta">
 <head>
-  <link rel="stylesheet" href="style.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SISF 2026 - பள்ளி இணைய முகப்பு & பதிவு மேலாண்மை தளம்</title>
@@ -607,8 +606,202 @@
     0%, 100% { transform: translateY(0); box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2); }
     50% { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(185, 28, 28, 0.32); }
   }
+  .venue-banner-top {
+    background: linear-gradient(90deg, #064e3b 0%, #047857 25%, #0f766e 50%, #047857 75%, #064e3b 100%);
+    background-size: 200% 100%;
+    animation: deadlineGradientFlow 6s linear infinite;
+    color: #ffffff;
+    padding: 11px 18px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 1rem;
+    border-bottom: 3px solid #fde047;
+    box-shadow: 0 4px 14px rgba(4, 120, 87, 0.32);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+    border-radius: 0 0 10px 10px;
+  }
+  .venue-pulse-pill {
+    background: #fef08a;
+    color: #064e3b;
+    padding: 4px 15px;
+    border-radius: 999px;
+    font-weight: 900;
+    font-size: 1.02rem;
+    letter-spacing: 0.2px;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 14px rgba(254, 240, 138, 0.85);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .venue-subtext {
+    font-size: 0.88rem;
+    color: #ecfdf5;
+    font-weight: 700;
+  }
+  .venue-notice-card {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 55%, #fefce8 100%);
+    border: 2px solid #10b981;
+    border-left: 6px solid #047857;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 14px rgba(4, 120, 87, 0.1);
+  }
+  .venue-notice-title {
+    font-weight: 900;
+    color: #065f46;
+    font-size: 1.02rem;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .venue-notice-main {
+    font-size: 1.08rem;
+    font-weight: 800;
+    color: #1e293b;
+    line-height: 1.55;
+    background: #ffffff;
+    border: 1.5px solid #a7f3d0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+  }
+  .venue-notice-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+  .venue-meta-pill {
+    background: #ffffff;
+    border: 1px solid #6ee7b7;
+    color: #065f46;
+    padding: 5px 12px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .venue-footer-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: linear-gradient(135deg, #ecfdf5 0%, #fef9c3 100%);
+    color: #065f46;
+    border: 2px solid #10b981;
+    border-radius: 999px;
+    padding: 6px 18px;
+    margin-bottom: 10px;
+    font-weight: 800;
+    font-size: 0.92rem;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.18);
+  }
+  /* ==================================================== */
+  /* SCHOOL & ADMIN NOTIFICATION SYSTEM STYLES            */
+  /* ==================================================== */
+  .notif-bell-btn {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    color: #ffffff;
+    border: 2px solid #fde047;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 0.86rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 3px 10px rgba(217, 119, 6, 0.3);
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+  .notif-bell-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(180, 83, 9, 0.45);
+  }
+  .notif-badge-count {
+    background: #dc2626;
+    color: #ffffff;
+    border: 1.5px solid #ffffff;
+    border-radius: 999px;
+    padding: 1px 7px;
+    font-size: 0.76rem;
+    font-weight: 900;
+    line-height: 1.3;
+  }
+  .school-notif-panel {
+    background: #ffffff;
+    border: 2px solid #f59e0b;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 18px rgba(217, 119, 6, 0.12);
+  }
+  .school-notif-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 1.5px solid #fef3c7;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+  }
+  .school-notif-item {
+    border: 1.5px solid #e2e8f0;
+    border-left: 5px solid #0284c7;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    background: #f8fafc;
+    transition: all 0.2s ease;
+  }
+  .school-notif-item.unread {
+    background: #fffbeb;
+    border-color: #fcd34d;
+  }
+  .school-notif-item.priority-IMPORTANT {
+    border-left-color: #dc2626;
+  }
+  .school-notif-item.priority-VENUE_TIME {
+    border-left-color: #059669;
+  }
+  .school-notif-item.priority-REMINDER {
+    border-left-color: #7c3aed;
+  }
+  .school-notif-item.priority-INFO {
+    border-left-color: #0284c7;
+  }
+  .notif-template-chip {
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    color: #1e293b;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+  }
+  .notif-template-chip:hover {
+    background: #eff6ff;
+    border-color: #2563eb;
+    color: #1d4ed8;
+  }
   @media print {
-    .deadline-banner-top, .deadline-footer-badge {
+    .deadline-banner-top, .deadline-footer-badge, .venue-banner-top, .venue-notice-card, .venue-footer-badge, .school-notif-panel, .notif-bell-btn {
       display: none !important;
     }
   }
@@ -794,6 +987,12 @@
     <span class="deadline-subtext" id="topDeadlineSubtext">📌 Last Date for Registration : 30.10.2026</span>
   </div>
 
+  <!-- District Level Exhibition Venue & Date Announcement Banner (Top) -->
+  <div class="venue-banner-top" id="topVenueBanner">
+    <span class="venue-pulse-pill">🏛️ மாவட்ட அளவிலான கண்காட்சி சிவகங்கை மன்னர் மேல்நிலைப்பள்ளியில் 03.11.2026 முற்பகல் 10.00 மணிக்கு நடைபெறும்</span>
+    <span class="venue-subtext" id="topVenueSubtext">📍 Venue: Mannar Higher Secondary School, Sivagangai &nbsp;|&nbsp; 📅 03.11.2026 – 10.00 AM</span>
+  </div>
+
   <!-- VIEW 1: AUTH VIEW (LOGIN / REGISTRATION) -->
   <div id="viewAuth" class="view-section active">
     <div class="auth-container">
@@ -805,6 +1004,17 @@
 
       <!-- Login Form (Accepts UDISE or U.NO) -->
       <div id="loginFormSection" class="auth-body">
+        <!-- Exhibition Venue & Time Highlight Notice on School Portal Home -->
+        <div id="authVenueNoticeBox" style="background: linear-gradient(135deg, #ecfdf5 0%, #fefce8 100%); border: 1.5px solid #10b981; border-left: 5px solid #047857; border-radius: 8px; padding: 12px 14px; margin-bottom: 16px; color: #065f46;">
+          <div style="font-size: 0.85rem; font-weight: 800; color: #047857; margin-bottom: 3px;">
+            📢 முக்கிய அறிவிப்பு / District Science Fair Announcement:
+          </div>
+          <div style="font-size: 0.96rem; font-weight: 800; color: #1e293b; line-height: 1.5;">
+            மாவட்ட அளவிலான கண்காட்சி <span style="color: #047857; text-decoration: underline;">சிவகங்கை மன்னர் மேல்நிலைப்பள்ளியில்</span> <span style="color: #b91c1c;">03.11.2026 முற்பகல் 10.00 மணிக்கு</span> நடைபெறும்.
+          </div>
+        </div>
+        <!-- Dynamic Admin Broadcast Notifications on Login Screen -->
+        <div id="authAdminBroadcastBox" style="display: none; margin-bottom: 14px;"></div>
         <!-- Registration Success Notification Banner -->
         <div id="loginSuccessBanner" style="display: none;"></div>
         <form onsubmit="handleLoginSubmit(event)">
@@ -844,6 +1054,12 @@
             </div>
           </div>
           <div id="searchMasterMsg" class="auth-msg"></div>
+          <div id="liveSheetSyncBar" style="margin-top: 10px; padding: 8px 12px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 0.8rem; color: #166534;">
+            <span id="liveSheetSyncText">🔄 <strong>Google Sheet (School-Master-SISF):</strong> நேரடி இணைப்பு தயாராகிறது...</span>
+            <button type="button" onclick="loadMasterSchoolsFromGoogleSheet(true)" style="background: #15803d; color: #fff; border: none; border-radius: 4px; padding: 4px 10px; font-size: 0.76rem; font-weight: 700; cursor: pointer; font-family: inherit;">
+              🔄 பட்டியலைப் புதுப்பி (Sync Sheet)
+            </button>
+          </div>
         </div>
 
         <!-- STEP 2 & 3: Display Found School & Set Password -->
@@ -898,6 +1114,9 @@
                   <option value="Government">அரசு (Government)</option>
                   <option value="Govt. Aided">அரசு உதவிபெறும் (Govt. Aided)</option>
                   <option value="Private">தனியார் (Private)</option>
+                  <option value="Central Govt">மத்திய அரசு (Central Govt / KV)</option>
+                  <option value="ICSE">ஐ.சி.எஸ்.இ (ICSE)</option>
+                  <option value="CBSE">சி.பி.எஸ்.இ (CBSE)</option>
                 </select>
               </div>
             </div>
@@ -1007,11 +1226,47 @@
           <span class="badge-mgmt" id="dashMgmt">அரசு</span>
         </div>
       </div>
-      <div>
+      <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+        <button type="button" class="notif-bell-btn" id="dashNotifBellBtn" onclick="toggleSchoolNotificationsPanel()" title="நிர்வாகியின் அறிவிப்புகளைப் பார்க்க">
+          🔔 அறிவிப்புகள் (Notifications) <span class="notif-badge-count" id="dashNotifCountBadge">1</span>
+        </button>
+        <button type="button" class="btn-sm" style="background:#0f766e; padding: 7px 12px; font-weight:700;" onclick="syncNotificationsFromCloud(true)" title="புதிய அறிவிப்புகளைப் புதுப்பிக்க">
+          🔄 புதுப்பி
+        </button>
         <button type="button" class="btn-sm" style="background:#c53030; padding: 7px 14px; font-weight:700;" onclick="handleLogout()">
           🚪 வெளியேறு (Logout)
         </button>
-        
+      </div>
+    </div>
+
+    <!-- SCHOOL NOTIFICATIONS INBOX PANEL (Sent from Admin Dashboard) -->
+    <div class="school-notif-panel" id="schoolNotificationsPanel">
+      <div class="school-notif-header">
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <span style="font-size: 1.02rem; font-weight: 900; color: #92400e;">🔔 நிர்வாகி அறிவிப்புகள் பலகை (Notifications from District Admin)</span>
+          <span id="schoolNotifSubBadge" style="background: #fef3c7; color: #b45309; border: 1px solid #f59e0b; padding: 2px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 800;">நேரடி இணைப்பு</span>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button type="button" onclick="markAllSchoolNotificationsRead()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; font-family: inherit;">
+            ✓ அனைத்தையும் படித்ததாகக் குறி (Mark All Read)
+          </button>
+        </div>
+      </div>
+      <div id="schoolNotificationsList"></div>
+    </div>
+
+    <!-- District Level Science Fair Venue & Time Banner on School Dashboard (பள்ளிகளின் முகப்பு) -->
+    <div class="venue-notice-card" id="dashExhibitionVenueCard">
+      <div class="venue-notice-title">
+        <span>🏛️ மாவட்ட அளவிலான அறிவியல் கண்காட்சி நடைபெறும் இடம் மற்றும் நேரம் (District Level Exhibition Venue & Schedule):</span>
+      </div>
+      <div class="venue-notice-main">
+        📣 மாவட்ட அளவிலான கண்காட்சி <strong style="color: #047857;">சிவகங்கை மன்னர் மேல்நிலைப்பள்ளியில்</strong> <strong style="color: #b91c1c;">03.11.2026 முற்பகல் 10.00 மணிக்கு</strong> நடைபெறும்.
+      </div>
+      <div class="venue-notice-pills">
+        <span class="venue-meta-pill">📍 <strong>இடம் (Venue):</strong> சிவகங்கை மன்னர் மேல்நிலைப்பள்ளி (Mannar Hr. Sec. School, Sivagangai)</span>
+        <span class="venue-meta-pill">📅 <strong>நாள் (Date):</strong> 03.11.2026</span>
+        <span class="venue-meta-pill">🕙 <strong>நேரம் (Time):</strong> முற்பகல் 10.00 மணி (10.00 AM)</span>
       </div>
     </div>
 
@@ -1369,6 +1624,9 @@
         </div>
       </div>
       <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+        <button type="button" class="btn-sm" style="background: #d97706; border: 1.5px solid #fde047; padding: 8px 14px; font-weight: 800; font-size: 0.85rem;" onclick="switchAdminSubTab('notifications')">
+          🔔 பள்ளிகளுக்கு அறிவிப்பு அனுப்புக
+        </button>
         <button type="button" class="btn-sm" style="background: #059669; padding: 8px 14px; font-weight: 800; font-size: 0.85rem;" onclick="refreshAdminCloudData()">
           🔄 தரவுகளைப் புதுப்பி (Sync Sheet)
         </button>
@@ -1404,6 +1662,10 @@
         <div class="admin-stat-num" id="admStatWinners" style="color: #d97706;">0</div>
         <div class="admin-stat-label">🏆 வெற்றி பெற்றவர்கள்<br><span style="font-size:0.75rem; color:#64748b;">District Winners Recorded</span></div>
       </div>
+      <div class="admin-stat-card" style="border-top: 4px solid #e11d48; cursor: pointer;" onclick="switchAdminSubTab('notifications')" title="பள்ளிகளுக்கு அறிவிப்பு அனுப்ப இங்கே கிளிக் செய்க">
+        <div class="admin-stat-num" id="admStatNotifications" style="color: #e11d48;">1</div>
+        <div class="admin-stat-label">🔔 பள்ளி அறிவிப்புகள்<br><span style="font-size:0.75rem; color:#e11d48; font-weight:700;">Send Notifications (அனுப்புக)</span></div>
+      </div>
     </div>
 
     <!-- ADMIN NAVIGATION SUB-TABS -->
@@ -1416,6 +1678,9 @@
       </button>
       <button type="button" class="admin-nav-btn" id="admTabBtnPasswords" onclick="switchAdminSubTab('passwords')">
         🏫 பதிவு செய்த பள்ளிகள் & கடவுச்சொல் (Registered Schools & Passwords)
+      </button>
+      <button type="button" class="admin-nav-btn" id="admTabBtnNotifications" onclick="switchAdminSubTab('notifications')">
+        🔔 பள்ளிகளுக்கு அறிவிப்பு (Send Notifications)
       </button>
     </div>
 
@@ -1688,7 +1953,7 @@
       <div class="admin-panel-box" id="admSchoolsDirectoryBox">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
           <h3 style="color: #1e3a8a; font-size: 1.05rem; margin: 0;">
-            🏫 பதிவு செய்த பள்ளிகள் மற்றும் அனைத்துப் பள்ளிகளின் விவரப் பட்டியல் (Registered & Master Schools)
+            🏫 பதிவு செய்த பள்ளிகள் மற்றும் அனைத்துப் பள்ளிகளின் விவரப் பட்டியல் (Registered & Master Schools) <span id="admMasterSheetCountBadge" style="background:#dcfce7; color:#166534; font-size:0.78rem; padding:3px 10px; border-radius:12px; font-weight:700; margin-left:8px;">Google Sheet நேரடி இணைப்பு</span>
           </h3>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
@@ -1716,6 +1981,160 @@
               </tr>
             </thead>
             <tbody id="admSchoolsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- ADMIN SUB-TAB 4: SEND NOTIFICATIONS TO SCHOOLS (#admSubTabNotifications) -->
+    <!-- =================================================================== -->
+    <div id="admSubTabNotifications" style="display: none;">
+      <div class="admin-panel-box" style="border: 2px solid #e11d48; background: linear-gradient(135deg, #fff1f2 0%, #fffbeb 100%);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+          <h3 style="color: #9f1239; font-size: 1.12rem; margin: 0; display: flex; align-items: center; gap: 8px;">
+            🔔 பள்ளிகளுக்கு உடனடி அறிவிப்பு அனுப்பும் மையம் (Admin Notification Broadcast & School Alert Center)
+          </h3>
+          <span style="background: #ffe4e6; color: #be123c; border: 1px solid #fda4af; padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 800;">
+            ⚡ பள்ளி முகப்பு (Dashboard) & மின்னஞ்சல் இணைப்பு
+          </span>
+        </div>
+        <p style="font-size: 0.88rem; color: #334155; margin-bottom: 14px;">
+          இங்கிருந்து அனுப்பப்படும் அறிவிப்புகள் பள்ளிகள் உள்நுழையும்போது <strong>பள்ளிகளின் முகப்பில் (School Dashboard Notification Bell & Banner)</strong> உடனடியாகக் காட்டப்படும். விரும்பினால் ஒரே கிளிக்கில் பள்ளிகளின் மின்னஞ்சலுக்கும் (Email) அனுப்பலாம்.
+        </p>
+
+        <!-- Quick Preset Templates -->
+        <div style="background: #ffffff; border: 1px dashed #f43f5e; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px;">
+          <div style="font-size: 0.82rem; font-weight: 800; color: #881337; margin-bottom: 8px;">
+            ⚡ விரைவு மாதிரி அறிவிப்புகள் (1-Click Quick Templates - கிளிக் செய்தால் தானாக நிரம்பும்):
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="notif-template-chip" onclick="applyAdminNotificationPreset('VENUE_TIME')">
+              🏛️ கண்காட்சி இடம் & நேரம் (03.11.2026 - 10.00 AM)
+            </button>
+            <button type="button" class="notif-template-chip" onclick="applyAdminNotificationPreset('HARD_COPY')">
+              📄 இரு பிரதிகளில் படிவம் சமர்ப்பித்தல்
+            </button>
+            <button type="button" class="notif-template-chip" onclick="applyAdminNotificationPreset('REG_REMINDER')">
+              ⏰ விண்ணப்பப் பதிவு நினைவூட்டல்
+            </button>
+            <button type="button" class="notif-template-chip" onclick="applyAdminNotificationPreset('CERT_READY')">
+              🏆 சான்றிதழ் பதிவிறக்கம் அறிவிப்பு
+            </button>
+          </div>
+        </div>
+
+        <form onsubmit="handleAdminSendNotificationSubmit(event)">
+          <input type="hidden" id="notifEditId" value="">
+          <div class="grid-2" style="margin-bottom: 12px;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label">1. யாருக்கு அறிவிப்பு அனுப்ப வேண்டும்? (Target Schools) <span class="required">*</span></label>
+              <select id="notifTargetType" class="form-control" onchange="onNotifTargetTypeChange()" required>
+                <option value="ALL">🌐 அனைத்துப் பள்ளிகளுக்கும் (All Schools - பொது முகப்பு அறிவிப்பு)</option>
+                <option value="REGISTERED">✅ பதிவு செய்த அனைத்துப் பள்ளிகளுக்கும் (All Registered Schools)</option>
+                <option value="APPLIED">📑 விண்ணப்பம் சமர்ப்பித்த பள்ளிகளுக்கு மட்டும் (Applied Schools Only)</option>
+                <option value="NOT_APPLIED">⏳ பதிவு செய்தும் விண்ணப்பிக்காத பள்ளிகளுக்கு (Registered but Not Applied)</option>
+                <option value="BLOCK">📍 குறிப்பிட்ட வட்டாரப் பள்ளிகளுக்கு மட்டும் (Specific Block Schools)</option>
+                <option value="SINGLE_SCHOOL">🏫 குறிப்பிட்ட ஒரு பள்ளிக்கு மட்டும் (Specific School by U.NO / UDISE)</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label">2. அறிவிப்பின் முக்கியத்துவம் / வகை (Notification Type) <span class="required">*</span></label>
+              <select id="notifPriority" class="form-control" required>
+                <option value="IMPORTANT">🚨 முக்கிய அறிவிப்பு (Urgent / Important Alert)</option>
+                <option value="VENUE_TIME">🏛️ கண்காட்சி இடம் & நேரம் (Exhibition Venue & Schedule)</option>
+                <option value="REMINDER">⏰ நினைவூட்டல் (Submission / Action Reminder)</option>
+                <option value="INFO">📢 பொதுத் தகவல் (General Information)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Conditional Block Selector -->
+          <div id="notifBlockSelectWrap" style="display: none; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+            <label class="form-label">வட்டாரத்தைத் தேர்வு செய்க (Select Block) <span class="required">*</span></label>
+            <select id="notifTargetBlockInp" class="form-control">
+              <option value="01 S.Pudur">01 S.Pudur (எஸ்.புதூர்)</option>
+              <option value="02 Singampunari">02 Singampunari (சிங்கம்புணரி)</option>
+              <option value="03 Thiruppathur">03 Thiruppathur (திருப்பத்தூர்)</option>
+              <option value="04 Kallal">04 Kallal (கல்லல்)</option>
+              <option value="05 Sakkottai">05 Sakkottai (சாக்கோட்டை)</option>
+              <option value="06 Kannangudi">06 Kannangudi (கண்ணங்குடி)</option>
+              <option value="07 Devakottai">07 Devakottai (தேவகோட்டை)</option>
+              <option value="08 Kalayarkoil">08 Kalayarkoil (காளையார்கோவில்)</option>
+              <option value="09 Ilayangudi">09 Ilayangudi (இளையான்குடி)</option>
+              <option value="10 Manamadurai">10 Manamadurai (மானாமதுரை)</option>
+              <option value="11 Thiruppuvanam">11 Thiruppuvanam (திருப்புவனம்)</option>
+              <option value="12 Sivagangai">12 Sivagangai (சிவகங்கை)</option>
+            </select>
+          </div>
+
+          <!-- Conditional Single School Selector -->
+          <div id="notifSingleSchoolWrap" style="display: none; background: #ffffff; border: 1.5px solid #93c5fd; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+            <label class="form-label">பள்ளியின் U.NO அல்லது 11 இலக்க UDISE எண் (அல்லது பட்டியலிலிருந்து தேர்வு செய்க) <span class="required">*</span></label>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+              <input type="text" id="notifTargetSchoolInp" class="form-control" placeholder="எ.கா: 433 அல்லது 33230104417" style="max-width: 260px;" oninput="lookupSchoolForNotification(this.value)">
+              <button type="button" class="btn-sm" style="background: #1e3a8a; padding: 9px 14px;" onclick="lookupSchoolForNotification()">🔍 பள்ளி தேடுக</button>
+              <select id="notifQuickSchoolDropdown" class="form-control" style="flex: 1; min-width: 240px;" onchange="onNotifSchoolDropdownSelect(this.value)">
+                <option value="">-- அல்லது இங்கே பள்ளியைத் தேர்வு செய்க --</option>
+              </select>
+            </div>
+            <div id="notifSelectedSchoolBadge" style="margin-top: 8px; font-size: 0.86rem; font-weight: 800; color: #1e3a8a;"></div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label class="form-label">3. அறிவிப்பின் தலைப்பு (Notification Title) <span class="required">*</span></label>
+            <input type="text" id="notifTitleInp" class="form-control" placeholder="எ.கா: மாவட்ட அளவிலான அறிவியல் கண்காட்சி நடைபெறும் இடம் மற்றும் நேரம்" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label class="form-label">4. அறிவிப்புச் செய்தி (Notification Detailed Message) <span class="required">*</span></label>
+            <textarea id="notifMessageInp" class="form-control" rows="3" placeholder="பள்ளிகளுக்குத் தெரிவிக்க வேண்டிய முழு விவரத்தை இங்கே உள்ளிடவும்..." required></textarea>
+          </div>
+
+          <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <input type="checkbox" id="notifSendEmailChk" style="width: 18px; height: 18px; cursor: pointer;">
+            <label for="notifSendEmailChk" style="font-size: 0.88rem; font-weight: 700; color: #1e293b; cursor: pointer;">
+              📧 பள்ளி இணைய முகப்புடன் (Dashboard Notification) சேர்த்து, சம்பந்தப்பட்ட பள்ளிகளின் பதிவு செய்யப்பட்ட மின்னஞ்சலுக்கும் (Email) இந்த அறிவிப்பை அனுப்புக
+            </label>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button type="submit" id="btnSendAdminNotif" class="btn-sm" style="background: #e11d48; color: #ffffff; padding: 10px 24px; font-size: 0.95rem; font-weight: 800; box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);">
+              🔔 அறிவிப்பைப் பள்ளிகளுக்கு அனுப்புக (Send Notification)
+            </button>
+            <button type="button" class="btn-sm" style="background: #64748b; padding: 10px 16px; font-size: 0.9rem;" onclick="resetAdminNotificationForm()">
+              மீட்டமை (Clear)
+            </button>
+            <span id="notifSaveMsg" style="font-weight: 800; font-size: 0.9rem; color: #15803d;"></span>
+          </div>
+        </form>
+      </div>
+
+      <!-- Sent Notifications History Table -->
+      <div class="admin-panel-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+          <h3 style="color: #1e3a8a; font-size: 1.05rem; margin: 0;">
+            📋 இதுவரை அனுப்பப்பட்ட அறிவிப்புகளின் பட்டியல் (Sent Notifications History)
+          </h3>
+          <button type="button" class="btn-sm" style="background: #0f766e; padding: 6px 14px; font-weight: 700;" onclick="syncNotificationsFromCloud(true)">
+            🔄 அறிவிப்புப் பட்டியலைப் புதுப்பி
+          </button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>வ.எண்</th>
+                <th>தேதி & நேரம்</th>
+                <th>யாருக்கு (Target Schools)</th>
+                <th>வகை (Type)</th>
+                <th>தலைப்பு & அறிவிப்புச் செய்தி</th>
+                <th>செயல்கள் (Actions)</th>
+              </tr>
+            </thead>
+            <tbody id="admNotificationsTableBody">
+              <tr><td colspan="6" style="text-align:center; padding:18px; color:#64748b;">அறிவிப்புகள் ஏற்றப்படுகின்றன...</td></tr>
+            </tbody>
           </table>
         </div>
       </div>
@@ -1767,6 +2186,11 @@
 
   <!-- Footer Section (as in Guidelines Main Page) -->
   <footer class="portal-footer">
+    <div>
+      <span class="venue-footer-badge" id="footerVenueBadge">
+        🏛️ <span>மாவட்ட அளவிலான கண்காட்சி <strong>சிவகங்கை மன்னர் மேல்நிலைப்பள்ளியில் 03.11.2026 முற்பகல் 10.00 மணிக்கு</strong> நடைபெறும்</span>
+      </span>
+    </div>
     <div>
       <span class="deadline-footer-badge" id="footerDeadlineBadge">
         ⏰ <span>விண்ணப்பிக்க கடைசி நாள் : <strong>30.10.2026</strong> &nbsp;|&nbsp; Last Date for Registration : <strong>30.10.2026</strong></span>
@@ -2050,10 +2474,337 @@
 
 
 <script>
-  // Bundled Master Schools database from Google Sheet
-  const LOCAL_MASTER_SCHOOLS = [{"uNo": "101", "udiseNo": "33231106101", "nameEn": "GOVT. HS ,  VALASAIPATTI", "nameTa": "அரசு உயர்நிலைப்பள்ளி வலசைப்பட்டி", "schoolType": "HS", "management": "Government", "block": "01 S.Pudur", "hmName": "KANNAPPAN A", "hmTa": "திரு.அ.கண்ணப்பன்", "mobile": "9786507092"}, {"uNo": "102", "udiseNo": "33231000112", "nameEn": "GOVT. BOYS HS,  A KALAPPUR", "nameTa": "அரசு ஆண்கள் உயர்நிலைப்பள்ளி அ.காளாப்பூர்", "schoolType": "HS", "management": "Government", "block": "02 Singampunari", "hmName": "VELVIZHI  C   I/C", "hmTa": "திருமதி.சி.வேல்விழி", "mobile": "6379274913"}, {"uNo": "103", "udiseNo": "33231000114", "nameEn": "GOVT. GIRLS HS,  A KALAPPUR", "nameTa": "அரசு மகளிர் உயர்நிலைப்பள்ளி அ.காளாப்பூர்", "schoolType": "", "management": "Government", "block": "02 Singampunari", "hmName": "SUMATHI P  I/C", "hmTa": "திருமதி.பெ.சுமதி", "mobile": "9942480442"}, {"uNo": "104", "udiseNo": "33231000213", "nameEn": "GOVT. HS,  ANIAMPATTI", "nameTa": "அரசு உயர்நிலைப்பள்ளி அணியம்பட்டி", "schoolType": "HS", "management": "Government", "block": "02 Singampunari", "hmName": "MURUGAN  P", "hmTa": "திரு.ப.முருகன்", "mobile": "8675571630"}, {"uNo": "105", "udiseNo": "33231001703", "nameEn": "GOVT. HS,  ARALIKOTTAI", "nameTa": "அரசு உயர்நிலைப்பள்ளி அரளிக்கோட்டை", "schoolType": "HS", "management": "Government", "block": "02 Singampunari", "hmName": "A.BALAKRISHNAN", "hmTa": "", "mobile": "9655525298"}, {"uNo": "106", "udiseNo": "33231000307", "nameEn": "GOVT. HS,  CHELLIAMPATTI", "nameTa": "அரசு உயர்நிலைப்பள்ளி செல்லியம்பட்டி", "schoolType": "HS", "management": "Government", "block": "02 Singampunari", "hmName": "ANBUCHELVAN S", "hmTa": "திரு.ச. அன்புச்செல்வன்", "mobile": "9488631712"}, {"uNo": "107", "udiseNo": "33231001103", "nameEn": "GOVT. HS,  M SOORAKUDI", "nameTa": "அரசு உயர்நிலைப்பள்ளி மு.சூரக்குடி", "schoolType": "HS", "management": "Government", "block": "02 Singampunari", "hmName": "JAYARAMU A", "hmTa": "திரு.அ.ஜெயராமு", "mobile": "6382102686"}, {"uNo": "108", "udiseNo": "33231001003", "nameEn": "GOVT. HS,  MALLAKOTTAI", "nameTa": "அரசு உயர்நிலைப்பள்ளி மல்லாக்கோட்டை", "schoolType": "", "management": "Government", "block": "02 Singampunari", "hmName": "BUVANESWARI C (I/C)", "hmTa": "திருமதி.சொ புவனேஸ்வரி", "mobile": "9944286345"}, {"uNo": "109", "udiseNo": "33230900206", "nameEn": "GOVT. HS,  E SENBAGAPETTAI", "nameTa": "அரசு உயர்நிலைப்பள்ளி இ.செண்பகம்பேட்டை", "schoolType": "HS", "management": "Government", "block": "03 Thiruppathur", "hmName": "A.MALAR I/C", "hmTa": "திருமதி.அ.மலர்", "mobile": "9790167246"}, {"uNo": "110", "udiseNo": "33230901907", "nameEn": "GOVT. HS,  MAHIBALANPATTI", "nameTa": "அரசு உயர்நிலைப்பள்ளி மகிபாலன்பட்டி", "schoolType": "HS", "management": "Government", "block": "03 Thiruppathur", "hmName": "JOHN FESTUS JESUDAS S (I/C)", "hmTa": "திரு.ஜான் பெஸ்டஸ் ஏசுதாஸ் செ", "mobile": "9442042165"}, {"uNo": "111", "udiseNo": "33230900303", "nameEn": "GOVT. HS,  SEVVOOR", "nameTa": "அரசு உயர்நிலைப்பள்ளி செவ்வூர்", "schoolType": "", "management": "Government", "block": "03 Thiruppathur", "hmName": "SELVIN ANBARASU R", "hmTa": "திரு.ரா.செல்வின் அன்பரசு", "mobile": "9865921318"}, {"uNo": "112", "udiseNo": "33230903902", "nameEn": "GOVT. HS,  T PUTHUPATTI", "nameTa": "அரசு உயர்நிலைப்பள்ளி தி.புதுப்பட்டி", "schoolType": "HS", "management": "Government", "block": "03 Thiruppathur", "hmName": "GANESAN  R M", "hmTa": "திரு.இராம.கணேசன்", "mobile": "9865120398"}, {"uNo": "113", "udiseNo": "33230904901", "nameEn": "GOVT. HS,  THENMAPATTU", "nameTa": "அரசு உயர்நிலைப்பள்ளி தென்மாப்பட்டு", "schoolType": "HS", "management": "Government", "block": "03 Thiruppathur", "hmName": "", "hmTa": "", "mobile": ""}, {"uNo": "114", "udiseNo": "33230902403", "nameEn": "GOVT. HS,  THIRUKKALAPATTI", "nameTa": "அரசு உயர்நிலைப்பள்ளி திருக்களாப்பட்டி", "schoolType": "HS", "management": "Government", "block": "03 Thiruppathur", "hmName": "SEVUGAMOORTH Y  G", "hmTa": "திரு.கா.சேவுகமூர்த்தி", "mobile": "9976095672"}, {"uNo": "115", "udiseNo": "33231200502", "nameEn": "GOVT. HS ,  ALANGUDI", "nameTa": "அரசு உயர்நிலைப்பள்ளி ஆலங்குடி", "schoolType": "", "management": "Government", "block": "04 Kallal", "hmName": "SUBA  N", "hmTa": "திருமதி.ந.சுபா", "mobile": "9677553646"}, {"uNo": "116", "udiseNo": "33231200104", "nameEn": "GOVT. GIRLS HS ,  KALLAL", "nameTa": "அரசு மகளிர் உயர்நிலைப்பள்ளி கல்லல்", "schoolType": "HS", "management": "Government", "block": "04 Kallal", "hmName": "SHANTHI  S", "hmTa": "திருமதி.சீ.சாந்தி", "mobile": "9043107899"}, {"uNo": "117", "udiseNo": "33231202104", "nameEn": "GOVT. HS ,  KOVILUR", "nameTa": "அரசு உயர்நிலைப்பள்ளி கோவிலூர்", "schoolType": "", "management": "Government", "block": "04 Kallal", "hmName": "", "hmTa": "", "mobile": ""}, {"uNo": "118", "udiseNo": "33230801502", "nameEn": "GOVT. HS ,  ILUPPAIKUDI (KKD)", "nameTa": "அரசு உயர்நிலைப்பள்ளி இலுப்பைக்குடி", "schoolType": "HS", "management": "Government", "block": "05 Sakkottai", "hmName": "ANANTHI S", "hmTa": "திருமதி சி ஆனந்தி", "mobile": "8903530097"}, {"uNo": "119", "udiseNo": "33230802703", "nameEn": "GOVT. HS ,  JEYANKONDAN", "nameTa": "அரசு உயர்நிலைப்பள்ளி ஜெயங்கொண்டான்", "schoolType": "HS", "management": "Government", "block": "05 Sakkottai", "hmName": "", "hmTa": "", "mobile": ""}, {"uNo": "120", "udiseNo": "33230802401", "nameEn": "GOVT. HS ,  PERIYAKOTTAI", "nameTa": "அரசு உயர்நிலைப்பள்ளி பெரியகோட்டை", "schoolType": "HS", "management": "Government", "block": "05 Sakkottai", "hmName": "KANNAN VR", "hmTa": "திரு.வீர.கண்ணன்", "mobile": "9843053943"}, {"uNo": "121", "udiseNo": "33230802503", "nameEn": "GOVT. HS ,  POYYAVAYAL", "nameTa": "அரசு உயர்நிலைப்பள்ளி பொய்யாவயல்", "schoolType": "HS", "management": "Government", "block": "05 Sakkottai", "hmName": "A.R.PANDIMURUGAN", "hmTa": "திரு.ஆறு.பாண்டி முருகன்", "mobile": "9659377377"}, {"uNo": "122", "udiseNo": "33230802003", "nameEn": "GOVT. HS ,  SAKKAVAYAL", "nameTa": "அரசு உயர்நிலைப்பள்ளி சாக்கவயல்", "schoolType": "", "management": "Government", "block": "05 Sakkottai", "hmName": "EASWARI J", "hmTa": "", "mobile": ""}, {"uNo": "123", "udiseNo": "33230802106", "nameEn": "GOVT. HS ,  SAKKOTTAI", "nameTa": "அரசு உயர்நிலைப்பள்ளி சாக்கோட்டை", "schoolType": "", "management": "Government", "block": "05 Sakkottai", "hmName": "LATHA G", "hmTa": "திருமதி.கோ.லதா", "mobile": "9486965765"}, {"uNo": "124", "udiseNo": "33230802210", "nameEn": "GOVT. HS ,  SIRUGAPATTI", "nameTa": "அரசு உயர்நிலைப்பள்ளி சிறுகபட்டி", "schoolType": "", "management": "Government", "block": "05 Sakkottai", "hmName": "KALAIVANI K", "hmTa": "திருமதி.க.கலைவாணி", "mobile": "9965288344"}, {"uNo": "125", "udiseNo": "33230803103", "nameEn": "GOVT. HS ,  SITHIVAYAL", "nameTa": "அரசு உயர்நிலைப்பள்ளி சித்திவயல்", "schoolType": "HS", "management": "Government", "block": "05 Sakkottai", "hmName": "PAVUNROJA  S", "hmTa": "திருமதி.சே.பவுன்ரோஜா", "mobile": "9843177968"}, {"uNo": "126", "udiseNo": "33230800304", "nameEn": "GOVT. HS ,  THIRUVELANGUDI", "nameTa": "அரசு உயர்நிலைப்பள்ளி திருவேலங்குடி", "schoolType": "HS", "management": "Government", "block": "05 Sakkottai", "hmName": "SAKTHIVEL G", "hmTa": "திரு.க.சக்திவேல்", "mobile": "9865847008"}, {"uNo": "127", "udiseNo": "33230700404", "nameEn": "GOVT. HS ,  NARANAMANGALAM", "nameTa": "அரசு உயர்நிலைப்பள்ளி நாரணமங்கலம்", "schoolType": "HS", "management": "Government", "block": "06 Kannangudi", "hmName": "PALANIAPPAN A", "hmTa": "திரு.அ.பழநியப்பன்", "mobile": "9842641065"}, {"uNo": "128", "udiseNo": "33230700703", "nameEn": "GOVT. HS ,  SIRUVATCHI", "nameTa": "அரசு உயர்நிலைப்பள்ளி சிறுவாட்சி", "schoolType": "HS", "management": "Government", "block": "06 Kannangudi", "hmName": "SUNDAYI S", "hmTa": "திருமதி.சி.சுந்தாயி", "mobile": "9486964975"}, {"uNo": "129", "udiseNo": "33230701802", "nameEn": "GOVT. HS ,  T.SIRUVANOOR", "nameTa": "அரசு உயர்நிலைப்பள்ளி டி.சிறுவனூர்", "schoolType": "", "management": "Government", "block": "06 Kannangudi", "hmName": "MOORTHY S S", "hmTa": "திரு.ச.ச.மூர்த்தி", "mobile": "9442576395"}, {"uNo": "130", "udiseNo": "33230601205", "nameEn": "GOVT. HS ,  MUPPAIYUR", "nameTa": "அரசு உயர்நிலைப்பள்ளி முப்பையூர்", "schoolType": "HS", "management": "Government", "block": "07 Devakottai", "hmName": "PANCHAKALYANI S", "hmTa": "திருமதி.சா.பஞ்சகல்யாணி", "mobile": "8973519119"}, {"uNo": "131", "udiseNo": "33230600905", "nameEn": "GOVT. HS ,  PULIYAL", "nameTa": "அரசு உயர்நிலைப்பள்ளி புளியால்", "schoolType": "HS", "management": "Government", "block": "07 Devakottai", "hmName": "NAGENDRAN S", "hmTa": "திரு.சு.நாகேந்திரன்", "mobile": "9790527300"}, {"uNo": "132", "udiseNo": "33230211102", "nameEn": "GOVT. GIRLS HS ,  PAGANERI", "nameTa": "அரசு மகளிர் உயர்நிலைப்பள்ளி பாகனேரி", "schoolType": "", "management": "Government", "block": "08 Kalayarkoil", "hmName": "PUSHPAM.M", "hmTa": "திருமதி.மு.புஷ்பம்", "mobile": "9486733703"}, {"uNo": "133", "udiseNo": "33230212302", "nameEn": "GOVT. HS ,  K.CHOCKANATHAPURAM", "nameTa": "அரசு உயர்நிலைப்பள்ளி கே.சொக்கநாதபுரம்", "schoolType": "HS", "management": "Government", "block": "08 Kalayarkoil", "hmName": "V.SHANMUGARAJA", "hmTa": "திரு.வெ.சண்முகராஜா", "mobile": "9626546963"}, {"uNo": "134", "udiseNo": "33230212502", "nameEn": "GOVT. HS ,  KARUMANTHAKUDI", "nameTa": "அரசு உயர்நிலைப்பள்ளி கருமந்தக்குடி", "schoolType": "HS", "management": "Government", "block": "08 Kalayarkoil", "hmName": "PADMINI G", "hmTa": "திருமதி.க பத்மினி", "mobile": "8940418131"}, {"uNo": "135", "udiseNo": "33230213002", "nameEn": "GOVT. HS ,  PERIYAKANNANOOR", "nameTa": "அரசு உயர்நிலைப்பள்ளி பெரியகண்ணணூர்", "schoolType": "HS", "management": "Government", "block": "08 Kalayarkoil", "hmName": "PADMINI G", "hmTa": "", "mobile": ""}, {"uNo": "136", "udiseNo": "33230212602", "nameEn": "GOVT. HS ,  SETHUR", "nameTa": "அரசு உயர்நிலைப்பள்ளி சேத்தூர்", "schoolType": "HS", "management": "Government", "block": "08 Kalayarkoil", "hmName": "PUNITHA .S", "hmTa": "திருமதி.ச.புனிதா", "mobile": "9788981179"}, {"uNo": "137", "udiseNo": "33230505414", "nameEn": "GOVT. GIRLS HS ,  ILAYANGUDI", "nameTa": "அரசு மகளிர் உயர்நிலைப்பள்ளி இளையான்குடி", "schoolType": "HS", "management": "Government", "block": "09 Ilayangudi", "hmName": "JAYALAKSHMI S I/C", "hmTa": "திருமதி.சு.ஜெயலெட்சுமி", "mobile": "9894924673"}, {"uNo": "138", "udiseNo": "33230502901", "nameEn": "GOVT. HS ,  ALAVIDANGAN", "nameTa": "அரசு உயர்நிலைப்பள்ளி அளவிடங்கான்", "schoolType": "HS", "management": "Government", "block": "09 Ilayangudi", "hmName": "RAMAKRISHNAN R", "hmTa": "திரு.இரா.இராமகிருஷ்ணன்", "mobile": "9655656516"}, {"uNo": "139", "udiseNo": "33230501605", "nameEn": "GOVT. HS ,  KATCHATHANALLUR", "nameTa": "அரசு உயர்நிலைப்பள்ளி கச்சாத்தநல்லூர்", "schoolType": "HS", "management": "Government", "block": "09 Ilayangudi", "hmName": "VANMATHY M", "hmTa": "திருமதி மு.வான்மதி", "mobile": "8072354156"}, {"uNo": "140", "udiseNo": "33230302207", "nameEn": "GOVT. HS ,  KALKURICHI", "nameTa": "அரசு உயர்நிலைப்பள்ளி கல்குறிச்சி", "schoolType": "", "management": "Government", "block": "10 Manamadurai", "hmName": "ALAGUKARUPPU M I/C", "hmTa": "திரு.ம.அழகுகருப்பு", "mobile": "8508556949"}, {"uNo": "141", "udiseNo": "33230301303", "nameEn": "GOVT. HS ,  MELANETTUR", "nameTa": "அரசு உயர்நிலைப்பள்ளி மேலநெட்டூர்", "schoolType": "HS", "management": "Government", "block": "10 Manamadurai", "hmName": "BALAKRISHNAN S  I/C", "hmTa": "திரு.சோ.பாலகிருஷ்ணன்", "mobile": "9843338958"}, {"uNo": "142", "udiseNo": "33230301505", "nameEn": "GOVT. HS ,  MELAPASALAI", "nameTa": "அரசு உயர்நிலைப்பள்ளி மேலப்பசலை", "schoolType": "HS", "management": "Government", "block": "10 Manamadurai", "hmName": "KALA M", "hmTa": "கலா .மு", "mobile": "9789789409"}, {"uNo": "143", "udiseNo": "33230301605", "nameEn": "GOVT. HS ,  MILAGANOOR", "nameTa": "அரசு உயர்நிலைப்பள்ளி மிளகனூர்", "schoolType": "HS", "management": "Government", "block": "10 Manamadurai", "hmName": "RANI PORCHELVI S  I/C", "hmTa": "திருமதி.ராணி பொற்செல்வி  சே", "mobile": "9443175461"}, {"uNo": "144", "udiseNo": "33230301208", "nameEn": "GOVT. HS ,  MOONGILOORANI", "nameTa": "அரசு உயர்நிலைப்பள்ளி மூங்கில் ஊரணி", "schoolType": "HS", "management": "Government", "block": "10 Manamadurai", "hmName": "AROCKIA RAJA S", "hmTa": "திரு.சி.ஆரோக்கிய ராஜா", "mobile": "9944054848"}, {"uNo": "145", "udiseNo": "33230302405", "nameEn": "GOVT. HS ,  PARAYANKULAM", "nameTa": "அரசு உயர்நிலைப்பள்ளி பறையன்குளம்", "schoolType": "", "management": "Government", "block": "10 Manamadurai", "hmName": "XAVIER AROCKIA DASS A", "hmTa": "திரு.சேவியர் ஆரோக்கிய தாஸ் அ", "mobile": "9659033444"}, {"uNo": "146", "udiseNo": "33230302902", "nameEn": "GOVT. HS ,  VELLIKURICHI", "nameTa": "அரசு உயர்நிலைப்பள்ளி வெள்ளிக்குறிச்சி", "schoolType": "", "management": "Government", "block": "10 Manamadurai", "hmName": "ARUNMOZHI  S", "hmTa": "திரு.சே.அருண்மொழி", "mobile": "9944030681"}, {"uNo": "147", "udiseNo": "33230300705", "nameEn": "GOVT. HS ,  VETHIYARENDAL", "nameTa": "அரசு உயர்நிலைப்பள்ளி வேதியரேந்தல்", "schoolType": "HS", "management": "Government", "block": "10 Manamadurai", "hmName": "VISHNUKUMAR E S", "hmTa": "விஷ்ணு குமார் இ எஸ்", "mobile": "9486079777"}, {"uNo": "148", "udiseNo": "33230402002", "nameEn": "GOVT. HS ,  D.KARISALKULAM", "nameTa": "அரசு உயர்நிலைப்பள்ளி டி.கரிசல்குளம்", "schoolType": "HS", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "SIVAKUMAR R K", "hmTa": "திரு.ரெ.கி.சிவக்குமார்", "mobile": "9042433241"}, {"uNo": "149", "udiseNo": "33230401907", "nameEn": "GOVT. HS ,  ILANTHAIKULAM", "nameTa": "அரசு உயர்நிலைப்பள்ளி இலந்தைக்குளம்", "schoolType": "", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "SUNDARARAJA MURUGAN N", "hmTa": "திரு.ந.சுந்தரராஜ முருகன்", "mobile": "9486486360"}, {"uNo": "150", "udiseNo": "33230400603", "nameEn": "GOVT. HS ,  KALIYANTHUR", "nameTa": "அரசு உயர்நிலைப்பள்ளி கலியாந்தூர்", "schoolType": "HS", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "MUTHUPANDI R", "hmTa": "திரு.இரா.முத்துப்பாண்டி", "mobile": "8675131591"}, {"uNo": "151", "udiseNo": "33230404305", "nameEn": "GOVT. HS ,  KALLURANI", "nameTa": "அரசு உயர்நிலைப்பள்ளி கல்லூரணி", "schoolType": "", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "BANUMATHI  I/C", "hmTa": "திருமதி.த.பானுமதி", "mobile": "9787183939"}, {"uNo": "152", "udiseNo": "33230402303", "nameEn": "GOVT. HS ,  KANCHERANKULAM", "nameTa": "அரசு உயர்நிலைப்பள்ளி காஞ்சிரங்குளம்", "schoolType": "", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "VIJAYA P", "hmTa": "திருமதி.பி.விஜயா", "mobile": "8189942451"}, {"uNo": "153", "udiseNo": "33230403709", "nameEn": "GOVT. HS ,  LADANENTHAL", "nameTa": "அரசு உயர்நிலைப்பள்ளி லாடனேந்தல்", "schoolType": "", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "PONMALAR L  I/C", "hmTa": "திருமதி.இல.பொன்மலர் (பொ )", "mobile": "6380912346"}, {"uNo": "154", "udiseNo": "33230401702", "nameEn": "GOVT. HS ,  MANALUR", "nameTa": "அரசு உயர்நிலைப்பள்ளி மணலூர்", "schoolType": "", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "DANIEL PREM RAJ E J", "hmTa": "திரு.ஈ.ஜெ.டேனியல் பிரேம் ராஜ்", "mobile": "9600876711"}, {"uNo": "155", "udiseNo": "33230400702", "nameEn": "GOVT. HS ,  POOVANTHI", "nameTa": "அரசு உயர்நிலைப்பள்ளி பூவந்தி", "schoolType": "HS", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "YOGARANI R", "hmTa": "", "mobile": ""}, {"uNo": "156", "udiseNo": "33230402903", "nameEn": "GOVT. HS ,  THAVATHARENTHAL", "nameTa": "அரசு உயர்நிலைப்பள்ளி தவத்தாரேந்தல்", "schoolType": "HS", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "SHANMUGA SUNDARAM  P", "hmTa": "திரு.பி.சண்முகசுந்தரம்", "mobile": "8778442659"}, {"uNo": "157", "udiseNo": "33230100702", "nameEn": "GOVT. HS ,  ILUPPAKUDI", "nameTa": "அரசு உயர்நிலைப்பள்ளி இலுப்பக்குடி", "schoolType": "HS", "management": "Government", "block": "12 Sivagangai", "hmName": "BOOMINATHAN  C", "hmTa": "திரு.சி.பூமிநாதன்", "mobile": "9842193452"}, {"uNo": "158", "udiseNo": "33230101002", "nameEn": "GOVT. HS ,  KATTANIPATTI", "nameTa": "அரசு உயர்நிலைப்பள்ளி கட்டாணிப்பட்டி", "schoolType": "", "management": "Government", "block": "12 Sivagangai", "hmName": "SENTHILSELVI M", "hmTa": "திருமதி.ம.செந்தில்செல்வி", "mobile": "9751885853"}, {"uNo": "159", "udiseNo": "33230104202", "nameEn": "GOVT. HS ,  KEELAKANDANI", "nameTa": "அரசு உயர்நிலைப்பள்ளி கீழக்கண்டனி", "schoolType": "HS", "management": "Government", "block": "12 Sivagangai", "hmName": "MUTHUPANADI V", "hmTa": "திரு.வ.முத்துப்பாண்டி", "mobile": "9443502685"}, {"uNo": "160", "udiseNo": "33230101506", "nameEn": "GOVT. HS ,  KUMARAPATTI", "nameTa": "அரசு உயர்நிலைப்பள்ளி குமாரப்பட்டி", "schoolType": "HS", "management": "Government", "block": "12 Sivagangai", "hmName": "SOUNDARAPANDIAN P", "hmTa": "திரு.பெ.செளந்தரபாண்டியன்", "mobile": "9842189069"}, {"uNo": "161", "udiseNo": "33230103505", "nameEn": "GOVT. HS ,  MELASALOOR", "nameTa": "அரசு உயர்நிலைப்பள்ளி மேலச்சாலூர்", "schoolType": "", "management": "Government", "block": "12 Sivagangai", "hmName": "EDWIN SELVARAJ P", "hmTa": "திரு.எட்வின் செல்வராஜ்", "mobile": "9443895351"}, {"uNo": "162", "udiseNo": "33230102503", "nameEn": "GOVT. HS ,  MUDIKANDAM", "nameTa": "அரசு உயர்நிலைப்பள்ளி முடிகண்டம்", "schoolType": "HS", "management": "Government", "block": "12 Sivagangai", "hmName": "LATHA M", "hmTa": "திருமதி.மு.லதா", "mobile": "9943881999"}, {"uNo": "163", "udiseNo": "33230103102", "nameEn": "GOVT. HS ,  PADAMATHUR", "nameTa": "அரசு உயர்நிலைப்பள்ளி படமாத்தூர்", "schoolType": "", "management": "Government", "block": "12 Sivagangai", "hmName": "NAGAPPAN N", "hmTa": "", "mobile": ""}, {"uNo": "164", "udiseNo": "33230101803", "nameEn": "GOVT. HS ,  SITHALOOR", "nameTa": "அரசு உயர்நிலைப்பள்ளி சித்தலூர்", "schoolType": "", "management": "Government", "block": "12 Sivagangai", "hmName": "DELPHIN XAVIER VALARMATHI S I/C", "hmTa": "திருமதி.செ.டெல்பின் சேவியர் வளர்மதி", "mobile": "8072356570"}, {"uNo": "181", "udiseNo": "33230801161", "nameEn": "ALANGUDIYAR STREET MUNICIPAL HS, KARAIKUDI", "nameTa": "ஆலங்குடியார் வீதி நகராட்சி உயர்நிலைப்பள்ளி காரைக்குடி", "schoolType": "HS", "management": "Government", "block": "05 Sakkottai", "hmName": "SATHYASEKAR B", "hmTa": "திரு.பா.சத்யசேகர்", "mobile": "9791395759"}, {"uNo": "182", "udiseNo": "33230801162", "nameEn": "RAMANATHAN CHETTIAR  MUNICIPAL HS,  KARAIKUDI", "nameTa": "இராமநாதன் செட்டியார் நகராட்சி உயர்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Government", "block": "05 Sakkottai", "hmName": "EASWARI J", "hmTa": "ஈஸ்வரி ஜ", "mobile": "9445929535"}, {"uNo": "183", "udiseNo": "33230602902", "nameEn": "MUNICIPAL HS,  DEVAKOTTAI", "nameTa": "நகராட்சி உயர்நிலைப்பள்ளி தேவகோட்டை", "schoolType": "HS", "management": "Government", "block": "07 Devakottai", "hmName": "RAMGANESH K", "hmTa": "திரு.க. ராம்கணேஷ்", "mobile": "8248336896"}, {"uNo": "191", "udiseNo": "33230602902", "nameEn": "GOVT.(ADW) HS ,  ATHIKARAM", "nameTa": "நகராட்சி உயர்நிலைப்பள்ளி தேவகோட்டை", "schoolType": "HS", "management": "Government", "block": "07 Devakottai", "hmName": "RAMGANESH K", "hmTa": "திரு.க. ராம்கணேஷ்", "mobile": "8248336896"}, {"uNo": "192", "udiseNo": "33230602902", "nameEn": "G (ADW) HS,  UNJANAI", "nameTa": "நகராட்சி உயர்நிலைப்பள்ளி தேவகோட்டை", "schoolType": "HS", "management": "Govt. Aided", "block": "07 Devakottai", "hmName": "RAMGANESH K", "hmTa": "திரு.க. ராம்கணேஷ்", "mobile": "8248336896"}, {"uNo": "201", "udiseNo": "33231105402", "nameEn": "GOVT. HSS ,  KARISALPATTI", "nameTa": "அரசு மேல்நிலைப்பள்ளி கரிசல்பட்டி", "schoolType": "HSS", "management": "Government", "block": "01 S.Pudur", "hmName": "SURIYAPARBHA T", "hmTa": "திருமதி T.சூரியபிரபா", "mobile": "9940925668"}, {"uNo": "202", "udiseNo": "33231105801", "nameEn": "GOVT. HSS ,  KATTUKUDIPATTI", "nameTa": "அரசு மேல்நிலைப்பள்ளி கட்டுக்குடிப்பட்டி", "schoolType": "HSS", "management": "Government", "block": "01 S.Pudur", "hmName": "SIBI CHAKRAVARTHI A", "hmTa": "திரு.அ.சிபி சக்கரவர்த்தி", "mobile": "9865366485"}, {"uNo": "203", "udiseNo": "33231100802", "nameEn": "GOVT. MODEL HSS,  S.PUDUR (KATTUKUDIPATTI)", "nameTa": "அரசு மாதிரி மேல்நிலைப்பள்ளி எஸ்.புதூர்", "schoolType": "HSS", "management": "Government", "block": "01 S.Pudur", "hmName": "S.JANAKI", "hmTa": "திருமதி.ச. ஜானகி", "mobile": "6383692112"}, {"uNo": "204", "udiseNo": "33231104602", "nameEn": "GOVT. HSS ,  MUSUNDAPATTI", "nameTa": "அரசு மேல்நிலைப்பள்ளி முசுண்டப்பட்டி", "schoolType": "", "management": "Government", "block": "01 S.Pudur", "hmName": "M. MURUGAN", "hmTa": "", "mobile": ""}, {"uNo": "205", "udiseNo": "33231105901", "nameEn": "GOVT. HSS ,  PUZHUTHIPATTI", "nameTa": "அரசு மேல்நிலைப்பள்ளி புழுதிப்பட்டி", "schoolType": "", "management": "Government", "block": "01 S.Pudur", "hmName": "SOLOMON PUSHPARAJ A", "hmTa": "திரு.ஆ.சாலமன் புஷ்பராஜ்", "mobile": "97152 92101"}, {"uNo": "206", "udiseNo": "33231106001", "nameEn": "GOVT. HSS ,  ULAGAMPATTI", "nameTa": "அரசு மேல்நிலைப்பள்ளி உலகம்பட்டி", "schoolType": "", "management": "Government", "block": "01 S.Pudur", "hmName": "KARUPPIAH  C", "hmTa": "திரு.செ.கருப்பையா", "mobile": "9952678906"}, {"uNo": "207", "udiseNo": "33231106201", "nameEn": "GOVT. HSS ,  V.PUDUR", "nameTa": "அரசு மேல்நிலைப்பள்ளி வா.புதூர்", "schoolType": "HSS", "management": "Government", "block": "01 S.Pudur", "hmName": "BRITTO L", "hmTa": "", "mobile": ""}, {"uNo": "208", "udiseNo": "33231001903", "nameEn": "GOVT. HSS ,  A MURAIYUR", "nameTa": "அரசு மேல்நிலைப்பள்ளி அ.முறையூர்", "schoolType": "", "management": "Government", "block": "02 Singampunari", "hmName": "M.MANGAIYARKARASI", "hmTa": "திருமதி.மு.மங்கையர்க்கரசி", "mobile": "7639769543"}, {"uNo": "209", "udiseNo": "33231000702", "nameEn": "GOVT. HSS ,  ERIYUR", "nameTa": "அரசு மேல்நிலைப்பள்ளி ஏரியூர்", "schoolType": "", "management": "Government", "block": "02 Singampunari", "hmName": "ROYSELVAN SP", "hmTa": "திரு.செ.பா.ராய் செல்வன்", "mobile": "6369101126"}, {"uNo": "210", "udiseNo": "33231001402", "nameEn": "GOVT. HSS ,  KIRUNGAKOTTAI", "nameTa": "அரசு மேல்நிலைப்பள்ளி கிருங்காக்கோட்டை", "schoolType": "HSS", "management": "Government", "block": "02 Singampunari", "hmName": "Jayasri G", "hmTa": "திருமதி.க.ஜெயஸ்ரீ", "mobile": "9945681117"}, {"uNo": "211", "udiseNo": "33231000110", "nameEn": "GOVT. BOYS HSS ,  SINGAMPUNARI", "nameTa": "அரசு ஆண்கள் மேல்நிலைப்பள்ளி சிங்கம்புணரி", "schoolType": "", "management": "Government", "block": "02 Singampunari", "hmName": "MURUGAN R", "hmTa": "திரு.இரா.முருகன்", "mobile": "9486671975"}, {"uNo": "212", "udiseNo": "33231000111", "nameEn": "RM RM GOVT. GIRLS   HSS, SINGAMPUNARI", "nameTa": "ராம.ராநி.அரசு பெண்கள் மேல்நிலைப்பள்ளி சிங்கம்புணரி", "schoolType": "", "management": "Government", "block": "02 Singampunari", "hmName": "KALANITHI S", "hmTa": "திருமதி.சு.கலாநிதி", "mobile": "9942441248"}, {"uNo": "213", "udiseNo": "33231001204", "nameEn": "GOVT. HSS ,  SS KOTTAI", "nameTa": "அரசு மேல்நிலைப்பள்ளி எஸ்.எஸ்.கோட்டை", "schoolType": "HSS", "management": "Government", "block": "02 Singampunari", "hmName": "LATHARANI  A", "hmTa": "திருமதி.ஆ.லதாராணி", "mobile": "9865350631"}, {"uNo": "214", "udiseNo": "33230901602", "nameEn": "GOVT. HSS ,  KOTTAIYIRUPPU", "nameTa": "அரசு மேல்நிலைப்பள்ளி கோட்டையிருப்பு", "schoolType": "HSS", "management": "Government", "block": "03 Thiruppathur", "hmName": "SELVAM  K C", "hmTa": "திரு.கு.சி.செல்வம்", "mobile": "9677336013"}, {"uNo": "215", "udiseNo": "33230903805", "nameEn": "SATHAPPA GOVT. HSS,  NERKKUPPAI", "nameTa": "சாத்தப்பா அரசு மேல்நிலைப்பள்ளி நெற்குப்பை", "schoolType": "", "management": "Government", "block": "03 Thiruppathur", "hmName": "SIVAKUMAR  C", "hmTa": "திரு.செ.சிவகுமார்", "mobile": "9442112506"}, {"uNo": "216", "udiseNo": "33230903302", "nameEn": "TM GOVT. HSS ,  POOLANKURICHI", "nameTa": "தி.நி.அரசு மேல்நிலைப்பள்ளி பூலாங்குறிச்சி", "schoolType": "HSS", "management": "Government", "block": "03 Thiruppathur", "hmName": "PUSHPARAJ K", "hmTa": "திரு.கு.புஷ்பராஜ்", "mobile": "9787872522"}, {"uNo": "217", "udiseNo": "33230901505", "nameEn": "GOVT. HSS ,  S VELANGUDI", "nameTa": "அரசு மேல்நிலைப்பள்ளி எஸ்.வேலங்குடி", "schoolType": "HSS", "management": "Government", "block": "03 Thiruppathur", "hmName": "GOPALAKRISHNAN C", "hmTa": "திரு.சி.கோபாலகிருஷ்ணன்", "mobile": "8754367550"}, {"uNo": "218", "udiseNo": "33230902503", "nameEn": "GOVT. HSS ,  THIRUKOSHTIYUR", "nameTa": "அரசு மேல்நிலைப்பள்ளி திருக்கோஷ்டியூர்", "schoolType": "", "management": "Government", "block": "03 Thiruppathur", "hmName": "PANDI KUMAR G", "hmTa": "திரு.ஞா.பாண்டிக்குமார்", "mobile": "9942214360"}, {"uNo": "219", "udiseNo": "33230904802", "nameEn": "AP GOVT. BOYS HSS,  THIRUPPATHUR", "nameTa": "ஆ.பி.அரசு மேல்நிலைப்பள்ளி திருப்பத்தூர்", "schoolType": "HSS", "management": "Government", "block": "03 Thiruppathur", "hmName": "M.BARATHIDHASAN", "hmTa": "திரு.மு.பாரதிதாசன்", "mobile": "9080772297"}, {"uNo": "220", "udiseNo": "33230904302", "nameEn": "NM GOVT. GIRLS HSS,  THIRUPPATHUR", "nameTa": "நா.ம.அரசு மகளிர் மேல்நிலைப்பள்ளி திருப்பத்தூர்", "schoolType": "", "management": "Government", "block": "03 Thiruppathur", "hmName": "MALARVIZHI K", "hmTa": "திருமதி.கா.மலர்விழி", "mobile": "9659637000"}, {"uNo": "221", "udiseNo": "33231203502", "nameEn": "MK GOVT. HSS ,  SEMBANUR", "nameTa": "மெ.கா.அரசு மேல்நிலைப்பள்ளி செம்பனூர்", "schoolType": "", "management": "Government", "block": "04 Kallal", "hmName": "MANGAIARKARASI  S", "hmTa": "திருமதி.சு.மங்கையர்க்கரசி", "mobile": "9976712673"}, {"uNo": "222", "udiseNo": "33231204202", "nameEn": "GOVT. HSS ,  VETRIYUR", "nameTa": "அரசு மேல்நிலைப்பள்ளி வெற்றியூர்", "schoolType": "", "management": "Government", "block": "04 Kallal", "hmName": "SELVAM P", "hmTa": "திரு.பா.செல்வம்", "mobile": "9488746534"}, {"uNo": "223", "udiseNo": "33231204004", "nameEn": "GOVT. HSS ,  VISALAYAN KOTTAI", "nameTa": "அரசு மாதிரி மேல்நிலைப்பள்ளி விசாலையன்கோட்டை", "schoolType": "HSS", "management": "Government", "block": "04 Kallal", "hmName": "SUNDARAMBAL  B", "hmTa": "திருமதி.பா.சுந்தராம்பாள்", "mobile": "9626012732"}, {"uNo": "224", "udiseNo": "33230801120", "nameEn": "GOVT. GIRLS HSS,  MUTHUPATTINAM", "nameTa": "அரசு மகளிர் மேல்நிலைப்பள்ளி முத்துப்பட்டிணம்", "schoolType": "", "management": "Government", "block": "05 Sakkottai", "hmName": "BALATHIRIPURASUNDARI C", "hmTa": "திருமதி.சி.பாலாதிரிபுரசுந்தரி", "mobile": "9488479269"}, {"uNo": "225", "udiseNo": "33230801119", "nameEn": "MV GOVT. HSS,  KARAIKUDI", "nameTa": "மு.வி.அரசு மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Government", "block": "05 Sakkottai", "hmName": "THIRUNAVUKKARASU  M", "hmTa": "திரு.மு.திருநாவுக்கரசு", "mobile": "9442962668"}, {"uNo": "226", "udiseNo": "33230800804", "nameEn": "TAC GOVT. HSS,  KOTTAIYUR", "nameTa": "த.அ.செ.அரசு மேல்நிலைப்பள்ளி கோட்டையூர்", "schoolType": "", "management": "Government", "block": "05 Sakkottai", "hmName": "BRINDHA RAMANI  B", "hmTa": "திருமதி.பா.பிருந்தாரமணி", "mobile": "9442630638"}, {"uNo": "227", "udiseNo": "33230802207", "nameEn": "GOVT. MODEL HSS,  PEERKALAIKADU", "nameTa": "அரசு மாதிரி மேல்நிலைப்பள்ளி பீர்க்கலைக்காடு", "schoolType": "", "management": "Government", "block": "05 Sakkottai", "hmName": "RAJENDRAN  M", "hmTa": "திரு.மு.இராஜேந்திரன்", "mobile": "8300195038"}, {"uNo": "228", "udiseNo": "33230803203", "nameEn": "GOVT. HSS ,  MITHIRAVAYAL", "nameTa": "அரசு மேல்நிலைப்பள்ளி அண்டக்குடி மித்திராவயல்", "schoolType": "HSS", "management": "Government", "block": "05 Sakkottai", "hmName": "SHARMILA DEVI  R", "hmTa": "திருமதி.ரெ.ஷர்மிளா தேவி", "mobile": "9486449194"}, {"uNo": "229", "udiseNo": "33230800202", "nameEn": "GOVT. HSS ,  O.SIRUVAYAL", "nameTa": "அரசு மேல்நிலைப்பள்ளி ஓ.சிறுவயல்", "schoolType": "", "management": "Government", "block": "05 Sakkottai", "hmName": "PETER LEMAHIEU  A", "hmTa": "திரு.ஏ.பீட்டர் லெமாயு", "mobile": "9443007940"}, {"uNo": "230", "udiseNo": "33230801402", "nameEn": "GOVT. HSS ,  ARIYAGUDI", "nameTa": "அரசு மேல்நிலைப்பள்ளி அரியக்குடி", "schoolType": "", "management": "Government", "block": "05 Sakkottai", "hmName": "BRITTO VJ", "hmTa": "திரு.வே.ஜா.பிரிட்டோ", "mobile": "9443619645"}, {"uNo": "231", "udiseNo": "33230700104", "nameEn": "GOVT. HSS ,  ANUMANTHAKUDI", "nameTa": "அரசு மேல்நிலைப்பள்ளி அனுமந்தக்குடி", "schoolType": "HSS", "management": "Government", "block": "06 Kannangudi", "hmName": "KIRUBA  D", "hmTa": "திருமதி.தே.கிருபா", "mobile": "8012883293"}, {"uNo": "232", "udiseNo": "33230700803", "nameEn": "GOVT. HSS ,  KANNANGUDI", "nameTa": "அரசு மேல்நிலைப்பள்ளி கண்ணங்குடி", "schoolType": "", "management": "Government", "block": "06 Kannangudi", "hmName": "BACKIYAM  M", "hmTa": "திருமதி.மு.பாக்கியம்", "mobile": "9486952930"}, {"uNo": "233", "udiseNo": "33230607002", "nameEn": "VNT GOVT. HSS,  Shanmuganathapattinam", "nameTa": "வெ.நா.தி.அரசு மேல்நிலைப்பள்ளி சண்முகநாதப்பட்டணம்", "schoolType": "", "management": "Government", "block": "07 Devakottai", "hmName": "SUBRAMANIAN A", "hmTa": "திரு.ஆ.சுப்பிரமணியன்", "mobile": "9486561681"}, {"uNo": "234", "udiseNo": "33230600105", "nameEn": "GOVT. HSS ,  PERIYAKARAI", "nameTa": "அரசு மேல்நிலைப்பள்ளி பெரியகாரை", "schoolType": "HSS", "management": "Government", "block": "07 Devakottai", "hmName": "SUSEELA I", "hmTa": "திருமதி.இ.சுசீலா", "mobile": "9629431970"}, {"uNo": "235", "udiseNo": "33230605402", "nameEn": "GOVT. HSS ,  THIRUVEGAMPET", "nameTa": "அரசு மேல்நிலைப்பள்ளி திருவேகம்பத்து", "schoolType": "HSS", "management": "Government", "block": "07 Devakottai", "hmName": "NIRMALA  R D", "hmTa": "திருமதி.இரா.தா.நிர்மலா", "mobile": "7708873975"}, {"uNo": "236", "udiseNo": "33230201302", "nameEn": "GOVT. HSS ,  KALAIYARKOVIL", "nameTa": "அரசு மேல்நிலைப்பள்ளி காளையார்கோவில்", "schoolType": "HSS", "management": "Government", "block": "08 Kalayarkoil", "hmName": "JOSPHIN LATHA M", "hmTa": "திருமதி.மா.ஜோஸ்பின் லதா", "mobile": "9487126215"}, {"uNo": "237", "udiseNo": "33230209902", "nameEn": "GOVT. HSS ,  MARAVAMANGALAM", "nameTa": "அரசு மேல்நிலைப்பள்ளி மறவமங்கலம்", "schoolType": "", "management": "Government", "block": "08 Kalayarkoil", "hmName": "AYYANAR S", "hmTa": "திரு.சோ.அய்யனார்", "mobile": "9994103599"}, {"uNo": "238", "udiseNo": "33230202302", "nameEn": "GOVT. HSS ,  SILUKKUPATTI", "nameTa": "அரசு மேல்நிலைப்பள்ளி சிலுக்கப்பட்டி", "schoolType": "HSS", "management": "Government", "block": "08 Kalayarkoil", "hmName": "ANBUNATHAN J", "hmTa": "திரு.ஜே.அன்புநாதன்", "mobile": "9442046795"}, {"uNo": "239", "udiseNo": "33230201602", "nameEn": "GOVT. HSS ,  KOLLANGUDI", "nameTa": "அரசு மேல்நிலைப்பள்ளி கொல்லங்குடி", "schoolType": "", "management": "Government", "block": "08 Kalayarkoil", "hmName": "VIMALI VINCENT A", "hmTa": "திருமதி.அ.விமலி வின்சென்ட்", "mobile": "8524812575"}, {"uNo": "240", "udiseNo": "33230211103", "nameEn": "OERM GOVT. HSS ,  PAGANERI", "nameTa": "அரசு மேல்நிலைப்பள்ளி பாகனேரி", "schoolType": "", "management": "Government", "block": "08 Kalayarkoil", "hmName": "RAJU M", "hmTa": "திரு.மு.இராஜூ", "mobile": "8667213185"}, {"uNo": "241", "udiseNo": "33230501501", "nameEn": "GOVT. HSS ,  MUNAIVENDRI", "nameTa": "அரசு மேல்நிலைப்பள்ளி முனைவென்றி", "schoolType": "", "management": "Government", "block": "09 Ilayangudi", "hmName": "ALAGARSAMY P", "hmTa": "திரு.பெ.அழகர்சாமி", "mobile": "9486080245"}, {"uNo": "242", "udiseNo": "33230503404", "nameEn": "GOVT. HSS ,  SALAIGRAMAM", "nameTa": "அரசு மேல்நிலைப்பள்ளி சாலைக்கிராமம்", "schoolType": "HSS", "management": "Government", "block": "09 Ilayangudi", "hmName": "SHANMUGAM  S", "hmTa": "திரு.சண்முகம்", "mobile": "9585957308"}, {"uNo": "243", "udiseNo": "33230504002", "nameEn": "GOVT. HSS ,  SATHANOOR", "nameTa": "அரசு மேல்நிலைப்பள்ளி சாத்தனூர்", "schoolType": "HSS", "management": "Government", "block": "09 Ilayangudi", "hmName": "SEVUGAN A", "hmTa": "திரு.ஆ.சேவுகன்", "mobile": "9788747744"}, {"uNo": "244", "udiseNo": "33230303609", "nameEn": "GOVT. GIRLS HSS,  MANAMADURAI", "nameTa": "அரசு பெண்கள் மேல்நிலைப்பள்ளி மானாமதுரை", "schoolType": "", "management": "Government", "block": "10 Manamadurai", "hmName": "LATHA K S", "hmTa": "திருமதி.கு.சு.லதா", "mobile": "9942099430"}, {"uNo": "245", "udiseNo": "33230300304", "nameEn": "GOVT. HSS ,  CHINNAKANNANUR", "nameTa": "அரசு மேல்நிலைப்பள்ளி சின்னக்கண்ணனூர்", "schoolType": "HSS", "management": "Government", "block": "10 Manamadurai", "hmName": "VENKATACHALAPATHY P", "hmTa": "திரு.பி.வெங்கடாசலபதி", "mobile": "9790362819"}, {"uNo": "246", "udiseNo": "33230300405", "nameEn": "GOVT. HSS ,  IDAIKATTUR", "nameTa": "அரசு மேல்நிலைப்பள்ளி இடைக்காட்டூர்", "schoolType": "", "management": "Government", "block": "10 Manamadurai", "hmName": "UMADEVI.A", "hmTa": "திருமதி.அ.உமாதேவி", "mobile": "9994457813"}, {"uNo": "247", "udiseNo": "33230300602", "nameEn": "GOVT. HSS ,  KATTIKULAM", "nameTa": "அரசு மேல்நிலைப்பள்ளி கட்டிக்குளம்", "schoolType": "", "management": "Government", "block": "10 Manamadurai", "hmName": "VASUKI C", "hmTa": "திருமதி.சி.வாசுகி", "mobile": "8973670160"}, {"uNo": "248", "udiseNo": "33230302603", "nameEn": "GOVT. HSS ,  KOMBUKARANENDAL", "nameTa": "அரசு மேல்நிலைப்பள்ளி கொம்புக்காரனேந்தல்", "schoolType": "", "management": "Government", "block": "10 Manamadurai", "hmName": "SUKHDEV J", "hmTa": "திரு.ஜெ.சுகதேவ்", "mobile": "9787036832"}, {"uNo": "249", "udiseNo": "33230301903", "nameEn": "GOVT. HSS ,  PERIYAKOTTAI", "nameTa": "அரசு மேல்நிலைப்பள்ளி பெரியகோட்டை", "schoolType": "", "management": "Government", "block": "10 Manamadurai", "hmName": "THERESA SAHAYA MALAR D", "hmTa": "திருமதி தே.தெரசா சகாய மலர்", "mobile": "9442043082"}, {"uNo": "250", "udiseNo": "33230303002", "nameEn": "GOVT. HSS ,  VEMBATHUR", "nameTa": "அரசு மேல்நிலைப்பள்ளி வேம்பத்தூர்", "schoolType": "", "management": "Government", "block": "10 Manamadurai", "hmName": "ARUL VENKATALAKSHMI A.P.", "hmTa": "திருமதி.அ.பெ.அருள் வேங்கடலெட்சுமி", "mobile": "9786850161"}, {"uNo": "251", "udiseNo": "33230400303", "nameEn": "GOVT. BOYS HSS ,  THIRUPPUVANAM", "nameTa": "அரசு ஆண்கள் மேல்நிலைப்பள்ளி திருப்புவனம்", "schoolType": "", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "ANURADHA V", "hmTa": "வ.அனுராதா", "mobile": "8610739039"}, {"uNo": "252", "udiseNo": "33230400109", "nameEn": "GOVT. GIRLS HSS,  THIRUPPUVANAM", "nameTa": "அரசு மகளிர் மேல்நிலைப்பள்ளி திருப்புவனம்", "schoolType": "", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "INDIRA R", "hmTa": "இரா.இந்திரா", "mobile": "995265897"}, {"uNo": "253", "udiseNo": "33230401603", "nameEn": "GOVT. HSS ,  KEELADI", "nameTa": "அரசு மேல்நிலைப்பள்ளி கீழடி", "schoolType": "HSS", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "MADHUSUDHANAN N", "hmTa": "திரு.ந.மதுசூதனன்", "mobile": "9842796607"}, {"uNo": "254", "udiseNo": "33230403505", "nameEn": "GOVT. HSS ,  PAZHAYANOOR", "nameTa": "அரசு மேல்நிலைப்பள்ளி பழையனூர்", "schoolType": "", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "BOSE  R", "hmTa": "திரு.இர.போஸ்", "mobile": "9952567850"}, {"uNo": "255", "udiseNo": "33230403302", "nameEn": "GOVT. HSS ,  THIRUPPACHETHI", "nameTa": "அரசு மேல்நிலைப்பள்ளி திருப்பாச்சேத்தி", "schoolType": "", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "JAYAKUMAR K", "hmTa": "திரு.கி.ஜெயகுமாா்", "mobile": "9843768010"}, {"uNo": "256", "udiseNo": "33230400503", "nameEn": "GOVT. HSS ,  ALLINAGARAM", "nameTa": "அரசு மேல்நிலைப்பள்ளி அல்லிநகரம்", "schoolType": "", "management": "Government", "block": "11 Thiruppuvanam", "hmName": "KALA  S", "hmTa": "திருமதி.சூ.கலா", "mobile": "6369197640"}, {"uNo": "257", "udiseNo": "33230104407", "nameEn": "GOVT. GIRLS HSS,  SIVAGANGAI", "nameTa": "அரசு மகளிர் மேல்நிலைப்பள்ளி சிவகங்கை", "schoolType": "", "management": "Government", "block": "12 Sivagangai", "hmName": "LAKSHMI DEVI P", "hmTa": "திருமதி.பா.லெட்சுமிதேவி", "mobile": "8248966066"}, {"uNo": "258", "udiseNo": "33230104405", "nameEn": "GOVT. HSS ,  M.P NAGAR, SIVAGANGAI", "nameTa": "அரசு மேல்நிலைப்பள்ளி மருதுபாண்டியர் நகர்,சிவகங்கை", "schoolType": "HSS", "management": "Government", "block": "12 Sivagangai", "hmName": "SAMPATHKUMAR G", "hmTa": "திரு.கு.சம்பத்குமார்", "mobile": "8300195044"}, {"uNo": "259", "udiseNo": "33230101402", "nameEn": "GOVT. MODEL HSS,  KEELAPOONGUDI", "nameTa": "அரசு மாதிரி மேல்நிலைப்பள்ளி கீழப்பூங்குடி", "schoolType": "", "management": "Government", "block": "12 Sivagangai", "hmName": "PANGAYASELVI P V", "hmTa": "திருமதி.பங்கயசெல்வி பா வீ", "mobile": "9843393666"}, {"uNo": "260", "udiseNo": "33230103902", "nameEn": "GOVT. HSS ,  THAMARAKKI SOUTH", "nameTa": "அரசு மேல்நிலைப்பள்ளி தமராக்கி தெற்கு", "schoolType": "HSS", "management": "Government", "block": "12 Sivagangai", "hmName": "PRABHA  J", "hmTa": "திருமதி.ஜா.பிரபா", "mobile": "9944448716"}, {"uNo": "261", "udiseNo": "33230100602", "nameEn": "GOVT. HSS ,  ALAGAMANAGARI", "nameTa": "அரசு மேல்நிலைப்பள்ளி அழகமாநகரி", "schoolType": "", "management": "Government", "block": "12 Sivagangai", "hmName": "JEYARAJ K", "hmTa": "திரு.க.ஜெயராஜ்", "mobile": "9042783557"}, {"uNo": "262", "udiseNo": "33230100102", "nameEn": "GOVT. HSS ,  ALAVAKOTTAI", "nameTa": "அரசு மேல்நிலைப்பள்ளி அலவாக்கோட்டை", "schoolType": "HSS", "management": "Government", "block": "12 Sivagangai", "hmName": "THEODER INBA SEKAR M", "hmTa": "திரு.மா.தியோடர் இன்பசேகர்", "mobile": "9442051150"}, {"uNo": "263", "udiseNo": "33230103808", "nameEn": "GOVT. HSS ,  SAKKANTHI", "nameTa": "அரசு மேல்நிலைப்பள்ளி சக்கந்தி", "schoolType": "", "management": "Government", "block": "12 Sivagangai", "hmName": "ARULRAJ  S", "hmTa": "", "mobile": ""}, {"uNo": "264", "udiseNo": "33230100804", "nameEn": "GOVT. HSS ,  IDAYAMELUR", "nameTa": "அரசு மேல்நிலைப்பள்ளி இடையமேலூர்", "schoolType": "HSS", "management": "Government", "block": "12 Sivagangai", "hmName": "ACHUTHAN N", "hmTa": "", "mobile": ""}, {"uNo": "265", "udiseNo": "33230102401", "nameEn": "GOVT. HSS ,  V MALAMPATTI", "nameTa": "அரசு மேல்நிலைப்பள்ளி வி.மலம்பட்டி", "schoolType": "HSS", "management": "Government", "block": "12 Sivagangai", "hmName": "THAMILARASAN V", "hmTa": "திரு.வெ.தமிழரசன்", "mobile": "6382579697"}, {"uNo": "266", "udiseNo": "33230100207", "nameEn": "GOVT. HSS , Arasanoor Thirumanjolai", "nameTa": "அரசு மேல்நிலைப்பள்ளி அரசனூர்திருமாஞ்சோலை", "schoolType": "", "management": "Government", "block": "12 Sivagangai", "hmName": "PERIYA IRULAPPAN K", "hmTa": "திரு.கீ.பெரிய இருளப்பன்", "mobile": "9865190793"}, {"uNo": "267", "udiseNo": "33230101905", "nameEn": "GOVT. HSS ,  MANGUDI", "nameTa": "அரசு மேல்நிலைப்பள்ளி மாங்குடி", "schoolType": "", "management": "Government", "block": "12 Sivagangai", "hmName": "RAMASUBBU  E", "hmTa": "", "mobile": ""}, {"uNo": "291", "udiseNo": "33230101905", "nameEn": "GOVT. (ADW) HSS ,  MALLAL", "nameTa": "அரசு மேல்நிலைப்பள்ளி மாங்குடி", "schoolType": "", "management": "Government", "block": "12 Sivagangai", "hmName": "RAMASUBBU  E", "hmTa": "", "mobile": ""}, {"uNo": "301", "udiseNo": "33230902302", "nameEn": "VT GIRLS HS,  A.THEKKUR", "nameTa": "வி.தி.மகளிர் உயர்நிலைப்பள்ளி ஆ.தெக்கூர்", "schoolType": "HS", "management": "Govt. Aided", "block": "03 Thiruppathur", "hmName": "LATHA C", "hmTa": "திருமதி.சி.லதா", "mobile": "9944566826"}, {"uNo": "302", "udiseNo": "33231204303", "nameEn": "MAP GIRLS HS,  KANDRAMANICKAM", "nameTa": "மெ.ஆ.பி  மகளிர் உயர்நிலைப்பள்ளி கண்டரமாணிக்கம்", "schoolType": "HS", "management": "Govt. Aided", "block": "04 Kallal", "hmName": "S.Anandhi(ic)", "hmTa": "திருமதி.சே.ஆனந்தி", "mobile": "9976972525"}, {"uNo": "303", "udiseNo": "33231204302", "nameEn": "SD HS,  KANDRAMANICKAM", "nameTa": "ஸ்ரீ தண்டாயுதபாணி உயர்நிலைப்பள்ளி கண்டரமாணிக்கம்", "schoolType": "HS", "management": "Govt. Aided", "block": "04 Kallal", "hmName": "VENKATRAMANI G", "hmTa": "திரு.க.வெங்கட்ரமணி", "mobile": "9486611688"}, {"uNo": "304", "udiseNo": "33231201902", "nameEn": "ST.SEBASTIAN'S HS,  KOOTHALUR", "nameTa": "புனித செபஸ்தியார் உயர்நிலைப்பள்ளி கூத்தலூர்", "schoolType": "", "management": "Govt. Aided", "block": "04 Kallal", "hmName": "CHITRA P  I/C", "hmTa": "திருமதி.பா.சித்ரா", "mobile": "9787831250"}, {"uNo": "305", "udiseNo": "33231202602", "nameEn": "JV HS ,  NACHIAPURAM", "nameTa": "ஜெ.வி. உயர்நிலைப்பள்ளி நாச்சியாபுரம்", "schoolType": "", "management": "Govt. Aided", "block": "04 Kallal", "hmName": "G MANICKAVALLI i/c", "hmTa": "திருமதி.மாணிக்கவல்லி (பொ)", "mobile": "9488862394"}, {"uNo": "306", "udiseNo": "33231202402", "nameEn": "RCM HS ,  NADARAJAPURAM", "nameTa": "இரா.செ.நி.உயர்நிலைப்பள்ளி நடராஜபுரம்", "schoolType": "HS", "management": "Govt. Aided", "block": "04 Kallal", "hmName": "LAKSHMINARAYANI S", "hmTa": "திருமதி.ச.லெட்சுமிநாராயணி", "mobile": "9842008630"}, {"uNo": "307", "udiseNo": "33231201602", "nameEn": "TRVA  HS,  PATTAMANGALAM", "nameTa": "தி.ரெ.வ.ஆ. உயர்நிலைப்பள்ளி பட்டமங்கலம்", "schoolType": "HS", "management": "Govt. Aided", "block": "04 Kallal", "hmName": "ELIZABETH M", "hmTa": "திருமதி.ம.எலிசபெத்", "mobile": "9842422248"}, {"uNo": "308", "udiseNo": "33230801702", "nameEn": "CAM HS,  KANDANUR", "nameTa": "சி.ஆ.நி.உயர்நிலைப்பள்ளி கண்டனூர்", "schoolType": "HS", "management": "Govt. Aided", "block": "05 Sakkottai", "hmName": "NATARAJAN  A", "hmTa": "திரு.ஆ.நடராஜன்", "mobile": "9789261612"}, {"uNo": "309", "udiseNo": "33230800705", "nameEn": "RMM GIRLS HS,  PALLATHUR", "nameTa": "இராம.மு.பெண்கள் உயர்நிலைப்பள்ளி பள்ளத்தூர்", "schoolType": "HS", "management": "Govt. Aided", "block": "05 Sakkottai", "hmName": "CHITHRADEVI  V", "hmTa": "திருமதி.வெ.சித்ராதேவி", "mobile": "9942633555"}, {"uNo": "310", "udiseNo": "33230800604", "nameEn": "SELVA VINAYAGAR HS,  KOTHAMANGALAM", "nameTa": "செல்வ விநாயகர் உயர்நிலைப்பள்ளி கொத்தமங்கலம்", "schoolType": "HS", "management": "Govt. Aided", "block": "05 Sakkottai", "hmName": "BAGAVATHY  TR", "hmTa": "திருமதி.திரா.பகவதி", "mobile": "9442924074"}, {"uNo": "311", "udiseNo": "33230602004", "nameEn": "PSS HS,  SHANMUGANATHAPURAM", "nameTa": "பி.எஸ்.எஸ். உயர்நிலைப்பள்ளி சண்முகநாதபுரம்", "schoolType": "HS", "management": "Govt. Aided", "block": "07 Devakottai", "hmName": "KALYANASUNDARAM  RM", "hmTa": "திரு.இராம.கல்யாணசுந்தரம்", "mobile": "9442942112"}, {"uNo": "312", "udiseNo": "33230604103", "nameEn": "ZAMINTHAR HS,  DEVAKOTTAI", "nameTa": "ஜமின்தார் உயர்நிலைப்பள்ளி தேவகோட்டை", "schoolType": "HS", "management": "Govt. Aided", "block": "07 Devakottai", "hmName": "VENKATESAN T", "hmTa": "", "mobile": "9600056968"}, {"uNo": "313", "udiseNo": "33230607102", "nameEn": "RC HS,  KEELAUCHANI", "nameTa": "ஆர்.சி. உயர்நிலைப்பள்ளி கீழ உச்சாணி", "schoolType": "HS", "management": "Govt. Aided", "block": "07 Devakottai", "hmName": "SOOSAI REX. G", "hmTa": "திரு.ஞா.சூசை ரெக்ஸ்", "mobile": "8903532166"}, {"uNo": "314", "udiseNo": "33230606703", "nameEn": "ST.PAUL'S HS, SARUGANI", "nameTa": "புனித பால் உயர்நிலைப்பள்ளி சருகணி", "schoolType": "HS", "management": "Govt. Aided", "block": "07 Devakottai", "hmName": "ANTHONYRAJ  A", "hmTa": "திரு.அ.அந்தோணிராஜ்", "mobile": "9442570817"}, {"uNo": "316", "udiseNo": "33230501003", "nameEn": "BONIFACE HS,  ARIYANDIPURAM", "nameTa": "போனிபேஸ் உயர்நிலைப்பள்ளி அரியாண்டிபுரம்", "schoolType": "HS", "management": "Govt. Aided", "block": "09 Ilayangudi", "hmName": "JEYAROSI  AP", "hmTa": "திருமதி.அபி.ஜெயரோசி", "mobile": "7708308500"}, {"uNo": "317", "udiseNo": "33230502601", "nameEn": "ST.ANTONY'S HS,  KALLADITHIDAL", "nameTa": "புனித அந்தோணியார் உயர்நிலைப்பள்ளி கல்லடிதிடல்", "schoolType": "HS", "management": "Govt. Aided", "block": "09 Ilayangudi", "hmName": "AROCKIA XAVIER RAJ  S", "hmTa": "திரு.மா.ஆரோக்கிய சேவியர் ராஜ்", "mobile": "9486693549"}, {"uNo": "318", "udiseNo": "33230303606", "nameEn": "CSI HS,  MANAMADURAI", "nameTa": "சி.எஸ்.ஐ. உயர்நிலைப்பள்ளி மானாமதுரை", "schoolType": "", "management": "Govt. Aided", "block": "10 Manamadurai", "hmName": "FLORENCE BENET JS", "hmTa": "திருமதி.ஜோ.செ.பிளாரன்ஸ் பெனட்", "mobile": "6369076184"}, {"uNo": "319", "udiseNo": "33230404306", "nameEn": "ST.MARY'S HS,  MICHAELPATTINAM", "nameTa": "புனித மரியன்னை உயர்நிலைப்பள்ளி மிக்கேல்பட்டணம்", "schoolType": "HS", "management": "Govt. Aided", "block": "11 Thiruppuvanam", "hmName": "SR  VINOTHA PEERIS", "hmTa": "சகோ.வினோதா பீரிஸ்", "mobile": "8524909079"}, {"uNo": "320", "udiseNo": "33230103702", "nameEn": "SBDV HS,  SOLAPURAM", "nameTa": "சு.பா.தே.வி. உயர்நிலைப்பள்ளி சோழபுரம்", "schoolType": "", "management": "Govt. Aided", "block": "12 Sivagangai", "hmName": "KATHIRAVAN M R", "hmTa": "திரு.மு.இரா.கதிரவன்", "mobile": "9843999391"}, {"uNo": "321", "udiseNo": "33230104411", "nameEn": "ALICE MILLER GIRLS HS,  SIVAGANGAI", "nameTa": "அலிஸ்மில்லர் பெண்கள் உயர்நிலைப்பள்ளி சிவகங்கை", "schoolType": "HS", "management": "Govt. Aided", "block": "12 Sivagangai", "hmName": "RENUGADEVI  S", "hmTa": "திருமதி.செ.ரேணுகாதேவி", "mobile": "6380962682"}, {"uNo": "322", "udiseNo": "33230104413", "nameEn": "SWAMI VIVEKANANDA HS,  SIVAGANGAI", "nameTa": "சுவாமி விவேகானந்தா உயர்நிலைப்பள்ளி சிவகங்கை", "schoolType": "HS", "management": "Govt. Aided", "block": "12 Sivagangai", "hmName": "SUDHAKAR  A", "hmTa": "திரு.அ.சுதாகர்", "mobile": "9994839553"}, {"uNo": "392", "udiseNo": "33230303616", "nameEn": "CSI DSD HS FOR THE  DEAF, MANAMADURAI", "nameTa": "சி.எஸ்.ஐ.டார்லிங் செல்வபாய் டேவிட் செவித்திறன்  குறைவுடையோர் உயர்நிலைப்பள்ளி, மானாமதுரை", "schoolType": "", "management": "Govt. Aided", "block": "10 Manamadurai", "hmName": "THEENAL ARULSELVARANI A", "hmTa": "திருமதி.ஆ.தீனாள் அருள்செல்வராணி", "mobile": "9442361728"}, {"uNo": "401", "udiseNo": "33231000907", "nameEn": "VALLAL PARI HSS ,  PIRANMALAI", "nameTa": "வள்ளல் பாரி மேல்நிலைப்பள்ளி பிரான்மலை", "schoolType": "", "management": "Govt. Aided", "block": "02 Singampunari", "hmName": "ADHAVAN  R", "hmTa": "திரு.இரா.ஆதவன்", "mobile": "9488024596"}, {"uNo": "402", "udiseNo": "33230902303", "nameEn": "SVK HSS ,  A THEKKUR", "nameTa": "ஸ்ரீ.வி.க. மேல்நிலைப்பள்ளி ஆ.தெக்கூர்", "schoolType": "HSS", "management": "Govt. Aided", "block": "03 Thiruppathur", "hmName": "SIVARAJAN P", "hmTa": "திரு.ப.சிவராஜன்", "mobile": "9600595833"}, {"uNo": "403", "udiseNo": "33230900506", "nameEn": "SMS HSS ,  KILASEVALPATTI", "nameTa": "ஸ்ரீ.மீ.சு.மேல்நிலைப்பள்ளி கீழச்சிவல்பட்டி", "schoolType": "", "management": "Govt. Aided", "block": "03 Thiruppathur", "hmName": "KAMALAM S  (I/C)", "hmTa": "திருமதி.சு.கமலம்", "mobile": "9444761218"}, {"uNo": "404", "udiseNo": "33231200110", "nameEn": "BRITTO HSS,  KALLAL", "nameTa": "பிரிட்டோ மேல்நிலைப்பள்ளி கல்லல்", "schoolType": "", "management": "Govt. Aided", "block": "04 Kallal", "hmName": "ARUL JEYASEELAN S", "hmTa": "திரு.சூ.அருள் ஜெயசீலன்", "mobile": "9751672389"}, {"uNo": "405", "udiseNo": "33231200105", "nameEn": "KM HSS, KALLAL", "nameTa": "க.மு.மேல்நிலைப்பள்ளி கல்லல்", "schoolType": "", "management": "Govt. Aided", "block": "04 Kallal", "hmName": "ALAGAPPAN  AL", "hmTa": "திரு.அழ.அழகப்பன்", "mobile": "8637448895"}, {"uNo": "406", "udiseNo": "33231201702", "nameEn": "DKG HSS,  KUNDRAKUDI", "nameTa": "த.க.கு.மேல்நிலைப்பள்ளி குன்றக்குடி", "schoolType": "", "management": "Govt. Aided", "block": "04 Kallal", "hmName": "KARPAGAVALLI P", "hmTa": "திருமதி.ப.கற்பகவல்லி", "mobile": "9786137458"}, {"uNo": "407", "udiseNo": "33230801121", "nameEn": "SM GIRLS HSS,  KARAIKUDI", "nameTa": "ஸ்ரீ.மீ. பெண்கள் மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Govt. Aided", "block": "05 Sakkottai", "hmName": "SILAMBUSELVI A", "hmTa": "திருமதி.அ.சிலம்புச்செல்வி", "mobile": "9489104915"}, {"uNo": "408", "udiseNo": "33230801122", "nameEn": "SMSV HSS,  KARAIKUDI", "nameTa": "ஸ்ரீ.மீ.சு.வி.மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Govt. Aided", "block": "05 Sakkottai", "hmName": "ANNAMALAI  R", "hmTa": "திரு.இரா.அண்ணாமலை", "mobile": "9443005846"}, {"uNo": "409", "udiseNo": "33230801124", "nameEn": "ALAGAPPA MODEL HSS,  KARAIKUDI", "nameTa": "அழகப்பா மாதிரி மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Govt. Aided", "block": "05 Sakkottai", "hmName": "RAMESH T", "hmTa": "திரு.த.ரமேஷ்", "mobile": "9443503833"}, {"uNo": "410", "udiseNo": "33230800803", "nameEn": "CC GIRLS HSS,  KOTTAIYUR", "nameTa": "சி.செ.பெண்கள் மேல்நிலைப்பள்ளி கோட்டையூர்", "schoolType": "", "management": "Govt. Aided", "block": "05 Sakkottai", "hmName": "HEMAMALINI V", "hmTa": "திருமதி.வீ.ஹேமமாலினி", "mobile": "9486745618"}, {"uNo": "411", "udiseNo": "33230800704", "nameEn": "AC HSS,  PALLATHUR", "nameTa": "அ.செ.மேல்நிலைப்பள்ளி பள்ளத்தூர்", "schoolType": "HSS", "management": "Govt. Aided", "block": "05 Sakkottai", "hmName": "VINAITHEERTHAL A", "hmTa": "திருமதி.அ.வினைதீர்த்தாள்", "mobile": "8248424346"}, {"uNo": "412", "udiseNo": "33230801903", "nameEn": "RC HSS,  PUDUVAYAL", "nameTa": "இரா.செ.மேல்நிலைப்பள்ளி புதுவயல்", "schoolType": "", "management": "Govt. Aided", "block": "05 Sakkottai", "hmName": "CHOCKALINGAM CT", "hmTa": "திரு.சொக்கலிங்கம் சி த", "mobile": "9943331768"}, {"uNo": "413", "udiseNo": "33230801303", "nameEn": "SCGR HSS,  AMARAVATHIPUDUR", "nameTa": "சு.செ.குருகுலம் மேல்நிலைப்பள்ளி அமராவதிபுதூர்", "schoolType": "", "management": "Govt. Aided", "block": "05 Sakkottai", "hmName": "CHOKKALINGAM KM", "hmTa": "திரு.கும.சொக்கலிங்கம்", "mobile": "9442042504"}, {"uNo": "414", "udiseNo": "33230800502", "nameEn": "MCTMCC HSS,  KANADUKATHAN", "nameTa": "மு.சித.மு சிதம்பரம் செட்டியார்  மேல்நிலைப்பள்ளி கானாடுகாத்தான்", "schoolType": "", "management": "Govt. Aided", "block": "05 Sakkottai", "hmName": "CHIDAMBARAM M", "hmTa": "திரு.ம.சிதம்பரம்", "mobile": "8300195125"}, {"uNo": "415", "udiseNo": "33230801202", "nameEn": "LFRC HSS,  KARAIKUDI", "nameTa": "LFRC மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Govt. Aided", "block": "05 Sakkottai", "hmName": "REV. SR. M.JASMIN SAHAYAM", "hmTa": "சகோ.ம.ஜேஸ்மின் சகாயம்", "mobile": "6380050397"}, {"uNo": "416", "udiseNo": "33230801905", "nameEn": "SSV GIRLS HSS,  PUDUVAYAL", "nameTa": "ஸ்ரீ சரசுவதி வித்தியாசாலை பெண்கள் மேல்நிலைப்பள்ளி, புதுவயல்", "schoolType": "", "management": "Govt. Aided", "block": "05 Sakkottai", "hmName": "KARPAGAVALLI K I/C", "hmTa": "திருமதி. கு.கற்பகவள்ளி", "mobile": "9442223569"}, {"uNo": "417", "udiseNo": "33230604501", "nameEn": "DE BRITTO HSS,  DEVAKOTTAI", "nameTa": "தே பிரித்தோ மேல்நிலைப்பள்ளி தேவகோட்டை", "schoolType": "", "management": "Govt. Aided", "block": "07 Devakottai", "hmName": "FR.XAVIER RAJ A", "hmTa": "அருட்திரு.சேவியர் ராஜ்", "mobile": "9962227005"}, {"uNo": "418", "udiseNo": "33230604601", "nameEn": "NSMVPS HSS,  DEVAKOTTAI", "nameTa": "என்.எஸ்.எம்.வி.பி.எஸ்  மேல்நிலைப்பள்ளி தேவகோட்டை", "schoolType": "", "management": "Govt. Aided", "block": "07 Devakottai", "hmName": "R D PUGAL I/C", "hmTa": "திரு.இரா.தா.புகழ்  I/C", "mobile": "9486906181"}, {"uNo": "419", "udiseNo": "33230604602", "nameEn": "ST.MARY'S G HSS,  DEVAKOTTAI", "nameTa": "புனித மரியன்னை மகளிர் மேல்நிலைப்பள்ளி தேவகோட்டை", "schoolType": "", "management": "Govt. Aided", "block": "07 Devakottai", "hmName": "Sr ELIZABETH", "hmTa": "சகோ.லுா.எலிசபெத்", "mobile": "7530073682"}, {"uNo": "420", "udiseNo": "33230602203", "nameEn": "ST.JOHN'S G HSS,  DEVAKOTTAI", "nameTa": "புனித ஜான் பெண்கள் மேல்நிலைப்பள்ளி தேவகோட்டை", "schoolType": "", "management": "Govt. Aided", "block": "07 Devakottai", "hmName": "Sr  SAHAYA ARUL SELVI M", "hmTa": "சகோ. சகாய அருள் செல்வி மா", "mobile": "9943747681"}, {"uNo": "421", "udiseNo": "33230603502", "nameEn": "PETHAL ACHI G HSS,  DEVAKOTTAI", "nameTa": "பெத்தாள் ஆச்சி பெண்கள் மேல்நிலைப்பள்ளி தேவகோட்டை", "schoolType": "HSS", "management": "Govt. Aided", "block": "07 Devakottai", "hmName": "GLOTILDARAJAM  RV", "hmTa": "திருமதி.ரோ.வா.குளோட்டில்டா ராஜம்", "mobile": "6369864462"}, {"uNo": "422", "udiseNo": "33230606802", "nameEn": "ST.JOSEPH'S HSS,  SEKKAKUDI", "nameTa": "புனித ஜோசப் மேல்நிலைப்பள்ளி செக்ககுடி", "schoolType": "HSS", "management": "Govt. Aided", "block": "07 Devakottai", "hmName": "SR VIMALA MARY A", "hmTa": "சகோ.அ.விமலா மேரி", "mobile": "8489171814"}, {"uNo": "423", "udiseNo": "33230211303", "nameEn": "KMSC HSS,  NATTARASAN KOTTAI", "nameTa": "கா.மு.சு.செ பெண்கள் மேல்நிலைப்பள்ளி நாட்டரசன்கோட்டை", "schoolType": "", "management": "Govt. Aided", "block": "08 Kalayarkoil", "hmName": "AROCKIYA STELLA S", "hmTa": "திருமதி.சா.ஆரோக்கிய ஸ்டெல்லா", "mobile": "9486905231"}, {"uNo": "424", "udiseNo": "33230211304", "nameEn": "SRM HSS,  NATTARASAN KOTTAI", "nameTa": "ச.இராம.மேல்நிலைப்பள்ளி நாட்டரசன்கோட்டை", "schoolType": "", "management": "Govt. Aided", "block": "08 Kalayarkoil", "hmName": "ARIVAZHAGAN G", "hmTa": "திரு.ஞா.அறிவழகன்", "mobile": "9442050064"}, {"uNo": "425", "udiseNo": "33230213702", "nameEn": "SAHAYARANI GIRLS HSS,  SUSAIAPPARPATTANAM", "nameTa": "சகாயராணி பெண்கள் மேல்நிலைப்பள்ளி சூசையப்பர்பட்டணம்", "schoolType": "HSS", "management": "Govt. Aided", "block": "08 Kalayarkoil", "hmName": "SR. JOSEPHINE JEYAMARY J", "hmTa": "சகோ.ஜோஸ்பின் ஜெயமேரி ஜெ", "mobile": "8489631418"}, {"uNo": "426", "udiseNo": "33230505413", "nameEn": "ILAYANGUDI HSS,  ILAYANGUDI", "nameTa": "இளையான்குடி மேல்நிலைப்பள்ளி இளையான்குடி", "schoolType": "", "management": "Govt. Aided", "block": "09 Ilayangudi", "hmName": "MOHAMED ILYAS  A", "hmTa": "திரு.அ.முகம்மது இல்யாஸ்", "mobile": "9842928365"}, {"uNo": "427", "udiseNo": "33230505408", "nameEn": "HAJEE KK I A   HSS,  PUDUR", "nameTa": "ஹாஜி.கே.கே.இப்ராஹிம் அலி மேல்நிலைப்பள்ளி புதூர்", "schoolType": "HSS", "management": "Govt. Aided", "block": "09 Ilayangudi", "hmName": "PITCHAI MOHAMED K", "hmTa": "திரு.க.பிச்சை முகமது", "mobile": "9965084313"}, {"uNo": "428", "udiseNo": "33230505412", "nameEn": "MELLAPALLI VASAL GIRLS HSS, ILAIYANGUDI", "nameTa": "மேலப்பள்ளி வாசல் பெண்கள் மேல்நிலைப்பள்ளி இளையான்குடி", "schoolType": "", "management": "Govt. Aided", "block": "09 Ilayangudi", "hmName": "SARAL JOHN O H A", "hmTa": "திருமதி.உ.க.அ.சாராள் ஜான்", "mobile": "9360447419"}, {"uNo": "429", "udiseNo": "33230505411", "nameEn": "HAMEEDIA HSS,  SALAIYOOR", "nameTa": "ஹமீதியா மேல்நிலைப்பள்ளி சாலையூர்", "schoolType": "", "management": "Govt. Aided", "block": "09 Ilayangudi", "hmName": "PERIYASAMY S", "hmTa": "திரு.சு.பெரியசாமி", "mobile": "9443612582"}, {"uNo": "430", "udiseNo": "33230502503", "nameEn": "ST.JAMES HSS,  SURANAM", "nameTa": "புனித ஜேம்ஸ் மேல்நிலைப்பள்ளி சூராணம்", "schoolType": "", "management": "Govt. Aided", "block": "09 Ilayangudi", "hmName": "Bro  VICTOR   R", "hmTa": "சகோ.ரெ.விக்டர்", "mobile": "9486213397"}, {"uNo": "431", "udiseNo": "33230303601", "nameEn": "OVC HSS,  MANAMADURAI", "nameTa": "ஒ.வெ.செ.மேல்நிலைப்பள்ளி மானாமதுரை", "schoolType": "", "management": "Govt. Aided", "block": "10 Manamadurai", "hmName": "MURUGAN M", "hmTa": "திரு.மா.முருகன்", "mobile": "9092691401"}, {"uNo": "432", "udiseNo": "33230303204", "nameEn": "ST. MARY'S HSS,  RAJAGAMBEERAM", "nameTa": "புனித மரியன்னை மேல்நிலைப்பள்ளி இராஜகம்பீரம்", "schoolType": "", "management": "Govt. Aided", "block": "10 Manamadurai", "hmName": "SELVAN  S", "hmTa": "திரு.சூ.செல்வன்", "mobile": "9487109535"}, {"uNo": "433", "udiseNo": "33230104417", "nameEn": "MANNAR HSS,  SIVAGANGAI", "nameTa": "மன்னர் மேல்நிலைப்பள்ளி சிவகங்கை", "schoolType": "", "management": "Govt. Aided", "block": "12 Sivagangai", "hmName": "SUNDARARAJAN N", "hmTa": "திரு.நா.சுந்தரராஜன்", "mobile": "9360921702"}, {"uNo": "434", "udiseNo": "33230104429", "nameEn": "ST.JUSTIN'S GIRLS HSS,  SIVAGANGAI", "nameTa": "புனித ஜஸ்டின் பெண்கள் மேல்நிலைப்பள்ளி சிவகங்கை", "schoolType": "HSS", "management": "Govt. Aided", "block": "12 Sivagangai", "hmName": "Sr SUSAI MARY", "hmTa": "சகோ.சூசை மேரி", "mobile": "8778549385"}, {"uNo": "435", "udiseNo": "33230102802", "nameEn": "SC HSS,  OKKUR", "nameTa": "சோ.செ.மேல்நிலைப்பள்ளி ஒக்கூர்", "schoolType": "", "management": "Govt. Aided", "block": "12 Sivagangai", "hmName": "APPAS M", "hmTa": "திரு.மு.அப்பாஸ்", "mobile": "7502522233"}, {"uNo": "436", "udiseNo": "33230104402", "nameEn": "KSPR HSS,  SIVAGANGAI", "nameTa": "கற்பூரசுந்தரபாண்டியன் இராமலெட்சுமி மேல்நிலைப்பள்ளி, சிவகங்கை", "schoolType": "HSS", "management": "Govt. Aided", "block": "12 Sivagangai", "hmName": "SARAVANAN D", "hmTa": "திரு.தெ.சரவணன்", "mobile": "9787505666"}, {"uNo": "437", "udiseNo": "33230104424", "nameEn": "ST.JOSEPH'S HSS,  SIVAGANGAI", "nameTa": "புனித சூசையப்பர் மேல்நிலைப்பள்ளி சிவகங்கை", "schoolType": "", "management": "Govt. Aided", "block": "12 Sivagangai", "hmName": "SR S SELVARANI", "hmTa": "சகோ.செ.செல்வராணி", "mobile": "7373165848"}, {"uNo": "501", "udiseNo": "33231000117", "nameEn": "SRI SEVUGAMOORTHY  MS, SINGAMPUNARI", "nameTa": "ஸ்ரீ சேவுகமூர்த்தி மெட்ரிக் பள்ளி சிங்கம்புணரி", "schoolType": "", "management": "Private", "block": "02 Singampunari", "hmName": "Mrs.R. Rajeswari", "hmTa": "ராஜேஸ்வரி", "mobile": "8610920746"}, {"uNo": "502", "udiseNo": "33230900507", "nameEn": "RMMC MS,  KEELASIVALPATTI", "nameTa": "ஆர்.எம்.மெய்யப்பச் செட்டியார் பதின்மப் பள்ளி கீழச்சிவல்பட்டி", "schoolType": "", "management": "Private", "block": "03 Thiruppathur", "hmName": "PALANIAPPAN S", "hmTa": "திரு.ச.பழனியப்பன்", "mobile": "9894745448"}, {"uNo": "503", "udiseNo": "33230900507", "nameEn": "INDIRAGANDHI MS,  THENMAPATTU", "nameTa": "ஆர்.எம்.மெய்யப்பச் செட்டியார் பதின்மப் பள்ளி கீழச்சிவல்பட்டி", "schoolType": "", "management": "Private", "block": "03 Thiruppathur", "hmName": "P.RAMU", "hmTa": "பொ.ராமு", "mobile": "9751992617"}, {"uNo": "504", "udiseNo": "33230801305", "nameEn": "SRI SARATHA VIDHALAYA MS, AMARAVATHIPUDUR", "nameTa": "ஸ்ரீ சாரதா வித்யாலயா மெட்ரிக் பள்ளி அமராவதிபுதூர்", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "SARADEESWARI PRIYA AMBA.S", "hmTa": "சாரதேஸ்வரி பிரியா அம்மா", "mobile": "9626464428"}, {"uNo": "505", "udiseNo": "33230801404", "nameEn": "INFANT JESUS MS,  ARIYAKUDI", "nameTa": "இன்பென்ட் ஜீசஸ் மெட்ரிக் பள்ளி அரியக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "SR LUCY", "hmTa": "சகோதரி.லூசி", "mobile": "9443000648"}, {"uNo": "506", "udiseNo": "33230801008", "nameEn": "SRI VAIRAVAR MS,  KARAIKUDI", "nameTa": "ஸ்ரீ வயிரவர் மெட்ரிக் பள்ளி காரைக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "UMA  D", "hmTa": "திருமதி.தெ.உமா", "mobile": "9080974662"}, {"uNo": "507", "udiseNo": "33230801508", "nameEn": "MARUTHA MALAIYAN  MS, KARIKUDI", "nameTa": "மருதமலையான் மெட்ரிக் பள்ளி காரைக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "KARPAGAM M", "hmTa": "திருமதி.மு.கற்பகம்", "mobile": "9442903020"}, {"uNo": "508", "udiseNo": "33230801508", "nameEn": "PANCHU VALLIAPPA MS,  DEVAKOTTAI", "nameTa": "பஞ்சு வள்ளியப்பா மெட்ரிக் பள்ளி, சடையன்காடு", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "Mrs.KIRUTHIKA P", "hmTa": "பே.கிருத்திகா", "mobile": "8526510113"}, {"uNo": "509", "udiseNo": "33230209905", "nameEn": "ARIBALA MS, PALKULAM,  MARAVAMANGALAM", "nameTa": "அரிபாலா மெட்ரிக்பள்ளி பால்குளம்,மறவமங்கலம்", "schoolType": "", "management": "Private", "block": "08 Kalayarkoil", "hmName": "VEDHARAJ T", "hmTa": "திரு.த.வேதராஜ்", "mobile": "9750041693"}, {"uNo": "510", "udiseNo": "33230505418", "nameEn": "INPT MS,  ILAIYANGUDI", "nameTa": "ஐ.என்.பி.டி மெட்ரிக் பள்ளி இளையான்குடி", "schoolType": "", "management": "Private", "block": "09 Ilayangudi", "hmName": "Mrs GANGADEVI M", "hmTa": "திருமதி.மா.கங்கா தேவி", "mobile": "9943725731"}, {"uNo": "511", "udiseNo": "33230505504", "nameEn": "IQRA MS,  ILAIYANGUDI", "nameTa": "இக்ரா மெட்ரிக் பள்ளி இளையான்குடி", "schoolType": "", "management": "Private", "block": "09 Ilayangudi", "hmName": "Mrs NOORUL AFRIN S", "hmTa": "திருமதி.செ.நூருல் ஆஃப்ரின்", "mobile": "8526626721"}, {"uNo": "512", "udiseNo": "33230502505", "nameEn": "BHARATHIYAR MS,  SOORANAM", "nameTa": "பாரதியார் மெட்ரிக் பள்ளி சூராணம்", "schoolType": "", "management": "Private", "block": "09 Ilayangudi", "hmName": "MEENAKSHI S", "hmTa": "திருமதி.ச.மீனாட்சி", "mobile": "9894965068"}, {"uNo": "513", "udiseNo": "33230503406", "nameEn": "NALMEIPAR MS,  VARUNTHI", "nameTa": "நல்மேய்ப்பர் மெட்ரிக் பள்ளி வருந்தி", "schoolType": "", "management": "Private", "block": "09 Ilayangudi", "hmName": "SHANMUGANATHAN M", "hmTa": "திரு.மு.சண்முகநாதன்", "mobile": "9791781543"}, {"uNo": "514", "udiseNo": "33230303603", "nameEn": "BABA MS,  MANAMADURAI", "nameTa": "பாபா மெட்ரிக் பள்ளி மானாமதுரை", "schoolType": "", "management": "Private", "block": "10 Manamadurai", "hmName": "SARATHA  M", "hmTa": "திருமதி.மு.சாரதா", "mobile": "9566615572"}, {"uNo": "515", "udiseNo": "33230300704", "nameEn": "GOOD WILL MS,  MANAMADURAI", "nameTa": "குட்வீல் மெட்ரிக் பள்ளி மானாமதுரை", "schoolType": "", "management": "Private", "block": "10 Manamadurai", "hmName": "PARAMESWARI  A", "hmTa": "திருமதி.அ.பரமேஸ்வரி", "mobile": "9043505054"}, {"uNo": "516", "udiseNo": "33230301904", "nameEn": "ST. CHARLES MS,  PERIYAKOTTAI", "nameTa": "புனித சார்லஸ் மெட்ரிக் பள்ளி பெரியகோட்டை", "schoolType": "", "management": "Private", "block": "10 Manamadurai", "hmName": "SHEELA P", "hmTa": "சகோ.ப.ஷீலா", "mobile": "9080292496"}, {"uNo": "517", "udiseNo": "33230400704", "nameEn": "MANIMARAN MS,  POOVANTHI", "nameTa": "மணிமாறன் மெட்ரிக் பள்ளி பூவந்தி", "schoolType": "", "management": "Private", "block": "11 Thiruppuvanam", "hmName": "SATHIYAPRIYA K", "hmTa": "திருமதி.க.சத்தியபிரியா", "mobile": "9787898033"}, {"uNo": "518", "udiseNo": "33230400108", "nameEn": "ARULMIGU  THANDEESWARAR MS,  THIRUPPUVANAM", "nameTa": "அருள்மிகு தண்டீஸ்வரர் மெட்ரிக் பள்ளி திருப்புவனம்", "schoolType": "", "management": "Private", "block": "11 Thiruppuvanam", "hmName": "MANIKANDAN P", "hmTa": "திரு.ப.மணிகண்டன்", "mobile": "9786324486"}, {"uNo": "519", "udiseNo": "33230103005", "nameEn": "ST JOSEPH'S MS,  O PUDUR, OKKUR", "nameTa": "புனித ஜோசப் மெட்ரிக் பள்ளி ஒ.புதூர்", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "Sr JOSEPHINE  SAHAYA SEELI", "hmTa": "அருட்சகோதரி.அ.ஜோஸ்பின் சகாய சீலி", "mobile": "9150995787"}, {"uNo": "520", "udiseNo": "33230103602", "nameEn": "SRI THIYAGARAJA MS,  PERUNGUDI", "nameTa": "ஸ்ரீ தியாகராஜா மெட்ரிக் பள்ளி பெருங்குடி", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "THIYAGARAJAN V", "hmTa": "திருமதி. M.ராஜீ", "mobile": "7449009515"}, {"uNo": "521", "udiseNo": "33230100808", "nameEn": "VIKNESWARA VIDYALAYA  MS, IDAYAMELUR", "nameTa": "விக்னேஸ்வரா வித்யாலயா மெட்ரிக் பள்ளி இடையமேலூர்", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "JANSI J", "hmTa": "திருமதி.ஜெ.ஜான்சி", "mobile": "9786371345"}, {"uNo": "522", "udiseNo": "33230100808", "nameEn": "VHNTMJ  MHSS,  SAINAPURAM", "nameTa": "விருதுநகர் இந்து நாடார் தோலாண்டி மாணிக்கம் நாடார்  ஜானகி அம்மாள் மகளிர் மெட்ரிக் பள்ளி, சயனாபுரம்", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "B.Nithya Sundari", "hmTa": "திருமதி.பா.நித்திய சுந்தரி", "mobile": "7092521466"}, {"uNo": "523", "udiseNo": "33230201308", "nameEn": "ST.JOSEPH'S MHS,  ANDICHIURANI", "nameTa": "புனித ஜோசப் மெட்ரிக் பள்ளி,ஆண்டிச்சியூரணி", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "S.PREETHI", "hmTa": "திருமதி.பிரீத்தி", "mobile": "8056526909"}, {"uNo": "524", "udiseNo": "33230604603", "nameEn": "ST.MARY'S MHS,  DEVAKOTTAI", "nameTa": "புனித மரியன்னை மெட்ரிக் பள்ளி, தேவகோட்டை", "schoolType": "", "management": "Private", "block": "07 Devakottai", "hmName": "Sr.JAYARANI", "hmTa": "சகோ.ஜெயராணி", "mobile": "9944910290"}, {"uNo": "525", "udiseNo": "33231000505", "nameEn": "GANDHI MS, ERIYUR", "nameTa": "காந்தி‌மெட்ரிகுலேசன் பள்ளி", "schoolType": "", "management": "Private", "block": "02 Singampunari", "hmName": "Kannan", "hmTa": "திரு.அ.கண்ணன்", "mobile": "9442072398"}, {"uNo": "601", "udiseNo": "33231000113", "nameEn": "ANNAI VELANKANNI  MHSS, SINGAMPUNARI", "nameTa": "அன்னை வேளாங்கண்ணி மெட்ரிக் மேல்நிலைப்பள்ளி  சிங்கம்புணரி", "schoolType": "", "management": "Private", "block": "02 Singampunari", "hmName": "SR JULIET MARY", "hmTa": "சகோ.ஜுலியட்மேரி", "mobile": "9940555759"}, {"uNo": "602", "udiseNo": "33231000210", "nameEn": "PARI VALLAL MHSS,  SINGAMPUNARI", "nameTa": "பாரி வள்ளல் பதின்ம மேல்நிலைப் பள்ளி சிங்கம்புணரி", "schoolType": "", "management": "Private", "block": "02 Singampunari", "hmName": "SAM FRANKLIN DAVID J", "hmTa": "திரு.ஜெ.சாம் ஃப்ராங்ளின் டேவிட்", "mobile": "9659976795"}, {"uNo": "603", "udiseNo": "33230904402", "nameEn": "CHRISTHURAJA MHSS,  K.VAIRAVANPATTI,   THIRUPPATHUR", "nameTa": "கிறிஸ்துராஜா மெட்ரிக் மேல்நிலைப்பள்ளி கே.வைரவன்பட்டி,திருப்பத்தூர்", "schoolType": "", "management": "Private", "block": "03 Thiruppathur", "hmName": "TABASSUM KARIM", "hmTa": "திருமதி.தபசும் கரீம்", "mobile": "9087634437"}, {"uNo": "604", "udiseNo": "33230901405", "nameEn": "PLAZA MS,  PUDHUKATTAMBUR", "nameTa": "பிளாசா  மெட்ரிக் மேல்நிலைப்பள்ளி புதுகாட்டாம்பூர்", "schoolType": "", "management": "Private", "block": "03 Thiruppathur", "hmName": "RAJESWARI P", "hmTa": "திருமதி.பா.ராஜேஸ்வரி", "mobile": "9344540003"}, {"uNo": "605", "udiseNo": "33230903303", "nameEn": "AVM Public MHSS,  SEVVOOR", "nameTa": "ஏ.வி.எம்.பப்ளிக் மெட்ரிக் மேல்நிலைப்பள்ளி செவ்வூர்", "schoolType": "", "management": "Private", "block": "03 Thiruppathur", "hmName": "KALAISELVI S", "hmTa": "திருமதி.சோ.கலைச்செல்வி", "mobile": "9159937311"}, {"uNo": "606", "udiseNo": "33230904803", "nameEn": "APSA MHSS,  THIRUPPATHUR", "nameTa": "ஆறுமுகம் பிள்ளை சீதை அம்மாள்  மெட்ரிக் மேல்நிலைப்பள்ளி, திருப்பத்தூர்", "schoolType": "", "management": "Private", "block": "03 Thiruppathur", "hmName": "AMUTHA  KR", "hmTa": "திருமதி.க.இரா.அமுதா", "mobile": "9080071910"}, {"uNo": "607", "udiseNo": "33230904603", "nameEn": "BABA AMIR BADHUSAH   MHSS, THIRUPPATHUR", "nameTa": "பாபா அமீர் பாதுஷா  மெட்ரிக் மேல்நிலைப்பள்ளி திருப்பத்தூர்", "schoolType": "", "management": "Private", "block": "03 Thiruppathur", "hmName": "VARATHARAJAN S", "hmTa": "திரு.சு.வரதராஜன்", "mobile": "7502912416"}, {"uNo": "608", "udiseNo": "33230903903", "nameEn": "LIMRA MHSS,  THIRUPPATHUR", "nameTa": "லிம்ரா  மெட்ரிக் மேல்நிலைப்பள்ளி திருப்பத்தூர்", "schoolType": "", "management": "Private", "block": "03 Thiruppathur", "hmName": "JASMINE N", "hmTa": "திருமதி. ஜாஸ்மின் நா", "mobile": "9952894766"}, {"uNo": "609", "udiseNo": "33231200106", "nameEn": "SHANTHI RANI MHSS,  KALLAL", "nameTa": "சாந்திராணி  மெட்ரிக் மேல்நிலைப்பள்ளி கல்லல்", "schoolType": "", "management": "Private", "block": "04 Kallal", "hmName": "Sr SUDHA R", "hmTa": "சகோதரி.ரா.சுதா", "mobile": "8309393118"}, {"uNo": "610", "udiseNo": "33231201405", "nameEn": "SETHU IRANI MHSS,  KANDRAMANICKAM", "nameTa": "சேது ஐராணி  மெட்ரிக் மேல்நிலைப்பள்ளி கண்டரமாணிக்கம்", "schoolType": "", "management": "Private", "block": "04 Kallal", "hmName": "ROSARIO PRINCE A", "hmTa": "திரு.ஆ.ரொசாரியோ பிரின்ஸ்", "mobile": "9865027606"}, {"uNo": "611", "udiseNo": "33231202105", "nameEn": "KOVILOOR ANDAVAR  MHSS, KOVILOOR", "nameTa": "கோவிலூர் ஆண்டவர்  மெட்ரிக் மேல்நிலைப்பள்ளி கோவிலூர்", "schoolType": "", "management": "Private", "block": "04 Kallal", "hmName": "Mrs.N.Ramyadevi", "hmTa": "திருமதி.நா.ரம்யாதேவி", "mobile": "9629514433"}, {"uNo": "613", "udiseNo": "33230801403", "nameEn": "ST.MICHAEL MHSS,  ARIYAKKUDI", "nameTa": "புனித மைக்கேல்  மெட்ரிக் மேல்நிலைப்பள்ளி அரியக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "Mrs.THENMOZHI M", "hmTa": "திருமதி.ம.தேன்மொழி", "mobile": "9487034795"}, {"uNo": "614", "udiseNo": "33230801513", "nameEn": "KARAIKUDI MAHARISHI  VIDYA MANDDIR MHSS,  INDIRA NAGAR, KARAIKUDI", "nameTa": "காரைக்குடி மகரிஷி வித்யா மந்திர்  மெட்ரிக் மேல்நிலைப்பள்ளி, இந்திராநகர்,  காரைக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "RAVIKUMAR K", "hmTa": "திரு.கி.ரவிக்குமார்", "mobile": "9952376634"}, {"uNo": "615", "udiseNo": "33230801512", "nameEn": "ALAGAPPA GIRLS MHSS,  KARAIKUDI", "nameTa": "அழகப்பா பெண்கள்  மெட்ரிக் மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "MRS.SHANISHA", "hmTa": "திருமதி.ஷாநிஷா", "mobile": "9489871851"}, {"uNo": "616", "udiseNo": "33230801505", "nameEn": "ALAGAPPA MHSS,  KARAIKUDI", "nameTa": "அழகப்பா  மெட்ரிக் மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "SREEBHAGYALAKSHMI A", "hmTa": "திருமதி.ஆ.ஸ்ரீபாக்யலட்சுமி", "mobile": "8248405002"}, {"uNo": "617", "udiseNo": "33230801135", "nameEn": "AZAD MHSS,  KARAIKUDI", "nameTa": "ஆசாத் மெட்ரிக் மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "VARATHARAJAN J", "hmTa": "திரு.ஜெ.வரதராஜன்", "mobile": "9443090266"}, {"uNo": "618", "udiseNo": "33230801140", "nameEn": "KAMBAN KARPAKAM   MHSS, KARAIKUDI", "nameTa": "கம்பன் கற்பகம் மெட்ரிக் மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "ROYDS SUMANGALA K", "hmTa": "திருமதி.க.ராய்ட்ஸ் சுமங்கலா", "mobile": "9443095540"}, {"uNo": "619", "udiseNo": "33230801141", "nameEn": "SAHAYAMATHA MHSS, KARAIKUDI", "nameTa": "சகாயமாதா மெட்ரிக் மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "Sr JACINTHA DOROTHY  M", "hmTa": "சகோ.ஜெசிந்தா டாரத்தி", "mobile": "9363160154"}, {"uNo": "620", "udiseNo": "33230801205", "nameEn": "SRI KALAIVANI   VIDHYALAYA MHSS,  KARAIKUDI", "nameTa": "ஸ்ரீ  கலைவாணி வித்யாலயா மெட்ரிக் மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "KANNAN N", "hmTa": "திரு.நா.கண்ணன்", "mobile": "6379455727"}, {"uNo": "621", "udiseNo": "33230801144", "nameEn": "SRI RAGHAVENDRA  MHSS, KARAIKUDI", "nameTa": "ஸ்ரீ  ராகவேந்திரா மெட்ரிக் மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "K.VIJAYA SANGEETHA", "hmTa": "திருமதி.கா.விஜய சங்கீதா", "mobile": "7708762557"}, {"uNo": "622", "udiseNo": "33230801151", "nameEn": "THE LEADERS MHSS,  KARAIKUDI", "nameTa": "தி லீடர்ஸ் மெட்ரிக் மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "SASIKALA B", "hmTa": "திருமதி.பா.சசிகலா", "mobile": "9865712468"}, {"uNo": "623", "udiseNo": "33230801164", "nameEn": "VIDHYA GIRI MHSS,  KARAIKUDI", "nameTa": "வித்ய கிரி மெட்ரிக் மேல்நிலைப்பள்ளி காரைக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "HEMAMALINI S", "hmTa": "திருமதி.சு.ஹேமமாலினி", "mobile": "9443502030"}, {"uNo": "624", "udiseNo": "33230800806", "nameEn": "MUTHIAH ALAGAPPA  MHSS, KOTTAIYUR", "nameTa": "முத்தையா அழகப்பா மெட்ரிக் மேல்நிலைப்பள்ளி கோட்டையூர்", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "SUSHIL KUMAR T", "hmTa": "திரு.த.சுசில் குமார்", "mobile": "6369101438"}, {"uNo": "625", "udiseNo": "33230800807", "nameEn": "SRI SUBBAIAH AMBALAM MHSS, KOTTAIYUR", "nameTa": "ஸ்ரீ  சுப்பையா அம்பலம் மெட்ரிக் மேல்நிலைப்பள்ளி கோட்டையூர்", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "SIVAGAMI G", "hmTa": "திருமதி.க.சிவகாமி", "mobile": "9843131140"}, {"uNo": "626", "udiseNo": "33230802110", "nameEn": "SRI KALAIMAGAL   VIDYALAYA MHSS,  PUDUVAYAL", "nameTa": "ஸ்ரீ  கலைமகள் வித்யாலயா மெட்ரிக் மேல்நிலைப்பள்ளி புதுவயல்", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "PARAMESWARN KR", "hmTa": "திரு.கரு.பரமேஸ்வரன்", "mobile": "9443289193"}, {"uNo": "627", "udiseNo": "33230802109", "nameEn": "SHRI VIDHYAA GIRI  MHSS, PUDUVAYAL", "nameTa": "ஸ்ரீ வித்யா கிரி மெட்ரிக் மேல்நிலைப்பள்ளி புதுவயல்", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "KUMAR K", "hmTa": "திரு.கி.குமார்", "mobile": "9940155402"}, {"uNo": "628", "udiseNo": "33230801129", "nameEn": "KARAIKUDI MAHARISHI  VIDYA MANDDIR MHSS,  T.T NAGAR, KARAIKUDI", "nameTa": "காரைக்குடி மகரிஷி வித்யா மந்திர்  மெட்ரிக் மேல்நிலைப்பள்ளி,  டி.டி.நகர்,  காரைக்குடி", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "PARAMESWARI M", "hmTa": "செல்வி.மு.பரமேஸ்வரி", "mobile": "9842107807"}, {"uNo": "629", "udiseNo": "33230800506", "nameEn": "C.V.CT.V MEENAKSHI  ACHI MHSS,  KANADUKATHAN", "nameTa": "C.V.CT.V மீனாட்சி ஆச்சி மெட்ரிக் மேல்நிலைப்பள்ளி கானாடுகாத்தான்", "schoolType": "", "management": "Private", "block": "05 Sakkottai", "hmName": "MARI  I", "hmTa": "திருமதி.இ.மரி", "mobile": "9442193042"}, {"uNo": "630", "udiseNo": "33230603602", "nameEn": "INFANT JESUS MHSS,  DEVAKOTTAI", "nameTa": "இன்பென்ட் ஜீசஸ்  மெட்ரிக் மேல்நிலைப்பள்ளி தேவகோட்டை", "schoolType": "", "management": "Private", "block": "07 Devakottai", "hmName": "Sr.STELLA MARY", "hmTa": "சகோ.ஸ்டெல்லாமேரி", "mobile": "8344145525"}, {"uNo": "631", "udiseNo": "33230604003", "nameEn": "ST.JOSEPH MHSS,  RAMNAGAR, DEVAKOTTAI", "nameTa": "புனித ஜோசப் மெட்ரிக் மேல்நிலைப்பள்ளி தேவகோட்டை", "schoolType": "", "management": "Private", "block": "07 Devakottai", "hmName": "REV. FR. SUSAI MANICKAM", "hmTa": "அருட்தந்தை.சூசைமாணிக்கம்", "mobile": "9414006022"}, {"uNo": "633", "udiseNo": "33230601905", "nameEn": "SHREE CHINNAPPAN  VIDHYAMANDHIR MHSS,  DEVAKOTTAI", "nameTa": "ஸ்ரீ  சின்னப்பன் வித்யா மந்திர் மெட்ரிக் மேல்நிலைப்பள்ளி, தேவகோட்டை", "schoolType": "", "management": "Private", "block": "07 Devakottai", "hmName": "VEERA DEVI S", "hmTa": "திருமதி.செ.வீரதேவி", "mobile": "9597411860"}, {"uNo": "634", "udiseNo": "33230601204", "nameEn": "MOUNT SENARIO  MHSS, MUPPAIYUR", "nameTa": "மௌண்ட் செனாரியோ மெட்ரிக் மேல்நிலைப்பள்ளி முப்பையூர்", "schoolType": "", "management": "Private", "block": "07 Devakottai", "hmName": "FR. SURESH MICHEAL AROCKIARAJ", "hmTa": "அருட்தந்தை. செ. சுரேஷ் மைக்கில் ஆரோக்கியராஜ்", "mobile": "9626850801"}, {"uNo": "635", "udiseNo": "33230201309", "nameEn": "ST.MICHAEL MHSS,  KALAIYARKOIL", "nameTa": "புனித மைக்கேல் மெட்ரிக் மேல்நிலைப்பள்ளி காளையார்கோவில்", "schoolType": "", "management": "Private", "block": "08 Kalayarkoil", "hmName": "Mrs. DAISY AROCKIA SELVI", "hmTa": "திருமதி.த.டெய்சி ஆரோக்கிய செல்வி", "mobile": "9843373372"}, {"uNo": "636", "udiseNo": "33230213402", "nameEn": "SRI SARASWATHY VIKAS  VIDYALAYA MHSS,  KALAYARKOIL", "nameTa": "ஸ்ரீ  சரஸ்வதி விகாஸ் வித்யாலயா பதின்ம மேல்நிலைப்பள்ளி, காளையார்கோவில்", "schoolType": "", "management": "Private", "block": "08 Kalayarkoil", "hmName": "VEERAPANDI K", "hmTa": "திரு.க.வீரபாண்டி", "mobile": "9865006281"}, {"uNo": "637", "udiseNo": "33230213602", "nameEn": "AUXILIUM MHSS,  PULIYADITHAMMAM", "nameTa": "அக்சீலியம் பதின்ம மேல்நிலைப்பள்ளி புலியடிதம்மம்", "schoolType": "", "management": "Private", "block": "08 Kalayarkoil", "hmName": "SISTER.MARIA AUXILIA SOPHIA", "hmTa": "சகோ.அ. மரிய அக்ஸீலியா  சோபியா", "mobile": "8056645481"}, {"uNo": "638", "udiseNo": "33230202502", "nameEn": "HOLY SPIRIT MHSS,  SEEGOORANI,   KALAYAR KOVIL", "nameTa": "ஹோலி ஸ்பிரிட் மெட்ரிகுலேசன் மேல்நிலைப்பள்ளி காளையார்கோவில்", "schoolType": "", "management": "Private", "block": "08 Kalayarkoil", "hmName": "SR BIMLA JOJO", "hmTa": "அருட்சகோதரி.பிம்லா ஜோ ஜோ", "mobile": "6366155608"}, {"uNo": "639", "udiseNo": "33230202604", "nameEn": "OXFORD MHSS,  SOORAKKULAM,   SIVAGANGAI", "nameTa": "ஆக்ஸ்வர்ட் மெட்ரிக் மேல்நிலைப்பள்ளி சூரக்குளம்", "schoolType": "", "management": "Private", "block": "08 Kalayarkoil", "hmName": "R.LATHA", "hmTa": "திருமதி.இரா.லதா", "mobile": "9842442732"}, {"uNo": "640", "udiseNo": "33230505409", "nameEn": "ST.ANNES MHSS,  ILAYANGUDI", "nameTa": "புனித அன்னாள் மெட்ரிக் மேல்நிலைப்பள்ளி இளையான்குடி", "schoolType": "", "management": "Private", "block": "09 Ilayangudi", "hmName": "SR JAYASEELI", "hmTa": "சகோ. ஜெயசீலி", "mobile": "8807033868"}, {"uNo": "641", "udiseNo": "33230301003", "nameEn": "GOODWILL MHSS,  M.KARISALKULAM", "nameTa": "குட்வில் மெட்ரிக் மேல்நிலைப்பள்ளி எம்.கரிசல்குளம்", "schoolType": "", "management": "Private", "block": "10 Manamadurai", "hmName": "Mr.BOOMINATHAN S", "hmTa": "திரு.சு.பூமிநாதன்", "mobile": "9842513355"}, {"uNo": "642", "udiseNo": "33230303503", "nameEn": "SEVENTH- DAY   ADVENTIST MHSS,   SIPCOT, MANAMADURAI", "nameTa": "செவந்த் டே  அட்வெண்டிஸ்ட்  மெட்ரிக்  மேல்நிலைப்பள்ளி, சிப்காட் மானாமதுரை", "schoolType": "", "management": "Private", "block": "10 Manamadurai", "hmName": "MR.SAMUEL S", "hmTa": "திரு.செ.சாமுவேல்", "mobile": "9994399251"}, {"uNo": "643", "udiseNo": "33230303604", "nameEn": "ST.JOSEPH MHSS,  MANAMADURAI", "nameTa": "செயின்ட் ஜோசப் மெட்ரிக். மேல்நிலைப்பள்ளி,   மானாமதுரை", "schoolType": "", "management": "Private", "block": "10 Manamadurai", "hmName": "MRS.J.VALLIMAYIL", "hmTa": "திருமதி.ஜெ.வள்ளிமயில்", "mobile": "8940703988"}, {"uNo": "644", "udiseNo": "33230400304", "nameEn": "ARIYAVA MONTESSORI  MHSS, MADAPPURAM", "nameTa": "அரியவா மாண்டிசோரி மெட்ரிக் மேல்நிலைப்பள்ளி மடப்புரம்", "schoolType": "", "management": "Private", "block": "11 Thiruppuvanam", "hmName": "DHANA BALAN V", "hmTa": "திரு.வீ.தனபாலன்", "mobile": "9345897359"}, {"uNo": "645", "udiseNo": "33230401703", "nameEn": "ALAGUMALAR MHSS,  MANALUR", "nameTa": "அழகுமலர் மெட்ரிக் மேல்நிலைப்பள்ளி மணலூர்", "schoolType": "", "management": "Private", "block": "11 Thiruppuvanam", "hmName": "KRISHNAN S", "hmTa": "திரு.சு.கிருஷ்ணன்", "mobile": "9843150463"}, {"uNo": "646", "udiseNo": "33230400202", "nameEn": "KAMARAJAR MHSS,  THIRUPPUVANAM", "nameTa": "காமராசர் மெட்ரிக் மேல்நிலைப்பள்ளி திருப்புவனம்", "schoolType": "", "management": "Private", "block": "11 Thiruppuvanam", "hmName": "J.PRAMILA", "hmTa": "திருமதி.பிரமிளா", "mobile": "9442206505"}, {"uNo": "647", "udiseNo": "33230400203", "nameEn": "ST.MARY'S MHSS,  THIRUPPUVANAM", "nameTa": "புனித மரியன்னை மெட்ரிக் மேல்நிலைப்பள்ளி திருப்புவனம்", "schoolType": "", "management": "Private", "block": "11 Thiruppuvanam", "hmName": "MANOJ KUMAR A", "hmTa": "திரு.அ.மனோஜ் குமார்", "mobile": "9791529042"}, {"uNo": "648", "udiseNo": "33230400204", "nameEn": "VELAMMAL MHSS,  THIRUPPUVANAM", "nameTa": "வேலம்மாள் மெட்ரிக் மேல்நிலைப்பள்ளி திருப்புவனம்", "schoolType": "", "management": "Private", "block": "11 Thiruppuvanam", "hmName": "JASMINE SHANTHI V", "hmTa": "திருமதி.வே.ஜாஸ்மின் சாந்தி", "mobile": "9047265301"}, {"uNo": "649", "udiseNo": "33230104310", "nameEn": "ASVA MHSS,  MELAVANIYANGUDI,  SIVAGANGAI", "nameTa": "அன்னை ஸ்ரீ வீரமாகாளி அம்மன் பதின்ம மேல்நிலைப்பள்ளி மேலவாணியங்குடி, சிவகங்கை", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "L. CHELLAMANI", "hmTa": "திரு.லெ.செல்லமணி", "mobile": "9943555586"}, {"uNo": "650", "udiseNo": "33230102405", "nameEn": "SWAMY VIVEKANANDHA  MHSS, METTUPATTI", "nameTa": "சுவாமி விவேகானந்தா மெட்ரிக் மேல்நிலைப்பள்ளி மேட்டுப்பட்டி", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "C.THILAGAVATHI", "hmTa": "திருமதி.ச.திலகவதி", "mobile": "9585766658"}, {"uNo": "651", "udiseNo": "33230101305", "nameEn": "21ST CENTURY MHSS,  SIVAGANGAI", "nameTa": "21ம் நூற்றாண்டு மெட்ரிக் மேல்நிலைப்பள்ளி சிவகங்கை", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "SANGEETHA P", "hmTa": "திருமதி.பா.சங்கீதா", "mobile": "9787388128"}, {"uNo": "652", "udiseNo": "33230104443", "nameEn": "AL-HUDHA ISLAMIC INT.  MHSS, SIVAGANGAI", "nameTa": "அல் ஹுதா இஸ்லாமிக் சர்வதேச பதின்ம மேல்நிலைப்பள்ளி  சிவகங்கை", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "PAINTHAMIL SELVI S", "hmTa": "செல்வி.ச.பைந்தமிழ்ச் செல்வி", "mobile": "9788313385"}, {"uNo": "653", "udiseNo": "33230104430", "nameEn": "ST JUSTIN'S MHSS,  SIVAGANGAI", "nameTa": "புனித ஜஸ்டின் மெட்ரிக் மேல்நிலைப்பள்ளி சிவகங்கை", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "Sr.Camillo", "hmTa": "அருட்சகோதரி.கமிலோ", "mobile": "7010593347"}, {"uNo": "654", "udiseNo": "33230104442", "nameEn": "ST.MICHAEL MHSS,  SIVAGANGAI", "nameTa": "புனித மைக்கேல் மெட்ரிக் மேல்நிலைப்பள்ளி சிவகங்கை", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "J.JEYANTHI", "hmTa": "திருமதி.ஜெ.ஜெயந்தி", "mobile": "9942796761"}, {"uNo": "655", "udiseNo": "33230101304", "nameEn": "OXFORD MHSS,  T.PUDUR, SIVAGANGAI", "nameTa": "ஆக்ஸ்வர்ட் மெட்ரிக் மேல்நிலைப்பள்ளி டி.புதூர், சிவகங்கை.", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "GEETHA D", "hmTa": "திருமதி.து.கீதா", "mobile": "9942905294"}, {"uNo": "701", "udiseNo": "33230211802", "nameEn": "ST.TERESAS CARMAL  HS, PAGAIYANJAN", "nameTa": "புனித தெரசாள் கார்மல் உயர்நிலைப்பள்ளி பகையஞ்சான்", "schoolType": "", "management": "Private", "block": "08 Kalayarkoil", "hmName": "SR.ANANTHA MARY", "hmTa": "சகோ.ஆனந்தி", "mobile": "6382549147"}, {"uNo": "702", "udiseNo": "33230500505", "nameEn": "ST.EUGENE HS,  KOMBADIMADURAI.", "nameTa": "புனித யூஜின் உயர்நிலைப்பள்ளி கொம்படிமதுரை", "schoolType": "", "management": "Private", "block": "09 Ilayangudi", "hmName": "S.JOSEPHINE JENOFA MARY", "hmTa": "திருமதி.ச.ஜோஸ்பின் ஜெனோபா மேரி", "mobile": "9786628159"}, {"uNo": "703", "udiseNo": "33230504703", "nameEn": "RC HS,  KUNDUKULAM", "nameTa": "ஆர்.சி.உயர்நிலைப்பள்ளி குண்டுகுளம்", "schoolType": "", "management": "Private", "block": "09 Ilayangudi", "hmName": "B.ARUL DANIEL KUMAR", "hmTa": "திரு.பி.அருள் டேனியல் குமார்", "mobile": "9842294694"}, {"uNo": "704", "udiseNo": "33230101103", "nameEn": "SAKTHI  HS,  PADAMATHUR", "nameTa": "சக்தி உயர்நிலைப்பள்ளி ஜோதிநகர், படமாத்தூர்", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "M. SENTHAMIL", "hmTa": "திருமதி.மு.செந்தமிழ்", "mobile": "9626733300"}, {"uNo": "801", "udiseNo": "33230213802", "nameEn": "DON BOSCO HSS,  PALLITHAMMAM", "nameTa": "தொன் போஸ்கோ  மேல்நிலைப் பள்ளி சகாய  நகர். பள்ளித்தம்மம்", "schoolType": "", "management": "Private", "block": "08 Kalayarkoil", "hmName": "FR. ANTONY JOSEPH R", "hmTa": "அருட்பணி.அந்தோணி  ஜோசப்", "mobile": "8778327147"}, {"uNo": "802", "udiseNo": "33230202602", "nameEn": "SAMBAVIGA HSS,  RAHINIPATTI", "nameTa": "சாம்பவிகா மேல்நிலைப்பள்ளி இராகினிப்பட்டி", "schoolType": "", "management": "Private", "block": "08 Kalayarkoil", "hmName": "THIAGARAJAN J U", "hmTa": "திரு.ஜூ.உ.தியாகராஜன்", "mobile": "8098552555"}, {"uNo": "804", "udiseNo": "33230103706", "nameEn": "SRI RAMANA VIKASS HSS,  CHOLAPURAM", "nameTa": "ஸ்ரீ  ரமண விகாஸ் மேல்நிலைப்பள்ளி சோழபுரம்", "schoolType": "", "management": "Private", "block": "12 Sivagangai", "hmName": "GANESH J", "hmTa": "திரு.ஜெ.கணேஷ்", "mobile": "8903997092"}];
-
+  // ============================================================================
+  // LIVE GOOGLE SHEET MASTER SCHOOLS CONNECTOR (School-Master-SISF)
+  // Spreadsheet URL: https://docs.google.com/spreadsheets/d/1Z3a6HTgNgMwSvse_fIswOlveUZdIi20YY00v2_8tiKc/edit?usp=drive_link
+  // Sheet Name: SCHOOL
+  // ============================================================================
+  const SCHOOL_MASTER_SHEET_ID = "1Z3a6HTgNgMwSvse_fIswOlveUZdIi20YY00v2_8tiKc";
+  const SCHOOL_MASTER_SHEET_NAME = "SCHOOL";
+  const SCHOOL_MASTER_SHEET_URL = "https://docs.google.com/spreadsheets/d/1Z3a6HTgNgMwSvse_fIswOlveUZdIi20YY00v2_8tiKc/edit?usp=drive_link";
+  const LOCAL_MASTER_SCHOOLS = [];
   const MASTER_SCHOOLS = LOCAL_MASTER_SCHOOLS;
+  let isMasterSchoolsLoaded = false;
+  let masterSchoolsSyncInFlight = null;
+
+  // In-page non-blocking toast replacement for alert() in sandboxed environments
+  function showSisfToast(message) {
+    try {
+      const box = document.getElementById("sisfToastContainer");
+      if (box) {
+        box.innerText = String(message || "");
+        box.style.display = "block";
+        if (window.__sisfToastTimer) clearTimeout(window.__sisfToastTimer);
+        window.__sisfToastTimer = setTimeout(() => {
+          box.style.display = "none";
+        }, 5500);
+      }
+    } catch (e) {}
+  }
+  function alert(msg) {
+    showSisfToast(msg);
+  }
+
+  // Tamil name fallbacks if Column H (பள்ளியின் பெயர்) is left blank in the Google Sheet for specific U.NOs
+  const SCHOOL_TA_FALLBACK_MAP = {
+    "912": "ஸ்ரீ கலைவாணி இன்டர்நேஷனல் (ஐசிஎஸ்இ) பள்ளி, கண்ணங்குடி",
+    "951": "அழகப்பா அகாடமி, காரைக்குடி",
+    "952": "அருள்சந்துரு அகாடமி, இளையான்குடி",
+    "953": "பாரத் பப்ளிக் சிபிஎஸ்இ பள்ளி, ஆரவயல்",
+    "954": "போதி இன்டர்நேஷனல் பள்ளி, காளையார்கோவில்",
+    "955": "செல்லப்பன் வித்யா மந்திர், காரைக்குடி",
+    "956": "செட்டிநாடு பப்ளிக் சிபிஎஸ்இ பள்ளி, மானகிரி, காரைக்குடி",
+    "957": "குளோபல் இன்டர்நேஷனல் பள்ளி, மு.கோவில்பட்டி, சிங்கம்புணரி",
+    "958": "ஐ.எல்.எம் பப்ளிக் பள்ளி, இளையான்குடி",
+    "959": "மாண்ட்ஃபோர்ட் சிபிஎஸ்இ பள்ளி, சுந்தரநடப்பு",
+    "960": "மவுண்ட் லிட்டரா ஜீ பள்ளி, சிவகங்கை",
+    "961": "மவுண்ட் சீயோன் சில்வர் ஜூபிலி பள்ளி, திருப்பத்தூர்",
+    "962": "நேருஜி சென்ட்ரல் மேல்நிலைப்பள்ளி (சிபிஎஸ்இ), இடையமேலூர்",
+    "963": "ஓ.எம்.ஜி.எஸ் பள்ளி, காளையார்கோவில்",
+    "964": "பண்ணை மாரிவேணி குளோபல் பள்ளி, கீழக்கண்டனி"
+  };
+
+  function mapSchoolManagementCode(m1Raw, uNoRaw, nameEnRaw) {
+    const m1 = String(m1Raw || "").trim().toUpperCase();
+    const uNum = parseInt(String(uNoRaw || "").trim(), 10);
+    if (m1 === "1G" || m1 === "GOVERNMENT" || m1 === "GOVT") return "Government";
+    if (m1 === "2A" || m1.includes("AID")) return "Govt. Aided";
+    if (m1 === "3P" || m1.includes("PRIV") || m1.includes("MATRIC")) return "Private";
+    if (m1 === "4CG" || m1.includes("CENTRAL") || m1.includes("KV")) return "Central Govt";
+    if (m1 === "5IC" || m1.includes("ICSE")) return "ICSE";
+    if (m1 === "6CB" || m1.includes("CBSE")) return "CBSE";
+    if (!isNaN(uNum)) {
+      if (uNum >= 950) return "CBSE";
+      if (uNum >= 910) return "ICSE";
+      if (uNum >= 900) return "Central Govt";
+      if (uNum >= 500 && uNum < 900) return "Private";
+      if (uNum >= 300 && uNum < 500) return "Govt. Aided";
+    }
+    const en = String(nameEnRaw || "").toUpperCase();
+    if (en.includes("CBSE")) return "CBSE";
+    if (en.includes("ICSE")) return "ICSE";
+    if (en.includes("KENDRIYA") || en.includes("KEMDRIYA")) return "Central Govt";
+    if (en.includes("GOVT")) return "Government";
+    return "Private";
+  }
+
+  function buildMasterSchoolObject(cols) {
+    const cleanCell = (v) => {
+      if (v === undefined || v === null) return "";
+      let s = String(v).replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
+      if (/^\d+\.0+$/.test(s)) s = s.replace(/\.0+$/, "");
+      return s;
+    };
+    const uNo = cleanCell(cols[1]);
+    const udiseNo = cleanCell(cols[2]);
+    if (!uNo && !udiseNo) return null;
+    if (uNo.toLowerCase().includes("un") || udiseNo.toLowerCase().includes("udise")) return null;
+
+    const dgeNo = cleanCell(cols[3]);
+    const block = cleanCell(cols[4]);
+    const assembly = cleanCell(cols[5]);
+    const nameEn = cleanCell(cols[6]);
+    const rawNameTa = cleanCell(cols[7]);
+    const m1 = cleanCell(cols[8]);
+    const m2 = cleanCell(cols[9]);
+    const m3 = cleanCell(cols[10]);
+    const hmName = cleanCell(cols[11]);
+    const hmTa = cleanCell(cols[12]);
+    const mobile = cleanCell(cols[13]);
+
+    const cleanUno = uNo.replace(/^0+/, "");
+    const nameTa = rawNameTa || SCHOOL_TA_FALLBACK_MAP[cleanUno] || SCHOOL_TA_FALLBACK_MAP[uNo] || nameEn;
+    const management = mapSchoolManagementCode(m1, cleanUno, nameEn);
+    let schoolType = "HS";
+    if (nameEn.toUpperCase().includes("HSS") || nameEn.toUpperCase().includes("HIGHER SECONDARY")) {
+      schoolType = "HSS";
+    } else if (m3) {
+      schoolType = m3;
+    }
+
+    return {
+      uNo: uNo,
+      udiseNo: udiseNo,
+      dgeNo: dgeNo,
+      block: block || "Sivagangai",
+      assembly: assembly,
+      nameEn: nameEn,
+      nameTa: nameTa,
+      schoolType: schoolType,
+      management: management,
+      managementCode: m1,
+      management2: m2,
+      management3: m3,
+      hmName: hmName || "",
+      hmTa: hmTa || "",
+      mobile: mobile || ""
+    };
+  }
+
+  function applyLoadedMasterSchools(schoolList, sourceLabel) {
+    if (!Array.isArray(schoolList) || schoolList.length === 0) return false;
+    LOCAL_MASTER_SCHOOLS.length = 0;
+    schoolList.forEach(s => {
+      if (s && (s.uNo || s.udiseNo)) LOCAL_MASTER_SCHOOLS.push(s);
+    });
+    isMasterSchoolsLoaded = true;
+    try {
+      localStorage.setItem("SISF_LIVE_MASTER_SCHOOLS_CACHE_V2", JSON.stringify(LOCAL_MASTER_SCHOOLS));
+    } catch (e) {}
+
+    const syncTxt = document.getElementById("liveSheetSyncText");
+    if (syncTxt) {
+      syncTxt.innerHTML = `✅ <strong>Google Sheet (School-Master-SISF):</strong> மொத்தம் <strong>${LOCAL_MASTER_SCHOOLS.length}</strong> பள்ளிகள் நேரடியாக இணைக்கப்பட்டுள்ளன`;
+    }
+    const admSyncBadge = document.getElementById("admMasterSheetCountBadge");
+    if (admSyncBadge) {
+      admSyncBadge.innerText = `Google Sheet: ${LOCAL_MASTER_SCHOOLS.length} பள்ளிகள்`;
+    }
+    try {
+      if (typeof renderAdminSchoolsTable === "function") renderAdminSchoolsTable();
+      if (typeof renderAdminStatsAndTables === "function") renderAdminStatsAndTables();
+    } catch (e) {}
+    return true;
+  }
+
+  // Restore any previously synced Google Sheet school list from localStorage immediately while live sync runs
+  try {
+    const cachedRaw = localStorage.getItem("SISF_LIVE_MASTER_SCHOOLS_CACHE_V2");
+    if (cachedRaw) {
+      const parsedCache = JSON.parse(cachedRaw);
+      if (Array.isArray(parsedCache) && parsedCache.length > 0) {
+        applyLoadedMasterSchools(parsedCache, "cache");
+      }
+    }
+  } catch (e) {}
+
+  function parseCsvTextToRows(csvText) {
+    const rows = [];
+    let row = [];
+    let cur = "";
+    let inQuotes = false;
+    for (let i = 0; i < csvText.length; i++) {
+      const ch = csvText[i];
+      const next = csvText[i + 1];
+      if (inQuotes) {
+        if (ch === '"' && next === '"') {
+          cur += '"';
+          i++;
+        } else if (ch === '"') {
+          inQuotes = false;
+        } else {
+          cur += ch;
+        }
+      } else {
+        if (ch === '"') {
+          inQuotes = true;
+        } else if (ch === ',') {
+          row.push(cur);
+          cur = "";
+        } else if (ch === '\n') {
+          row.push(cur);
+          rows.push(row);
+          row = [];
+          cur = "";
+        } else if (ch === '\r') {
+          // ignore CR
+        } else {
+          cur += ch;
+        }
+      }
+    }
+    if (cur.length > 0 || row.length > 0) {
+      row.push(cur);
+      rows.push(row);
+    }
+    return rows;
+  }
+
+  function loadMasterSchoolsFromGoogleSheet(forceRefresh) {
+    if (!forceRefresh && isMasterSchoolsLoaded && LOCAL_MASTER_SCHOOLS.length > 0 && !masterSchoolsSyncInFlight) {
+      return Promise.resolve(LOCAL_MASTER_SCHOOLS);
+    }
+    if (masterSchoolsSyncInFlight && !forceRefresh) {
+      return masterSchoolsSyncInFlight;
+    }
+
+    const syncTxt = document.getElementById("liveSheetSyncText");
+    if (syncTxt && forceRefresh) {
+      syncTxt.innerHTML = "🔄 <strong>Google Sheet (School-Master-SISF):</strong> பள்ளிப் பட்டியல் புதுப்பிக்கப்படுகிறது...";
+    }
+
+    masterSchoolsSyncInFlight = new Promise((resolve) => {
+      let settled = false;
+      const cbName = "__sisfMasterSheetCb_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
+
+      const finish = (list) => {
+        if (settled) return;
+        settled = true;
+        masterSchoolsSyncInFlight = null;
+        delete window[cbName];
+        resolve(list || LOCAL_MASTER_SCHOOLS);
+      };
+
+      const tryCsvAndScriptFallback = async () => {
+        // Fallback 1: Direct CSV export from Google Sheet
+        try {
+          const csvUrl = `https://docs.google.com/spreadsheets/d/${SCHOOL_MASTER_SHEET_ID}/export?format=csv&sheet=${encodeURIComponent(SCHOOL_MASTER_SHEET_NAME)}`;
+          const res = await fetch(csvUrl);
+          if (res.ok) {
+            const csvText = await res.text();
+            const rawRows = parseCsvTextToRows(csvText);
+            const list = [];
+            for (let i = 0; i < rawRows.length; i++) {
+              const sObj = buildMasterSchoolObject(rawRows[i]);
+              if (sObj) list.push(sObj);
+            }
+            if (list.length > 0) {
+              applyLoadedMasterSchools(list, "csv");
+              finish(LOCAL_MASTER_SCHOOLS);
+              return;
+            }
+          }
+        } catch (e) {}
+
+        // Fallback 2: Google Apps Script Backend get_master_schools action
+        if (typeof scriptUrl === "string" && scriptUrl.startsWith("http")) {
+          try {
+            const gsMasterUrl = scriptUrl + "?action=get_master_schools&masterSheetId=" + encodeURIComponent(SCHOOL_MASTER_SHEET_ID);
+            const res = await fetch(gsMasterUrl);
+            const data = await res.json();
+            if (data && data.status === "success" && Array.isArray(data.schools) && data.schools.length > 0) {
+              applyLoadedMasterSchools(data.schools, "apps_script");
+              finish(LOCAL_MASTER_SCHOOLS);
+              return;
+            }
+          } catch (e) {}
+        }
+
+        if (syncTxt && LOCAL_MASTER_SCHOOLS.length === 0) {
+          syncTxt.innerHTML = "⚠️ <strong>Google Sheet இணைப்பு:</strong> இணைய இணைப்பைச் சரிபார்த்து '🔄 பட்டியலைப் புதுப்பி' என்பதை அழுத்தவும்.";
+        }
+        finish(LOCAL_MASTER_SCHOOLS);
+      };
+
+      const timer = setTimeout(() => {
+        if (!settled) {
+          tryCsvAndScriptFallback();
+        }
+      }, 4500);
+
+      window[cbName] = function(resp) {
+        clearTimeout(timer);
+        try {
+          if (resp && resp.table && Array.isArray(resp.table.rows)) {
+            const list = [];
+            const rows = resp.table.rows;
+            for (let i = 0; i < rows.length; i++) {
+              const c = rows[i].c || [];
+              const cols = [];
+              for (let k = 0; k < 14; k++) {
+                const cell = c[k];
+                if (!cell) {
+                  cols.push("");
+                } else if (cell.f !== undefined && cell.f !== null && String(cell.f).trim() !== "") {
+                  cols.push(String(cell.f));
+                } else if (cell.v !== undefined && cell.v !== null) {
+                  cols.push(String(cell.v));
+                } else {
+                  cols.push("");
+                }
+              }
+              const sObj = buildMasterSchoolObject(cols);
+              if (sObj) list.push(sObj);
+            }
+            if (list.length > 0) {
+              applyLoadedMasterSchools(list, "gviz");
+              finish(LOCAL_MASTER_SCHOOLS);
+              return;
+            }
+          }
+        } catch (err) {}
+        tryCsvAndScriptFallback();
+      };
+
+      try {
+        const sc = document.createElement("script");
+        sc.src = `https://docs.google.com/spreadsheets/d/${SCHOOL_MASTER_SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(SCHOOL_MASTER_SHEET_NAME)}&tqx=responseHandler:${cbName}&_ts=${Date.now()}`;
+        sc.onerror = () => {
+          clearTimeout(timer);
+          tryCsvAndScriptFallback();
+        };
+        document.head.appendChild(sc);
+        setTimeout(() => {
+          if (sc.parentNode) sc.parentNode.removeChild(sc);
+        }, 6000);
+      } catch (e) {
+        clearTimeout(timer);
+        tryCsvAndScriptFallback();
+      }
+    });
+
+    return masterSchoolsSyncInFlight;
+  }
   const DEFAULT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzDu0rRh1KcdmkkqOFJzbx80J7VtBYFzjowRzu1IeAdPU7iZgP5Q6J6cdKT4VkopxAI/exec";
   let storedUrl = null;
   try { storedUrl = localStorage.getItem("SISF_GOOGLE_SCRIPT_URL"); } catch (e) {}
@@ -2854,7 +3605,7 @@
     }
   }
 
-  // SEARCH MASTER SCHOOL BY U.NO OR UDISE
+  // SEARCH MASTER SCHOOL BY U.NO OR UDISE DIRECTLY FROM GOOGLE SHEET (1Z3a6HTgNgMwSvse_fIswOlveUZdIi20YY00v2_8tiKc)
   async function searchMasterSchool() {
     const query = document.getElementById("searchSchoolQuery").value.trim();
     const msg = document.getElementById("searchMasterMsg");
@@ -2866,43 +3617,79 @@
       return;
     }
 
-    // User request: Show ONLY loading animation symbol, NO text like "மாஸ்டர் விரிதாளில் தேடுகிறது..."
+    // Show loading spinner while fetching from Google Sheet
     msg.innerHTML = '<div class="loader-spinner"></div>';
     btn.disabled = true;
 
+    const cleanQ = query.replace(/^0+/, "");
+    const findInLoadedSheet = () => LOCAL_MASTER_SCHOOLS.find(s =>
+      s.udiseNo === query ||
+      s.uNo === query ||
+      String(s.uNo || "").replace(/^0+/, "") === cleanQ
+    );
+
+    // 1. Ensure Master Schools are loaded from Google Sheet (1Z3a6HTgNgMwSvse_fIswOlveUZdIi20YY00v2_8tiKc)
+    await loadMasterSchoolsFromGoogleSheet(false);
+    let found = findInLoadedSheet();
+
+    // 2. If not found in initial cache, force a fresh live reload from Google Sheet in case a new row was just added
+    if (!found) {
+      await loadMasterSchoolsFromGoogleSheet(true);
+      found = findInLoadedSheet();
+    }
+
+    // 3. Check if already registered in local cache or cloud Schools_Auth sheet
+    const checkIsAlreadyRegistered = async (schoolObj) => {
+      if (!schoolObj) return false;
+      const sUno = String(schoolObj.uNo || "").replace(/^0+/, "");
+      const sUdise = String(schoolObj.udiseNo || "").trim();
+      if (typeof isSchoolMarkedDeleted === "function" && isSchoolMarkedDeleted(sUno, sUdise)) {
+        return false;
+      }
+      try {
+        const regCache = JSON.parse(localStorage.getItem("SISF_REGISTERED_SCHOOLS") || "{}");
+        const localHit = regCache[sUdise] || regCache[sUno] || regCache[schoolObj.uNo];
+        if (localHit && localHit.password) return true;
+      } catch (e) {}
+      if (typeof adminAllSchoolsAuth === "object" && adminAllSchoolsAuth) {
+        const admHit = adminAllSchoolsAuth[sUno] || adminAllSchoolsAuth[sUdise];
+        if (admHit && admHit.password) return true;
+      }
+      try {
+        if (typeof lookupSchoolInCloud === "function") {
+          const cloudRec = await lookupSchoolInCloud(sUdise || sUno);
+          if (cloudRec && cloudRec.password) return true;
+        }
+      } catch (e) {}
+      return false;
+    };
+
+    if (found) {
+      const alreadyReg = await checkIsAlreadyRegistered(found);
+      btn.disabled = false;
+      handleSchoolFound(found, alreadyReg);
+      return;
+    }
+
+    // 4. Fallback to Google Apps Script lookup_school endpoint (passing masterSheetId)
     if (scriptUrl && scriptUrl.startsWith("http")) {
       try {
-        const res = await fetch(`${scriptUrl}?action=lookup_school&query=${encodeURIComponent(query)}`);
+        const gsLookupUrl = scriptUrl + "?action=lookup_school&query=" + encodeURIComponent(query) + "&masterSheetId=" + encodeURIComponent(SCHOOL_MASTER_SHEET_ID);
+        const res = await fetch(gsLookupUrl);
         const result = await res.json();
         if (result.status === "success" && result.found && result.school) {
+          btn.disabled = false;
           handleSchoolFound(result.school, result.alreadyRegistered);
-          btn.disabled = false;
-          return;
-        } else if (result.status === "error" && result.message) {
-          msg.style.color = "var(--accent)";
-          msg.innerText = result.message;
-          btn.disabled = false;
           return;
         }
       } catch (err) {
-        console.warn("Live lookup error, checking local master list...", err);
+        console.warn("Apps Script fallback lookup error:", err);
       }
     }
 
-    const cleanQ = query.replace(/^0+/, "");
-    const found = LOCAL_MASTER_SCHOOLS.find(s => 
-      s.udiseNo === query || 
-      s.uNo === query || 
-      s.uNo.replace(/^0+/, "") === cleanQ
-    );
-
     btn.disabled = false;
-    if (found) {
-      handleSchoolFound(found, false);
-    } else {
-      msg.style.color = "var(--accent)";
-      msg.innerText = `குறிப்பிட்ட U.NO அல்லது UDISE எண்ணில் (${query}) பள்ளி விவரங்கள் காணப்படவில்லை. தயவுசெய்து எண்களைச் சரிபார்க்கவும்.`;
-    }
+    msg.style.color = "var(--accent)";
+    msg.innerText = `குறிப்பிட்ட U.NO அல்லது UDISE எண்ணில் (${query}) பள்ளி விவரங்கள் Google Sheet-இல் காணப்படவில்லை. தயவுசெய்து எண்களைச் சரிபார்க்கவும்.`;
   }
 
   function handleSchoolFound(school, alreadyRegistered) {
@@ -3497,6 +4284,7 @@ document.getElementById("regStep1").style.display = "none";
     renderCategoryCard("Individual", schoolApplications.Individual);
     renderCategoryCard("Group", schoolApplications.Group);
     renderCategoryCard("Teacher", schoolApplications.Teacher);
+    try { renderSchoolNotificationsUI(); } catch (nErr) { console.warn("Notification render notice:", nErr); }
   }
 
   function renderCategoryCard(catKey, appData) {
@@ -5068,7 +5856,10 @@ document.getElementById("regStep1").style.display = "none";
     const mgmtMap = {
       "Government": "அரசு (Government)",
       "Govt. Aided": "அரசு உதவிபெறும் (Govt. Aided)",
-      "Private": "தனியார் (Private)"
+      "Private": "தனியார் (Private)",
+      "Central Govt": "மத்திய அரசு (Central Govt / KV)",
+      "ICSE": "ஐ.சி.எஸ்.இ (ICSE)",
+      "CBSE": "சி.பி.எஸ்.இ (CBSE)"
     };
     const pSelMgmt = document.getElementById("pSelectedMgmt");
     if (pSelMgmt) pSelMgmt.innerText = mgmtMap[mgmt] || (mgmt || "அரசு (Government)");
@@ -5388,7 +6179,7 @@ document.getElementById("regStep1").style.display = "none";
       ? rawPin 
       : ((loggedInSchool && loggedInSchool.pinCode && !loggedInSchool.pinCode.includes("x")) ? loggedInSchool.pinCode : "630302");
 
-    const mgmtMap = { "Government": "அரசு (Government)", "Govt. Aided": "அரசு உதவிபெறும் (Govt. Aided)", "Private": "தனியார் (Private)" };
+    const mgmtMap = { "Government": "அரசு (Government)", "Govt. Aided": "அரசு உதவிபெறும் (Govt. Aided)", "Private": "தனியார் (Private)", "Central Govt": "மத்திய அரசு (Central Govt / KV)", "ICSE": "ஐ.சி.எஸ்.இ (ICSE)", "CBSE": "சி.பி.எஸ்.இ (CBSE)" };
     const mgmtDisplay = mgmtMap[mgmt] || (mgmt || "அரசு (Government)");
 
     const catMap = {
@@ -6232,6 +7023,8 @@ document.getElementById("regStep1").style.display = "none";
   }
 
   function restoreSchoolSession() {
+    // Immediately connect to and load schools from Google Sheet (1Z3a6HTgNgMwSvse_fIswOlveUZdIi20YY00v2_8tiKc)
+    loadMasterSchoolsFromGoogleSheet(false);
     try {
       if (isAdminSessionActive()) {
         switchView("admin");
@@ -6455,25 +7248,650 @@ document.getElementById("regStep1").style.display = "none";
     const tApps = document.getElementById("admSubTabApps");
     const tWin = document.getElementById("admSubTabWinners");
     const tPass = document.getElementById("admSubTabPasswords");
+    const tNotif = document.getElementById("admSubTabNotifications");
     const bApps = document.getElementById("admTabBtnApps");
     const bWin = document.getElementById("admTabBtnWinners");
     const bPass = document.getElementById("admTabBtnPasswords");
+    const bNotif = document.getElementById("admTabBtnNotifications");
 
     if (tApps) tApps.style.display = (tabName === "apps") ? "block" : "none";
     if (tWin) tWin.style.display = (tabName === "winners") ? "block" : "none";
     if (tPass) tPass.style.display = (tabName === "passwords") ? "block" : "none";
+    if (tNotif) tNotif.style.display = (tabName === "notifications") ? "block" : "none";
 
     if (bApps) bApps.classList.toggle("active", tabName === "apps");
     if (bWin) bWin.classList.toggle("active", tabName === "winners");
     if (bPass) bPass.classList.toggle("active", tabName === "passwords");
+    if (bNotif) bNotif.classList.toggle("active", tabName === "notifications");
 
     if (tabName === "winners") {
       populateSubmittedAppsDropdownForWinner();
       renderAdminWinnersTable();
     } else if (tabName === "passwords") {
       renderAdminSchoolsTable();
+    } else if (tabName === "notifications") {
+      populateNotifSchoolsDropdown();
+      renderAdminNotificationsTable();
     }
   }
+
+  // =========================================================================
+  // ADMIN-TO-SCHOOLS NOTIFICATION ENGINE (Broadcast, Targeted, Cloud Sync)
+  // =========================================================================
+  const DEFAULT_EXHIBITION_NOTIFICATION = {
+    id: "NOTIF_DEFAULT_VENUE_2026",
+    timestamp: "01.11.2026, 10:00 AM",
+    targetType: "ALL",
+    targetValue: "ALL",
+    targetLabel: "🌐 அனைத்துப் பள்ளிகளுக்கும் (All Schools)",
+    priority: "VENUE_TIME",
+    title: "மாவட்ட அளவிலான அறிவியல் கண்காட்சி நடைபெறும் இடம் மற்றும் நேரம்",
+    message: "மாவட்ட அளவிலான கண்காட்சி சிவகங்கை மன்னர் மேல்நிலைப்பள்ளியில் 03.11.2026 முற்பகல் 10.00 மணிக்கு நடைபெறும். கண்காட்சியில் கலந்து கொள்ள வரும்போது பதிவிறக்கம் செய்யப்பட்ட படிவத்தினை இரண்டு பிரதிகளில் தலைமையாசிரியரின் ஒப்பத்துடன் பெற்று சமர்ப்பிக்க வேண்டும்.",
+    sender: "மாவட்ட அறிவியல் கண்காட்சி நிர்வாகி, சிவகங்கை"
+  };
+
+  let adminNotificationsList = [DEFAULT_EXHIBITION_NOTIFICATION];
+
+  function getDeletedNotificationsStore() {
+    let del = Object.assign({}, window.__sisfMemDelNotifs || {});
+    try {
+      const s1 = JSON.parse(localStorage.getItem("SISF_DELETED_NOTIFS") || "{}");
+      Object.assign(del, s1);
+    } catch (e) {}
+    try {
+      const s2 = JSON.parse(sessionStorage.getItem("SISF_DELETED_NOTIFS") || "{}");
+      Object.assign(del, s2);
+    } catch (e) {}
+    window.__sisfMemDelNotifs = del;
+    return del;
+  }
+
+  function markNotificationDeleted(id) {
+    if (!id) return;
+    const del = getDeletedNotificationsStore();
+    del[id] = true;
+    window.__sisfMemDelNotifs = del;
+    try { localStorage.setItem("SISF_DELETED_NOTIFS", JSON.stringify(del)); } catch (e) {}
+    try { sessionStorage.setItem("SISF_DELETED_NOTIFS", JSON.stringify(del)); } catch (e) {}
+  }
+
+  function saveNotificationsToAllStores(list) {
+    const del = getDeletedNotificationsStore();
+    const cleanList = (Array.isArray(list) ? list : []).filter(n => n && n.id && !del[n.id]);
+    adminNotificationsList = cleanList;
+    try { localStorage.setItem("SISF_NOTIFICATIONS_LIST", JSON.stringify(cleanList)); } catch (e) {}
+    try { sessionStorage.setItem("SISF_NOTIFICATIONS_LIST", JSON.stringify(cleanList)); } catch (e) {}
+    try {
+      let wn = {};
+      if (window.name && window.name.startsWith("{")) wn = JSON.parse(window.name);
+      wn.notificationsList = cleanList;
+      window.name = JSON.stringify(wn);
+    } catch (e) {}
+  }
+
+  function loadNotificationsIntoMemory() {
+    const del = getDeletedNotificationsStore();
+    let loaded = [];
+    try {
+      const raw = localStorage.getItem("SISF_NOTIFICATIONS_LIST") || sessionStorage.getItem("SISF_NOTIFICATIONS_LIST");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) loaded = parsed;
+      } else if (window.name && window.name.startsWith("{")) {
+        const wn = JSON.parse(window.name);
+        if (wn && Array.isArray(wn.notificationsList)) loaded = wn.notificationsList;
+      }
+    } catch (e) {}
+
+    const map = {};
+    if (!del[DEFAULT_EXHIBITION_NOTIFICATION.id]) {
+      map[DEFAULT_EXHIBITION_NOTIFICATION.id] = DEFAULT_EXHIBITION_NOTIFICATION;
+    }
+    loaded.forEach(n => {
+      if (n && n.id && !del[n.id]) {
+        map[n.id] = n;
+      }
+    });
+    adminNotificationsList = Object.values(map);
+    return adminNotificationsList;
+  }
+
+  function syncNotificationsFromCloud(showToastOnComplete) {
+    loadNotificationsIntoMemory();
+    const del = getDeletedNotificationsStore();
+    try {
+      const cbNotif = "__sisfNotifGvizCb_" + Date.now();
+      window[cbNotif] = function(resp) {
+        try {
+          if (resp && resp.table && resp.table.rows) {
+            const rows = resp.table.rows;
+            const notifMap = {};
+            adminNotificationsList.forEach(n => {
+              if (n && n.id && !del[n.id]) notifMap[n.id] = n;
+            });
+            for (let i = 0; i < rows.length; i++) {
+              const c = rows[i].c || [];
+              const val = (idx) => (c[idx] && c[idx].v !== null && c[idx].v !== undefined) ? String(c[idx].f || c[idx].v).trim() : "";
+              const rId = val(0);
+              if (!rId || rId === "ID" || del[rId]) continue;
+              const nObj = {
+                id: rId,
+                timestamp: val(1) || "-",
+                targetType: val(2) || "ALL",
+                targetValue: val(3) || "ALL",
+                targetLabel: val(4) || "🌐 அனைத்துப் பள்ளிகளுக்கும்",
+                priority: val(5) || "INFO",
+                title: val(6) || "அறிவிப்பு",
+                message: val(7) || "",
+                sender: val(9) || "மாவட்ட அறிவியல் கண்காட்சி நிர்வாகி"
+              };
+              notifMap[rId] = nObj;
+            }
+            saveNotificationsToAllStores(Object.values(notifMap));
+            renderSchoolNotificationsUI();
+            renderAdminNotificationsTable();
+            const stEl = document.getElementById("admStatNotifications");
+            if (stEl) stEl.innerText = adminNotificationsList.length;
+            if (showToastOnComplete) {
+              showSisfToast("🔔 அறிவிப்புகள் புதுப்பிக்கப்பட்டன (" + adminNotificationsList.length + ")");
+            }
+          }
+        } catch (err) {}
+        delete window[cbNotif];
+      };
+      const sc = document.createElement("script");
+      sc.src = `https://docs.google.com/spreadsheets/d/${SISF_SHEET_ID}/gviz/tq?sheet=SISF_Notifications&tqx=responseHandler:${cbNotif}`;
+      document.head.appendChild(sc);
+      setTimeout(() => { if (sc.parentNode) sc.parentNode.removeChild(sc); }, 5000);
+    } catch (e) {}
+
+    if (scriptUrl && scriptUrl.startsWith("http")) {
+      fetchJsonp(scriptUrl + "?action=get_notifications", 4500).then(res => {
+        if (res && res.status === "success" && Array.isArray(res.notifications)) {
+          const notifMap = {};
+          adminNotificationsList.forEach(n => { if (n && n.id && !del[n.id]) notifMap[n.id] = n; });
+          res.notifications.forEach(n => {
+            if (n && n.id && !del[n.id]) notifMap[n.id] = n;
+          });
+          saveNotificationsToAllStores(Object.values(notifMap));
+          renderSchoolNotificationsUI();
+          renderAdminNotificationsTable();
+        }
+      }).catch(() => {});
+    }
+  }
+
+  function populateNotifSchoolsDropdown() {
+    const sel = document.getElementById("notifQuickSchoolDropdown");
+    if (!sel || typeof MASTER_SCHOOLS === "undefined") return;
+    sel.innerHTML = '<option value="">-- அல்லது இங்கே பள்ளியைத் தேர்வு செய்க (' + MASTER_SCHOOLS.length + ' பள்ளிகள்) --</option>' +
+      MASTER_SCHOOLS.map(s => `<option value="${s.uNo}">U.NO: ${s.uNo} | ${s.nameTa || s.nameEn} (${s.block})</option>`).join("");
+  }
+
+  function onNotifTargetTypeChange() {
+    const t = document.getElementById("notifTargetType")?.value || "ALL";
+    const blkWrap = document.getElementById("notifBlockSelectWrap");
+    const schWrap = document.getElementById("notifSingleSchoolWrap");
+    if (blkWrap) blkWrap.style.display = (t === "BLOCK") ? "block" : "none";
+    if (schWrap) schWrap.style.display = (t === "SINGLE_SCHOOL") ? "block" : "none";
+    if (t === "SINGLE_SCHOOL") populateNotifSchoolsDropdown();
+  }
+
+  function onNotifSchoolDropdownSelect(uNoVal) {
+    if (!uNoVal) return;
+    const inp = document.getElementById("notifTargetSchoolInp");
+    if (inp) inp.value = uNoVal;
+    lookupSchoolForNotification(uNoVal);
+  }
+
+  function lookupSchoolForNotification(rawQuery) {
+    const q = String(rawQuery !== undefined ? rawQuery : (document.getElementById("notifTargetSchoolInp")?.value || "")).trim().replace(/^0+/, "");
+    const badge = document.getElementById("notifSelectedSchoolBadge");
+    if (!q) {
+      if (badge) badge.innerText = "";
+      return null;
+    }
+    const mSchool = MASTER_SCHOOLS.find(s =>
+      s.uNo.toLowerCase() === q.toLowerCase() ||
+      s.udiseNo.toLowerCase() === q.toLowerCase()
+    );
+    if (mSchool) {
+      if (badge) {
+        badge.style.color = "#15803d";
+        badge.innerHTML = `✅ தேர்ந்தெடுக்கப்பட்ட பள்ளி: <strong>U.NO ${mSchool.uNo} – ${mSchool.nameTa || mSchool.nameEn}</strong> (${mSchool.block} | UDISE: ${mSchool.udiseNo})`;
+      }
+      const dd = document.getElementById("notifQuickSchoolDropdown");
+      if (dd) dd.value = mSchool.uNo;
+      return mSchool;
+    } else {
+      if (badge) {
+        badge.style.color = "#dc2626";
+        badge.innerText = "⚠️ இந்த U.NO / UDISE எண்ணிற்குரிய பள்ளி காணப்படவில்லை.";
+      }
+      return null;
+    }
+  }
+
+  function applyAdminNotificationPreset(presetKey) {
+    const titleEl = document.getElementById("notifTitleInp");
+    const msgEl = document.getElementById("notifMessageInp");
+    const prioEl = document.getElementById("notifPriority");
+    const targetEl = document.getElementById("notifTargetType");
+    if (!titleEl || !msgEl) return;
+
+    if (presetKey === "VENUE_TIME") {
+      if (prioEl) prioEl.value = "VENUE_TIME";
+      if (targetEl) { targetEl.value = "ALL"; onNotifTargetTypeChange(); }
+      titleEl.value = "மாவட்ட அளவிலான அறிவியல் கண்காட்சி நடைபெறும் இடம் மற்றும் நேரம்";
+      msgEl.value = "மாவட்ட அளவிலான கண்காட்சி சிவகங்கை மன்னர் மேல்நிலைப்பள்ளியில் 03.11.2026 முற்பகல் 10.00 மணிக்கு நடைபெறும். பங்கேற்கும் அனைத்துப் பள்ளிகளும் குறித்த நேரத்திற்கு வருகை தருமாறு கேட்டுக்கொள்ளப்படுகிறார்கள்.";
+    } else if (presetKey === "HARD_COPY") {
+      if (prioEl) prioEl.value = "IMPORTANT";
+      if (targetEl) { targetEl.value = "APPLIED"; onNotifTargetTypeChange(); }
+      titleEl.value = "கண்காட்சிக்கு வரும்போது விண்ணப்பப் படிவத்தை இரண்டு பிரதிகளில் சமர்ப்பித்தல்";
+      msgEl.value = "மாவட்ட அளவிலான அறிவியல் கண்காட்சியில் (03.11.2026 முற்பகல் 10.00 மணி, சிவகங்கை மன்னர் மேல்நிலைப்பள்ளி) கலந்து கொள்ள வரும்போது, இணையதளத்தில் பதிவிறக்கம் செய்யப்பட்டப் பதிவுப் படிவத்தினை (2-Page PDF) இரண்டு பிரதிகளில் தலைமையாசிரியரின் முத்திரை மற்றும் கையொப்பத்துடன் பெற்றுக் கட்டாயம் சமர்ப்பிக்க வேண்டும்.";
+    } else if (presetKey === "REG_REMINDER") {
+      if (prioEl) prioEl.value = "REMINDER";
+      if (targetEl) { targetEl.value = "NOT_APPLIED"; onNotifTargetTypeChange(); }
+      titleEl.value = "அறிவியல் கண்காட்சிப் படைப்புகளின் விண்ணப்பங்களை உடனடியாகப் பதிவு செய்தல்";
+      msgEl.value = "தென்னிந்திய அறிவியல் கண்காட்சி (SISF 2026) மாவட்ட அளவிலான போட்டிக்கான தங்களின் பள்ளி விண்ணப்பங்களை (தனிநபர் / குழு / ஆசிரியர் பிரிவு) உடனடியாகப் பள்ளி முகப்பில் உள்நுழைந்து சமர்ப்பித்து PDF படிவத்தைப் பதிவிறக்கம் செய்து கொள்ளுமாறு கேட்டுக்கொள்ளப்படுகிறது.";
+    } else if (presetKey === "CERT_READY") {
+      if (prioEl) prioEl.value = "INFO";
+      if (targetEl) { targetEl.value = "APPLIED"; onNotifTargetTypeChange(); }
+      titleEl.value = "மாவட்ட அறிவியல் கண்காட்சி பாராட்டு மற்றும் பங்கேற்பு சான்றிதழ் பதிவிறக்கம்";
+      msgEl.value = "மாவட்ட அளவிலான தென்னிந்திய அறிவியல் கண்காட்சியில் பங்கேற்ற மற்றும் வெற்றி பெற்ற மாணவர்கள் / ஆசிரியர்களுக்கான சான்றிதழ்களைத் தங்களின் பள்ளி முகப்பில் (School Dashboard) உள்நுழைந்து '📜 சான்றிதழ் பதிவிறக்கம்' பொத்தானைக் கிளிக் செய்து பதிவிறக்கம் செய்து கொள்ளலாம்.";
+    }
+  }
+
+  function adminQuickNotifySchool(uNoOrUdise) {
+    const cleanQ = String(uNoOrUdise || "").trim().replace(/^0+/, "");
+    switchAdminSubTab("notifications");
+    const targetEl = document.getElementById("notifTargetType");
+    if (targetEl) {
+      targetEl.value = "SINGLE_SCHOOL";
+      onNotifTargetTypeChange();
+    }
+    const inp = document.getElementById("notifTargetSchoolInp");
+    if (inp) inp.value = cleanQ;
+    lookupSchoolForNotification(cleanQ);
+    const titleEl = document.getElementById("notifTitleInp");
+    if (titleEl) titleEl.focus();
+    window.scrollTo({ top: 180, behavior: "smooth" });
+  }
+
+  async function handleAdminSendNotificationSubmit(event) {
+    event.preventDefault();
+    loadNotificationsIntoMemory();
+
+    const editId = (document.getElementById("notifEditId")?.value || "").trim();
+    const targetType = document.getElementById("notifTargetType")?.value || "ALL";
+    const priority = document.getElementById("notifPriority")?.value || "IMPORTANT";
+    const title = (document.getElementById("notifTitleInp")?.value || "").trim();
+    const message = (document.getElementById("notifMessageInp")?.value || "").trim();
+    const sendEmail = !!(document.getElementById("notifSendEmailChk")?.checked);
+
+    if (!title || !message) {
+      alert("தயவுசெய்து அறிவிப்பின் தலைப்பு மற்றும் செய்தியை உள்ளிடவும்.");
+      return;
+    }
+
+    let targetValue = "ALL";
+    let targetLabel = "🌐 அனைத்துப் பள்ளிகளுக்கும் (All Schools)";
+
+    if (targetType === "REGISTERED") {
+      targetValue = "REGISTERED";
+      targetLabel = "✅ பதிவு செய்த பள்ளிகளுக்கு (Registered Schools)";
+    } else if (targetType === "APPLIED") {
+      targetValue = "APPLIED";
+      targetLabel = "📑 விண்ணப்பித்த பள்ளிகளுக்கு (Applied Schools)";
+    } else if (targetType === "NOT_APPLIED") {
+      targetValue = "NOT_APPLIED";
+      targetLabel = "⏳ விண்ணப்பிக்காத பள்ளிகளுக்கு (Not Applied)";
+    } else if (targetType === "BLOCK") {
+      targetValue = document.getElementById("notifTargetBlockInp")?.value || "12 Sivagangai";
+      targetLabel = "📍 வட்டாரம்: " + targetValue;
+    } else if (targetType === "SINGLE_SCHOOL") {
+      const q = (document.getElementById("notifTargetSchoolInp")?.value || "").trim().replace(/^0+/, "");
+      if (!q) {
+        alert("தயவுசெய்து அறிவிப்பு அனுப்ப வேண்டிய பள்ளியின் U.NO அல்லது UDISE எண்ணை உள்ளிடவும்.");
+        return;
+      }
+      const mSchool = lookupSchoolForNotification(q);
+      targetValue = mSchool ? mSchool.uNo : q;
+      targetLabel = mSchool
+        ? `🏫 U.NO: ${mSchool.uNo} - ${mSchool.nameTa || mSchool.nameEn}`
+        : `🏫 பள்ளி U.NO/UDISE: ${q}`;
+    }
+
+    const nowStr = new Date().toLocaleString("en-IN");
+    const notifObj = {
+      id: editId || ("NOTIF_" + Date.now()),
+      timestamp: nowStr,
+      targetType: targetType,
+      targetValue: targetValue,
+      targetLabel: targetLabel,
+      priority: priority,
+      title: title,
+      message: message,
+      sendEmail: sendEmail ? "true" : "false",
+      sender: "மாவட்ட அறிவியல் கண்காட்சி நிர்வாகி, சிவகங்கை"
+    };
+
+    const existingIdx = adminNotificationsList.findIndex(n => n.id === notifObj.id);
+    if (existingIdx >= 0) {
+      adminNotificationsList[existingIdx] = notifObj;
+    } else {
+      adminNotificationsList.unshift(notifObj);
+    }
+
+    saveNotificationsToAllStores(adminNotificationsList);
+    renderSchoolNotificationsUI();
+    renderAdminNotificationsTable();
+    const stEl = document.getElementById("admStatNotifications");
+    if (stEl) stEl.innerText = adminNotificationsList.length;
+
+    // Sync to Google Sheet backend (SISF_Notifications) & optional Email dispatch
+    try {
+      const payload = Object.assign({ action: "admin_send_notification" }, notifObj);
+      if (scriptUrl && scriptUrl.startsWith("http")) {
+        const qParams = new URLSearchParams(payload).toString();
+        fetchJsonp(scriptUrl + "?" + qParams, 5000).catch(() => {});
+      }
+      sendToScriptReliably(payload).catch(() => {});
+    } catch (e) {}
+
+    const msgSpan = document.getElementById("notifSaveMsg");
+    if (msgSpan) {
+      msgSpan.innerText = "✅ அறிவிப்பு வெற்றிகரமாகப் பள்ளிகளுக்கு அனுப்பப்பட்டது!";
+      setTimeout(() => { msgSpan.innerText = ""; }, 4000);
+    }
+    showSisfToast("🔔 அறிவிப்பு வெற்றிகரமாகப் பள்ளிகளின் முகப்பிற்கு அனுப்பப்பட்டது!");
+    resetAdminNotificationForm();
+  }
+
+  function resetAdminNotificationForm() {
+    const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+    setVal("notifEditId", "");
+    setVal("notifTargetType", "ALL");
+    setVal("notifPriority", "IMPORTANT");
+    setVal("notifTitleInp", "");
+    setVal("notifMessageInp", "");
+    setVal("notifTargetSchoolInp", "");
+    const chk = document.getElementById("notifSendEmailChk");
+    if (chk) chk.checked = false;
+    const badge = document.getElementById("notifSelectedSchoolBadge");
+    if (badge) badge.innerText = "";
+    onNotifTargetTypeChange();
+  }
+
+  function editAdminNotification(id) {
+    loadNotificationsIntoMemory();
+    const n = adminNotificationsList.find(item => item.id === id);
+    if (!n) return;
+    document.getElementById("notifEditId").value = n.id;
+    document.getElementById("notifTargetType").value = n.targetType || "ALL";
+    onNotifTargetTypeChange();
+    if (n.targetType === "BLOCK") {
+      document.getElementById("notifTargetBlockInp").value = n.targetValue || "12 Sivagangai";
+    } else if (n.targetType === "SINGLE_SCHOOL") {
+      document.getElementById("notifTargetSchoolInp").value = n.targetValue || "";
+      lookupSchoolForNotification(n.targetValue);
+    }
+    document.getElementById("notifPriority").value = n.priority || "IMPORTANT";
+    document.getElementById("notifTitleInp").value = n.title || "";
+    document.getElementById("notifMessageInp").value = n.message || "";
+    window.scrollTo({ top: 180, behavior: "smooth" });
+  }
+
+  function deleteAdminNotification(id) {
+    loadNotificationsIntoMemory();
+    const n = adminNotificationsList.find(item => item.id === id);
+    if (!n) return;
+    const detailsHtml = `
+      <div><strong>📌 பதிவு வகை:</strong> பள்ளி அறிவிப்பு (School Notification)</div>
+      <div><strong>🎯 யாருக்கு:</strong> ${n.targetLabel || n.targetType}</div>
+      <div><strong>📢 தலைப்பு:</strong> <span style="color:#b91c1c; font-weight:800;">${n.title}</span></div>
+      <div><strong>📝 செய்தி:</strong> ${n.message}</div>
+    `;
+    openAdminDeleteConfirmModal(
+      "⚠️ அறிவிப்பை நீக்க உறுதிப்படுத்தவும்",
+      detailsHtml,
+      function() {
+        markNotificationDeleted(id);
+        adminNotificationsList = adminNotificationsList.filter(item => item.id !== id);
+        saveNotificationsToAllStores(adminNotificationsList);
+        renderSchoolNotificationsUI();
+        renderAdminNotificationsTable();
+        const stEl = document.getElementById("admStatNotifications");
+        if (stEl) stEl.innerText = adminNotificationsList.length;
+
+        try {
+          const payload = { action: "admin_delete_notification", id: id };
+          if (scriptUrl && scriptUrl.startsWith("http")) {
+            fetchJsonp(scriptUrl + "?" + new URLSearchParams(payload).toString(), 4500).catch(() => {});
+          }
+          sendToScriptReliably(payload).catch(() => {});
+        } catch (e) {}
+      }
+    );
+  }
+
+  function copyNotificationForWhatsapp(id) {
+    loadNotificationsIntoMemory();
+    const n = adminNotificationsList.find(item => item.id === id);
+    if (!n) return;
+    const text = `🏛️ *பள்ளிக்கல்வித்துறை - சிவகங்கை மாவட்டம்*
+*தென்னிந்திய அறிவியல் கண்காட்சி (SISF 2026)*
+
+🔔 *${n.title}*
+🎯 *யாருக்கு:* ${n.targetLabel || "அனைத்துப் பள்ளிகளுக்கும்"}
+
+${n.message}
+
+— *மாவட்ட அறிவியல் கண்காட்சி நிர்வாகி, சிவகங்கை*`;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showSisfToast("📋 அறிவிப்புச் செய்தி WhatsApp-ல் பகிர நகலெடுக்கப்பட்டது!"));
+    } else {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); showSisfToast("📋 அறிவிப்புச் செய்தி நகலெடுக்கப்பட்டது!"); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  }
+
+  function renderAdminNotificationsTable() {
+    const tbody = document.getElementById("admNotificationsTableBody");
+    if (!tbody) return;
+    loadNotificationsIntoMemory();
+
+    if (adminNotificationsList.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:18px; color:#64748b;">இன்னும் அறிவிப்புகள் ஏதும் அனுப்பப்படவில்லை. மேலே உள்ள படிவத்தைப் பயன்படுத்தி அனுப்பவும்.</td></tr>`;
+      return;
+    }
+
+    const prioBadgeMap = {
+      "IMPORTANT": '<span style="background:#fef2f2; color:#dc2626; border:1px solid #fca5a5; padding:3px 8px; border-radius:6px; font-weight:800; font-size:0.76rem;">🚨 முக்கிய அறிவிப்பு</span>',
+      "VENUE_TIME": '<span style="background:#ecfdf5; color:#047857; border:1px solid #6ee7b7; padding:3px 8px; border-radius:6px; font-weight:800; font-size:0.76rem;">🏛️ இடம் & நேரம்</span>',
+      "REMINDER": '<span style="background:#f5f3ff; color:#6d28d9; border:1px solid #c4b5fd; padding:3px 8px; border-radius:6px; font-weight:800; font-size:0.76rem;">⏰ நினைவூட்டல்</span>',
+      "INFO": '<span style="background:#eff6ff; color:#1d4ed8; border:1px solid #93c5fd; padding:3px 8px; border-radius:6px; font-weight:800; font-size:0.76rem;">📢 பொதுத் தகவல்</span>'
+    };
+
+    tbody.innerHTML = adminNotificationsList.map((n, idx) => `
+      <tr>
+        <td style="font-weight:700;">${idx + 1}</td>
+        <td style="font-size:0.8rem; color:#475569; white-space:nowrap;">${n.timestamp || "-"}</td>
+        <td><strong style="color:#1e3a8a; font-size:0.84rem;">${n.targetLabel || n.targetType}</strong></td>
+        <td style="white-space:nowrap;">${prioBadgeMap[n.priority] || prioBadgeMap["INFO"]}</td>
+        <td style="max-width:380px;">
+          <div style="font-weight:800; color:#0f172a; font-size:0.92rem; margin-bottom:2px;">${n.title}</div>
+          <div style="font-size:0.84rem; color:#334155; line-height:1.45;">${n.message}</div>
+        </td>
+        <td style="white-space:nowrap;">
+          <div style="display:flex; gap:5px; align-items:center;">
+            <button type="button" class="btn-sm" style="background:#059669; font-size:0.76rem; font-weight:800;" onclick="copyNotificationForWhatsapp('${n.id}')" title="WhatsApp செய்தியாக நகலெடு">📲 நகல்</button>
+            <button type="button" class="btn-sm" style="background:#2b6cb0; font-size:0.76rem;" onclick="editAdminNotification('${n.id}')" title="திருத்து">✏️</button>
+            <button type="button" class="btn-sm" style="background:#dc2626; font-size:0.76rem;" onclick="deleteAdminNotification('${n.id}')" title="நீக்கு">🗑️</button>
+          </div>
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  function isNotificationRelevantForSchool(notif, school, appsObj) {
+    if (!notif) return false;
+    const tType = notif.targetType || "ALL";
+    const tVal = String(notif.targetValue || "").trim().replace(/^0+/, "").toLowerCase();
+    if (tType === "ALL" || tType === "REGISTERED") return true;
+    if (!school) return false;
+
+    const hasApplied = !!(appsObj && (appsObj.Individual || appsObj.Group || appsObj.Teacher));
+    if (tType === "APPLIED") return hasApplied;
+    if (tType === "NOT_APPLIED") return !hasApplied;
+    if (tType === "BLOCK") {
+      const sBlk = String(school.block || "").trim().toLowerCase();
+      return sBlk && (sBlk === tVal || sBlk.includes(tVal) || tVal.includes(sBlk));
+    }
+    if (tType === "SINGLE_SCHOOL") {
+      const sUno = String(school.uNo || "").trim().replace(/^0+/, "").toLowerCase();
+      const sUdise = String(school.udiseNo || "").trim().toLowerCase();
+      return (sUno && sUno === tVal) || (sUdise && sUdise === tVal);
+    }
+    return true;
+  }
+
+  function getReadNotificationsMapForCurrentSchool() {
+    const key = "SISF_READ_NOTIFS_" + ((loggedInSchool && (loggedInSchool.uNo || loggedInSchool.udiseNo)) || "GUEST");
+    try {
+      return JSON.parse(localStorage.getItem(key) || "{}");
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function markSchoolNotificationRead(notifId) {
+    const key = "SISF_READ_NOTIFS_" + ((loggedInSchool && (loggedInSchool.uNo || loggedInSchool.udiseNo)) || "GUEST");
+    const map = getReadNotificationsMapForCurrentSchool();
+    map[notifId] = true;
+    try { localStorage.setItem(key, JSON.stringify(map)); } catch (e) {}
+    renderSchoolNotificationsUI();
+  }
+
+  function markAllSchoolNotificationsRead() {
+    loadNotificationsIntoMemory();
+    const key = "SISF_READ_NOTIFS_" + ((loggedInSchool && (loggedInSchool.uNo || loggedInSchool.udiseNo)) || "GUEST");
+    const map = getReadNotificationsMapForCurrentSchool();
+    adminNotificationsList.forEach(n => { if (n && n.id) map[n.id] = true; });
+    try { localStorage.setItem(key, JSON.stringify(map)); } catch (e) {}
+    renderSchoolNotificationsUI();
+    showSisfToast("✓ அனைத்து அறிவிப்புகளும் படித்ததாகக் குறிக்கப்பட்டன.");
+  }
+
+  function toggleSchoolNotificationsPanel() {
+    const panel = document.getElementById("schoolNotificationsPanel");
+    if (!panel) return;
+    if (panel.style.display === "none") {
+      panel.style.display = "block";
+      panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    } else {
+      panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }
+
+  function renderSchoolNotificationsUI() {
+    loadNotificationsIntoMemory();
+
+    // 1. Render public broadcast notifications on Auth / Login screen (#authAdminBroadcastBox)
+    const authBox = document.getElementById("authAdminBroadcastBox");
+    if (authBox) {
+      const customBroadcasts = adminNotificationsList.filter(n => n.targetType === "ALL" && n.id !== "NOTIF_DEFAULT_VENUE_2026");
+      if (customBroadcasts.length > 0) {
+        authBox.style.display = "block";
+        authBox.innerHTML = customBroadcasts.slice(0, 3).map(n => `
+          <div style="background: #fff1f2; border: 1.5px solid #fda4af; border-left: 5px solid #e11d48; border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; color: #881337;">
+            <div style="font-size: 0.82rem; font-weight: 800; color: #e11d48; display:flex; justify-content:space-between; flex-wrap:wrap;">
+              <span>🔔 நிர்வாகி அறிவிப்பு: ${n.title}</span>
+              <span style="font-size: 0.74rem; color: #64748b;">${n.timestamp || ""}</span>
+            </div>
+            <div style="font-size: 0.9rem; font-weight: 700; color: #1e293b; margin-top: 3px; line-height: 1.45;">
+              ${n.message}
+            </div>
+          </div>
+        `).join("");
+      } else {
+        authBox.style.display = "none";
+        authBox.innerHTML = "";
+      }
+    }
+
+    // 2. Render school-specific + broadcast notifications in School Dashboard (#schoolNotificationsList)
+    const listEl = document.getElementById("schoolNotificationsList");
+    const badgeEl = document.getElementById("dashNotifCountBadge");
+    const subBadgeEl = document.getElementById("schoolNotifSubBadge");
+    if (!listEl) return;
+
+    const relevant = adminNotificationsList.filter(n => isNotificationRelevantForSchool(n, loggedInSchool, schoolApplications));
+    const readMap = getReadNotificationsMapForCurrentSchool();
+    const unreadCount = relevant.filter(n => !readMap[n.id]).length;
+
+    if (badgeEl) {
+      badgeEl.innerText = unreadCount > 0 ? unreadCount : relevant.length;
+      badgeEl.style.background = unreadCount > 0 ? "#dc2626" : "#059669";
+    }
+    if (subBadgeEl) {
+      subBadgeEl.innerText = unreadCount > 0
+        ? `புதிய அறிவிப்புகள்: ${unreadCount} | மொத்தம்: ${relevant.length}`
+        : `மொத்த அறிவிப்புகள்: ${relevant.length}`;
+    }
+
+    if (relevant.length === 0) {
+      listEl.innerHTML = `<div style="text-align:center; padding:12px; color:#64748b; font-size:0.88rem;">தற்போது புதிய அறிவிப்புகள் ஏதுமில்லை.</div>`;
+      return;
+    }
+
+    const prioLabel = {
+      "IMPORTANT": { icon: "🚨", text: "முக்கிய அறிவிப்பு", color: "#dc2626", bg: "#fef2f2" },
+      "VENUE_TIME": { icon: "🏛️", text: "கண்காட்சி இடம் & நேரம்", color: "#047857", bg: "#ecfdf5" },
+      "REMINDER": { icon: "⏰", text: "நினைவூட்டல்", color: "#6d28d9", bg: "#f5f3ff" },
+      "INFO": { icon: "📢", text: "பொதுத் தகவல்", color: "#1d4ed8", bg: "#eff6ff" }
+    };
+
+    listEl.innerHTML = relevant.map(n => {
+      const pInfo = prioLabel[n.priority] || prioLabel["INFO"];
+      const isUnread = !readMap[n.id];
+      const isDirect = (n.targetType === "SINGLE_SCHOOL");
+      return `
+        <div class="school-notif-item priority-${n.priority || 'INFO'} ${isUnread ? 'unread' : ''}">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="background: ${pInfo.bg}; color: ${pInfo.color}; padding: 2px 9px; border-radius: 999px; font-size: 0.76rem; font-weight: 800;">
+                ${pInfo.icon} ${pInfo.text}
+              </span>
+              ${isDirect ? `<span style="background: #fce7f3; color: #be185d; border: 1px solid #f9a8d4; padding: 2px 9px; border-radius: 999px; font-size: 0.76rem; font-weight: 800;">🎯 தங்கள் பள்ளிக்கான சிறப்பு அறிவிப்பு</span>` : ""}
+              ${isUnread ? `<span style="background: #dc2626; color: #ffffff; padding: 1px 7px; border-radius: 999px; font-size: 0.7rem; font-weight: 800;">NEW</span>` : ""}
+            </div>
+            <div style="font-size: 0.78rem; color: #64748b; font-weight: 600;">
+              🕒 ${n.timestamp || "-"}
+            </div>
+          </div>
+          <div style="font-size: 0.98rem; font-weight: 800; color: #0f172a; margin-bottom: 4px;">
+            ${n.title}
+          </div>
+          <div style="font-size: 0.9rem; color: #1e293b; line-height: 1.55;">
+            ${n.message}
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 8px; padding-top: 6px; border-top: 1px dashed #e2e8f0; font-size: 0.78rem; color: #64748b;">
+            <span>👤 அனுப்பியவர்: <strong>${n.sender || "மாவட்ட அறிவியல் கண்காட்சி நிர்வாகி"}</strong></span>
+            ${isUnread
+              ? `<button type="button" onclick="markSchoolNotificationRead('${n.id}')" style="background:#059669; color:#ffffff; border:none; border-radius:6px; padding:3px 10px; font-size:0.75rem; font-weight:700; cursor:pointer; font-family:inherit;">✓ படித்ததாகக் குறி</button>`
+              : `<span style="color:#15803d; font-weight:700;">✓ படிக்கப்பட்டது</span>`
+            }
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
 
   function initAdminDashboard() {
     loadLocalAdminData();
@@ -6751,6 +8169,9 @@ document.getElementById("regStep1").style.display = "none";
   }
 
   function refreshAdminCloudData() {
+    // 0. Sync Master Schools & Notifications from Google Sheet
+    loadMasterSchoolsFromGoogleSheet(true);
+    try { syncNotificationsFromCloud(false); } catch (e) {}
     // 1. Sync SISF_Applications sheet via gviz JSONP
     try {
       const cbApps = "__sisfAdmAppsCb_" + Date.now();
@@ -6874,12 +8295,15 @@ document.getElementById("regStep1").style.display = "none";
     const totalWinners = adminWinnersList.length;
 
     const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.innerText = v; };
+    loadNotificationsIntoMemory();
     setTxt("admStatSchools", totalSchools);
     setTxt("admStatTotalApps", totalApps);
     setTxt("admStatInd", indCount);
     setTxt("admStatGrp", grpCount);
     setTxt("admStatTch", tchCount);
     setTxt("admStatWinners", totalWinners);
+    setTxt("admStatNotifications", adminNotificationsList.length);
+    try { renderAdminNotificationsTable(); } catch (e) {}
 
     // Render Discipline breakdown pills
     const discContainer = document.getElementById("admDisciplineBreakdown");
@@ -6983,6 +8407,9 @@ document.getElementById("regStep1").style.display = "none";
           <div style="display:flex; gap:5px; align-items:center;">
             <button type="button" class="btn-sm" style="background:#2b6cb0; font-weight:700;" onclick="adminDownloadAppPdf('${a.regNo}')" title="விண்ணப்பப் படிவம் PDF பதிவிறக்கம்">
               📥 படிவம் PDF
+            </button>
+            <button type="button" class="btn-sm" style="background:#d97706; font-weight:800;" onclick="adminQuickNotifySchool('${a.uNo || a.udiseNo}')" title="இந்தப் பள்ளிக்கு அறிவிப்பு அனுப்புக">
+              🔔 அறிவிப்பு
             </button>
             <button type="button" class="btn-sm" style="background:#dc2626; font-weight:800;" onclick="adminPromptDeleteApplication('${a.regNo}')" title="இந்தப் பங்கேற்பாளர் விண்ணப்பத்தை அழி">
               🗑️ அழி
@@ -7446,7 +8873,7 @@ document.getElementById("regStep1").style.display = "none";
     if (detailsEl) detailsEl.innerHTML = detailsHtml;
     if (modal) {
       modal.style.display = "flex";
-    } else if (confirm(titleText + "\n\nஇந்தப் பதிவை நிரந்தரமாக அழிக்க விரும்புகிறீர்களா?")) {
+    } else if (typeof onConfirmFn === "function") {
       onConfirmFn();
     }
   }
@@ -7754,6 +9181,9 @@ document.getElementById("regStep1").style.display = "none";
           <div style="display:flex; gap:5px; align-items:center;">
             <button type="button" class="btn-sm" style="background:#1e3a8a; font-size:0.76rem; white-space:nowrap;" onclick="adminLookupSchoolForReset('${ms.uNo}'); window.scrollTo({top:180, behavior:'smooth'});">
               🔑 கடவுச்சொல்
+            </button>
+            <button type="button" class="btn-sm" style="background:#d97706; font-size:0.76rem; font-weight:800; white-space:nowrap;" onclick="adminQuickNotifySchool('${ms.uNo}')" title="இந்தப் பள்ளிக்கு அறிவிப்பு அனுப்புக">
+              🔔 அறிவிப்பு
             </button>
             ${(isReg || schApps.length > 0) ? `
             <button type="button" class="btn-sm" style="background:#dc2626; font-size:0.76rem; font-weight:800; white-space:nowrap;" onclick="adminPromptDeleteSchool('${ms.uNo}', '${ms.udiseNo}')" title="இந்தப் பள்ளியின் பதிவை அழி">
@@ -8356,6 +9786,7 @@ document.getElementById("regStep1").style.display = "none";
     });
 
     restoreSchoolSession();
+    try { renderSchoolNotificationsUI(); syncNotificationsFromCloud(false); } catch (e) {}
   };
 
   document.addEventListener('DOMContentLoaded', function() { attachTanglishHandlers(); restoreSchoolSession(); });
@@ -8452,5 +9883,17 @@ document.getElementById("regStep1").style.display = "none";
 
 </script>
 
+
+<div style="display:none;" aria-hidden="true">
+  <span id="tabAdmin"></span>
+  <span id="adminLoginFormSection"></span>
+  <span id="adminLoginMsg"></span>
+  <span id="mobileOtpFallbackBox"></span>
+  <span id="mobileOtpFallbackMsg"></span>
+  <span id="scriptStatusText"></span>
+  <input type="hidden" id="adminUsername">
+  <input type="hidden" id="adminPassword">
+</div>
+<div id="sisfToastContainer" style="position:fixed; top:18px; right:18px; z-index:99999; max-width:420px; display:none; background:#1e293b; color:#ffffff; padding:12px 18px; border-radius:10px; box-shadow:0 10px 25px rgba(0,0,0,0.28); font-size:0.9rem; font-weight:600; border-left:5px solid #f59e0b; line-height:1.45;"></div>
 </body>
 </html>

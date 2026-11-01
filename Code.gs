@@ -3,7 +3,7 @@
  * பள்ளி இணைய முகப்பு & பதிவு மேலாண்மை தளம் (School Portal Backend)
  * 
  * முதன்மை இணைப்புகள்:
- * 1. Master Spreadsheet ID: 1QesgNBu6tHCgM5xNIwfi4rwvU8quM2y7qXOc47_A64o (பள்ளி விவரங்கள்)
+ * 1. Master Spreadsheet ID: 1Z3a6HTgNgMwSvse_fIswOlveUZdIi20YY00v2_8tiKc (School-Master-SISF - SCHOOL தாள்)
  * 2. Active Application Spreadsheet: South India Science Fair Registration Form
  * 
  * பாதுகாப்பு அம்சங்கள்:
@@ -13,7 +13,8 @@
  * 3. விண்ணப்பங்கள் சமர்ப்பிக்கப்படும் போது அதிகாரப்பூர்வ A4 PDF மின்னஞ்சல் இணைப்பாகச் செல்லும்.
  */
 
-var MASTER_SPREADSHEET_ID = "1QesgNBu6tHCgM5xNIwfi4rwvU8quM2y7qXOc47_A64o";
+var MASTER_SPREADSHEET_ID = "1Z3a6HTgNgMwSvse_fIswOlveUZdIi20YY00v2_8tiKc";
+var MASTER_SHEET_NAME = "SCHOOL";
 var SHEET_SCHOOLS = "Schools_Auth";
 var SHEET_APPLICATIONS = "SISF_Applications";
 var SENDER_DISPLAY_NAME = "SIVAGANGAI DISTRICT SCHOOL EDUCATION DEPARTMENT";
@@ -25,7 +26,7 @@ function setupSystem() {
   
   try {
     var masterSs = SpreadsheetApp.openById(MASTER_SPREADSHEET_ID);
-    var masterSheet = masterSs.getSheetByName("Form") || masterSs.getSheets()[0];
+    var masterSheet = masterSs.getSheetByName(MASTER_SHEET_NAME) || masterSs.getSheetByName("SCHOOL") || masterSs.getSheetByName("Form") || masterSs.getSheets()[0];
     Logger.log("✅ Master Sheet இணைப்பு வெற்றி. மொத்தம் " + masterSheet.getLastRow() + " வரிகள் உள்ளன.");
   } catch (err) {
     Logger.log("⚠️ Master Sheet அணுகல் பிழை: " + err.toString());
@@ -62,7 +63,9 @@ function doGet(e) {
     } else if (action === "clear_schools_data" || action === "reset_schools_data") {
       output = resetSchoolAuthData();
     } else if (action === "lookup_school") {
-      output = lookupSchoolInMaster(p.query);
+      output = lookupSchoolInMaster(p.query, p.masterSheetId);
+    } else if (action === "get_master_schools") {
+      output = getAllMasterSchools(p.masterSheetId);
     } else if (action === "send_reg_otp") {
       output = handleSendRegOtp(p);
     } else if (action === "school_register") {
@@ -83,6 +86,12 @@ function doGet(e) {
       output = handleAdminDeleteApplication(p);
     } else if (action === "admin_delete_school") {
       output = handleAdminDeleteSchool(p);
+    } else if (action === "admin_send_notification") {
+      output = handleAdminSendNotification(p);
+    } else if (action === "admin_delete_notification") {
+      output = handleAdminDeleteNotification(p);
+    } else if (action === "get_notifications") {
+      output = handleGetNotifications();
     } else {
       output = {
         status: "active",
@@ -131,7 +140,9 @@ function doPost(e) {
     if (action === "reset_all_data" || action === "clear_all_data") {
       return ContentService.createTextOutput(JSON.stringify(resetAllSystemData())).setMimeType(ContentService.MimeType.JSON);
     } else if (action === "lookup_school") {
-      output = lookupSchoolInMaster(data.query);
+      output = lookupSchoolInMaster(data.query, data.masterSheetId);
+    } else if (action === "get_master_schools") {
+      output = getAllMasterSchools(data.masterSheetId);
     } else if (action === "send_reg_otp") {
       output = handleSendRegOtp(data);
     } else if (action === "school_register") {
@@ -154,6 +165,12 @@ function doPost(e) {
       output = handleAdminDeleteApplication(data);
     } else if (action === "admin_delete_school") {
       output = handleAdminDeleteSchool(data);
+    } else if (action === "admin_send_notification") {
+      output = handleAdminSendNotification(data);
+    } else if (action === "admin_delete_notification") {
+      output = handleAdminDeleteNotification(data);
+    } else if (action === "get_notifications") {
+      output = handleGetNotifications();
     } else {
       output = { status: "error", message: "அறியப்படாத கோரிக்கை (Unknown action)." };
     }
@@ -170,8 +187,107 @@ function doPost(e) {
   }
 }
 
-// மாஸ்டர் விரிதாளில் பள்ளியைத் தேடுதல்
-function lookupSchoolInMaster(query) {
+// School-Master-SISF (1Z3a6HTgNgMwSvse_fIswOlveUZdIi20YY00v2_8tiKc - SCHOOL தாள்) வரிசையை பள்ளி பொருளாக மாற்றுதல்
+function parseMasterRowToSchoolObj(row) {
+  if (!row || row.length < 7) return null;
+  var cleanStr = function(val) {
+    if (val === undefined || val === null) return "";
+    var s = val.toString().replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
+    if (/^\d+\.0+$/.test(s)) s = s.replace(/\.0+$/, "");
+    return s;
+  };
+  var uNo = cleanStr(row[1]);
+  var udise = cleanStr(row[2]);
+  if (!uNo && !udise) return null;
+  if (uNo.toLowerCase().indexOf("un") !== -1 || udise.toLowerCase().indexOf("udise") !== -1) return null;
+
+  var dgeNo = cleanStr(row[3]);
+  var block = cleanStr(row[4]);
+  var assembly = cleanStr(row[5]);
+  var nameEn = cleanStr(row[6]);
+  var nameTa = cleanStr(row[7]) || nameEn;
+  var m1 = cleanStr(row[8]).toUpperCase();
+  var m2 = cleanStr(row[9]);
+  var m3 = cleanStr(row[10]);
+  var hmName = cleanStr(row[11]);
+  var hmTa = cleanStr(row[12]);
+  var mobile = cleanStr(row[13]);
+
+  var mgmt = "Government";
+  var uNum = parseInt(uNo, 10);
+  if (m1 === "1G") {
+    mgmt = "Government";
+  } else if (m1 === "2A" || m1.indexOf("2") !== -1 || m1.indexOf("A") !== -1) {
+    mgmt = "Govt. Aided";
+  } else if (m1 === "3P" || m1.indexOf("3") !== -1 || m1.indexOf("P") !== -1) {
+    mgmt = "Private";
+  } else if (m1 === "4CG" || m1.indexOf("CG") !== -1) {
+    mgmt = "Central Govt";
+  } else if (m1 === "5IC" || m1.indexOf("IC") !== -1) {
+    mgmt = "ICSE";
+  } else if (m1 === "6CB" || m1.indexOf("CB") !== -1) {
+    mgmt = "CBSE";
+  } else if (!isNaN(uNum) && uNum >= 950) {
+    mgmt = "CBSE";
+  } else if (!isNaN(uNum) && uNum >= 910) {
+    mgmt = "ICSE";
+  } else if (!isNaN(uNum) && uNum >= 900) {
+    mgmt = "Central Govt";
+  }
+
+  var schoolType = "HS";
+  if (nameEn.toUpperCase().indexOf("HSS") !== -1 || nameEn.toUpperCase().indexOf("HIGHER SECONDARY") !== -1) {
+    schoolType = "HSS";
+  } else if (m3) {
+    schoolType = m3;
+  }
+
+  return {
+    uNo: uNo,
+    udiseNo: udise,
+    dgeNo: dgeNo,
+    block: block || "Sivagangai",
+    assembly: assembly,
+    nameEn: nameEn,
+    nameTa: nameTa,
+    schoolType: schoolType,
+    management: mgmt,
+    managementCode: m1,
+    management2: m2,
+    management3: m3,
+    hmName: hmName,
+    hmNameTa: hmTa,
+    mobile: mobile
+  };
+}
+
+// அனைத்து மாஸ்டர் பள்ளிகளையும் Google Sheet-இலிருந்து நேரடியாகப் பெறுதல்
+function getAllMasterSchools(optionalSheetId) {
+  try {
+    var targetId = (optionalSheetId && optionalSheetId.toString().trim()) ? optionalSheetId.toString().trim() : MASTER_SPREADSHEET_ID;
+    var masterSs = SpreadsheetApp.openById(targetId);
+    var masterSheet = masterSs.getSheetByName(MASTER_SHEET_NAME) || masterSs.getSheetByName("SCHOOL") || masterSs.getSheets()[0];
+    var data = masterSheet.getDataRange().getValues();
+    var schools = [];
+    for (var i = 1; i < data.length; i++) {
+      var sObj = parseMasterRowToSchoolObj(data[i]);
+      if (sObj) schools.push(sObj);
+    }
+    return {
+      status: "success",
+      count: schools.length,
+      schools: schools
+    };
+  } catch (err) {
+    return {
+      status: "error",
+      message: "மாஸ்டர் விரிதாளை அணுகுவதில் பிழை: " + err.toString()
+    };
+  }
+}
+
+// மாஸ்டர் விரிதாளில் பள்ளியைத் தேடுதல் (School-Master-SISF: 1Z3a6HTgNgMwSvse_fIswOlveUZdIi20YY00v2_8tiKc)
+function lookupSchoolInMaster(query, optionalSheetId) {
   query = (query || "").toString().trim();
   if (!query) {
     return { status: "error", message: "தயவுசெய்து U.NO அல்லது UDISE எண்ணை உள்ளிடவும்." };
@@ -180,14 +296,16 @@ function lookupSchoolInMaster(query) {
   var cleanQ = query.replace(/^0+/, "");
   
   try {
-    var masterSs = SpreadsheetApp.openById(MASTER_SPREADSHEET_ID);
-    var masterSheet = masterSs.getSheetByName("Form") || masterSs.getSheets()[0];
+    var targetId = (optionalSheetId && optionalSheetId.toString().trim()) ? optionalSheetId.toString().trim() : MASTER_SPREADSHEET_ID;
+    var masterSs = SpreadsheetApp.openById(targetId);
+    var masterSheet = masterSs.getSheetByName(MASTER_SHEET_NAME) || masterSs.getSheetByName("SCHOOL") || masterSs.getSheets()[0];
     var data = masterSheet.getDataRange().getValues();
     
     for (var i = 1; i < data.length; i++) {
-      var row = data[i];
-      var uNo = (row[0] || "").toString().trim();
-      var udise = (row[1] || "").toString().trim();
+      var schoolObj = parseMasterRowToSchoolObj(data[i]);
+      if (!schoolObj) continue;
+      var uNo = schoolObj.uNo;
+      var udise = schoolObj.udiseNo;
       var cleanUNo = uNo.replace(/^0+/, "");
       
       var match = false;
@@ -198,29 +316,7 @@ function lookupSchoolInMaster(query) {
       }
       
       if (match) {
-        var m1 = (row[7] || "").toString().trim();
-        var mgmt = "Government";
-        if (m1.indexOf("2") !== -1 || m1.toUpperCase().indexOf("A") !== -1) {
-          mgmt = "Govt. Aided";
-        } else if (m1.indexOf("3") !== -1 || m1.toUpperCase().indexOf("P") !== -1) {
-          mgmt = "Private";
-        }
-        
-        var schoolObj = {
-          uNo: uNo,
-          udiseNo: udise,
-          nameEn: (row[2] || "").toString().replace(/\n/g, " ").trim(),
-          nameTa: (row[3] || "").toString().replace(/\n/g, " ").trim(),
-          schoolType: (row[6] || "").toString().replace(/\n/g, " ").trim() || "HS",
-          management: mgmt,
-          block: (row[12] || "").toString().replace(/\n/g, " ").trim(),
-          hmName: (row[13] || "").toString().replace(/\n/g, " ").trim(),
-          hmNameTa: (row[14] || "").toString().replace(/\n/g, " ").trim(),
-          mobile: (row[15] || "").toString().replace(/\n/g, " ").trim()
-        };
-        
         var isAlreadyRegistered = checkIfSchoolRegistered(udise);
-        
         return {
           status: "success",
           found: true,
@@ -1504,5 +1600,200 @@ function handleAdminDeleteSchool(data) {
     status: "success",
     deletedSchools: deletedSchools,
     message: "பள்ளி மற்றும் அதன் விண்ணப்பப் பதிவுகள் வெற்றிகரமாக நீக்கப்பட்டன."
+  };
+}
+
+
+// =========================================================================
+// ADMIN TO SCHOOLS NOTIFICATION SYSTEM (SISF_Notifications Sheet & Email)
+// =========================================================================
+function getOrCreateNotificationSheet() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var notifSheet = ss.getSheetByName("SISF_Notifications");
+  if (!notifSheet) {
+    notifSheet = ss.insertSheet("SISF_Notifications");
+    notifSheet.appendRow([
+      "ID", "Timestamp", "Target Type", "Target Value", "Target Label",
+      "Priority", "Title", "Message", "Send Email", "Sender"
+    ]);
+    formatHeaderRow(notifSheet, 10, "#be123c");
+  }
+  return notifSheet;
+}
+
+function handleGetNotifications() {
+  var notifSheet = getOrCreateNotificationSheet();
+  var list = [];
+  if (notifSheet.getLastRow() > 1) {
+    var rows = notifSheet.getDataRange().getValues();
+    for (var i = rows.length - 1; i >= 1; i--) {
+      var r = rows[i];
+      if (!r[0]) continue;
+      list.push({
+        id: (r[0] || "").toString().trim(),
+        timestamp: (r[1] || "").toString().trim(),
+        targetType: (r[2] || "ALL").toString().trim(),
+        targetValue: (r[3] || "ALL").toString().trim(),
+        targetLabel: (r[4] || "").toString().trim(),
+        priority: (r[5] || "INFO").toString().trim(),
+        title: (r[6] || "").toString().trim(),
+        message: (r[7] || "").toString().trim(),
+        sendEmail: (r[8] || "false").toString().trim(),
+        sender: (r[9] || "மாவட்ட அறிவியல் கண்காட்சி நிர்வாகி, சிவகங்கை").toString().trim()
+      });
+    }
+  }
+  return {
+    status: "success",
+    count: list.length,
+    notifications: list
+  };
+}
+
+function handleAdminSendNotification(data) {
+  var notifSheet = getOrCreateNotificationSheet();
+  var id = (data.id || ("NOTIF_" + new Date().getTime())).toString().trim();
+  var timestamp = (data.timestamp || new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })).toString().trim();
+  var targetType = (data.targetType || "ALL").toString().trim();
+  var targetValue = (data.targetValue || "ALL").toString().trim();
+  var targetLabel = (data.targetLabel || "🌐 அனைத்துப் பள்ளிகளுக்கும்").toString().trim();
+  var priority = (data.priority || "IMPORTANT").toString().trim();
+  var title = (data.title || "").toString().trim();
+  var message = (data.message || "").toString().trim();
+  var sendEmail = (data.sendEmail || "false").toString().trim();
+  var sender = (data.sender || "மாவட்ட அறிவியல் கண்காட்சி நிர்வாகி, சிவகங்கை").toString().trim();
+
+  if (!title || !message) {
+    return { status: "error", message: "அறிவிப்பின் தலைப்பு மற்றும் செய்தி தேவை." };
+  }
+
+  var rowValues = [id, timestamp, targetType, targetValue, targetLabel, priority, title, message, sendEmail, sender];
+  var targetRowIdx = -1;
+  if (notifSheet.getLastRow() > 1) {
+    var rows = notifSheet.getDataRange().getValues();
+    for (var i = 1; i < rows.length; i++) {
+      if ((rows[i][0] || "").toString().trim() === id) {
+        targetRowIdx = i + 1;
+        break;
+      }
+    }
+  }
+
+  if (targetRowIdx !== -1) {
+    notifSheet.getRange(targetRowIdx, 1, 1, rowValues.length).setValues([rowValues]);
+  } else {
+    notifSheet.appendRow(rowValues);
+  }
+
+  var emailedCount = 0;
+  if (sendEmail === "true") {
+    try {
+      emailedCount = dispatchNotificationEmailsToSchools(notifObjFromRow(rowValues));
+    } catch (e) {
+      Logger.log("Notification email dispatch notice: " + e.toString());
+    }
+  }
+
+  return {
+    status: "success",
+    id: id,
+    emailedCount: emailedCount,
+    message: "அறிவிப்பு வெற்றிகரமாகச் சேமிக்கப்பட்டு பள்ளிகளுக்கு அனுப்பப்பட்டது."
+  };
+}
+
+function notifObjFromRow(r) {
+  return {
+    id: r[0], timestamp: r[1], targetType: r[2], targetValue: r[3],
+    targetLabel: r[4], priority: r[5], title: r[6], message: r[7], sender: r[9]
+  };
+}
+
+function dispatchNotificationEmailsToSchools(notif) {
+  var sheets = getOrCreateSheets();
+  var schSheet = sheets.schoolSheet;
+  var appSheet = sheets.appSheet;
+  var appliedUnos = {};
+
+  if (appSheet && appSheet.getLastRow() > 1) {
+    var aRows = appSheet.getDataRange().getValues();
+    for (var i = 1; i < aRows.length; i++) {
+      var aUno = (aRows[i][3] || "").toString().replace(/^0+/, "").trim();
+      var aUdise = (aRows[i][2] || "").toString().trim();
+      if (aUno) appliedUnos[aUno] = true;
+      if (aUdise) appliedUnos[aUdise] = true;
+    }
+  }
+
+  var emailsMap = {};
+  if (schSheet && schSheet.getLastRow() > 1) {
+    var sRows = schSheet.getDataRange().getValues();
+    var tType = notif.targetType || "ALL";
+    var tVal = (notif.targetValue || "").toString().replace(/^0+/, "").trim().toLowerCase();
+
+    for (var j = 1; j < sRows.length; j++) {
+      var rUdise = (sRows[j][0] || "").toString().trim();
+      var rUno = (sRows[j][1] || "").toString().replace(/^0+/, "").trim();
+      var rBlock = (sRows[j][4] || "").toString().trim().toLowerCase();
+      var rEmail = fixEmailTyposServer((sRows[j][6] || "").toString().trim());
+      if (!rEmail || rEmail.indexOf("@") === -1) continue;
+
+      var hasApp = !!(appliedUnos[rUno] || appliedUnos[rUdise]);
+      var match = false;
+      if (tType === "ALL" || tType === "REGISTERED") match = true;
+      else if (tType === "APPLIED") match = hasApp;
+      else if (tType === "NOT_APPLIED") match = !hasApp;
+      else if (tType === "BLOCK") match = (rBlock.indexOf(tVal) !== -1 || tVal.indexOf(rBlock) !== -1);
+      else if (tType === "SINGLE_SCHOOL") match = (rUno.toLowerCase() === tVal || rUdise.toLowerCase() === tVal);
+
+      if (match) {
+        emailsMap[rEmail] = true;
+      }
+    }
+  }
+
+  var emailList = Object.keys(emailsMap);
+  var sent = 0;
+  var subject = "🔔 [SISF 2026 அறிவிப்பு] " + notif.title + " - பள்ளிக்கல்வித்துறை, சிவகங்கை";
+  var bodyText = "அன்பார்ந்த தலைமையாசிரியர் அவர்களுக்கு,\n\n" +
+    "தென்னிந்திய அறிவியல் கண்காட்சி (SISF 2026) - மாவட்ட நிர்வாகியின் அறிவிப்பு:\n\n" +
+    "📌 தலைப்பு: " + notif.title + "\n" +
+    "📝 விவரம்:\n" + notif.message + "\n\n" +
+    "🕒 தேதி & நேரம்: " + notif.timestamp + "\n\n" +
+    "நன்றி,\n" +
+    "பள்ளிக்கல்வித்துறை, சிவகங்கை மாவட்டம்.";
+
+  for (var k = 0; k < emailList.length; k++) {
+    try {
+      MailApp.sendEmail({
+        to: emailList[k],
+        name: SENDER_DISPLAY_NAME,
+        subject: subject,
+        body: bodyText
+      });
+      sent++;
+    } catch (e) {}
+  }
+  return sent;
+}
+
+function handleAdminDeleteNotification(data) {
+  var id = (data.id || "").toString().trim();
+  if (!id) return { status: "error", message: "அறிவிப்பு ID தேவை." };
+  var notifSheet = getOrCreateNotificationSheet();
+  var deleted = 0;
+  if (notifSheet.getLastRow() > 1) {
+    var rows = notifSheet.getDataRange().getValues();
+    for (var i = rows.length - 1; i >= 1; i--) {
+      if ((rows[i][0] || "").toString().trim() === id) {
+        notifSheet.deleteRow(i + 1);
+        deleted++;
+      }
+    }
+  }
+  return {
+    status: "success",
+    deleted: deleted,
+    message: "அறிவிப்பு வெற்றிகரமாக நீக்கப்பட்டது."
   };
 }
