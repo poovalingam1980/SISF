@@ -9782,6 +9782,15 @@ ${n.message}
     });
   }
 
+  function cleanSchoolNameEnForCert(rawEn) {
+    let s = String(rawEn || "").trim();
+    // Remove any block code like ", 12 Sivagangai" or "01 S.Pudur" and any trailing "Sivagangai District"
+    s = s.replace(/,\s*\d{1,2}\s+[A-Za-z.\s]+$/i, "").trim();
+    s = s.replace(/,\s*Sivagangai\s*District.*$/i, "").trim();
+    s = s.replace(/^[,\s\-]+|[,\s\-]+$/g, "").trim();
+    return s || "Government High School";
+  }
+
   function renderWinnerCertificateCanvasToPdf(winRec, appData, langMode) {
     const mode = langMode || "bilingual"; // 'bilingual', 'ta', or 'en'
     const cvs = document.createElement("canvas");
@@ -9823,19 +9832,18 @@ ${n.message}
       rawSchoolNameEn = appData.schoolAddress.split(" / ")[1].trim();
     }
     if (!rawSchoolNameEn) rawSchoolNameEn = rawSchoolNameTa.replace(/\s*\([^)]*\)/g, "").trim() || "Government High School";
-    const blockEn = (mSchool && mSchool.block) || (appData && appData.block) || "";
-    const schoolNameEnFull = blockEn && !rawSchoolNameEn.toLowerCase().includes(blockEn.toLowerCase())
-      ? `${rawSchoolNameEn}, ${blockEn}`
-      : rawSchoolNameEn;
+    // Strictly DO NOT append block ("12 Sivagangai") or "Sivagangai District" to the English school name
+    const schoolNameEnFull = cleanSchoolNameEnForCert(rawSchoolNameEn);
 
-    // Pure Tamil discipline & category names for Tamil citation so Line 3 never shrinks!
+    // Pure Tamil discipline & category names formatted per user's model text:
+    // e.g., "ஆசிரியர் பிரிவில் ( உயிரியல் / உயிர்வேதியியல் )"
     const discMapTaClean = {
       "Physics": "இயற்பியல்",
       "Chemistry": "வேதியியல்",
       "Mathematics": "கணிதம்",
       "Environmental Science": "சுற்றுச்சூழல் அறிவியல்",
       "Engineering": "பொறியியல்",
-      "Bioscience / Biochemistry": "உயிரியல் / உயிர் வேதியியல்",
+      "Bioscience / Biochemistry": "உயிரியல் / உயிர்வேதியியல்",
       "Earth & Space Science": "பூமி & விண்வெளி அறிவியல்",
       "Computer Science": "கணினி அறிவியல்"
     };
@@ -9843,17 +9851,17 @@ ${n.message}
     const discTaClean = discMapTaClean[rawDisc] || rawDisc.split(" (")[0];
     const discEn = rawDisc;
 
-    const catMapTaClean = {
-      "Individual": "தனிநபர்",
-      "Group": "குழு",
-      "Teacher": "ஆசிரியர்"
+    const catMapTaPrefix = {
+      "Individual": "தனிநபர் பிரிவில்",
+      "Group": "குழுப் பிரிவில்",
+      "Teacher": "ஆசிரியர் பிரிவில்"
     };
     const catMapEn = {
       "Individual": "Individual Category",
       "Group": "Group Category",
       "Teacher": "Teacher Category"
     };
-    const winningCatFullTa = `${catMapTaClean[cat] || cat} – ${discTaClean}`;
+    const winningCatFullTa = `${catMapTaPrefix[cat] || (cat + " பிரிவில்")} ( ${discTaClean} )`;
     const winningCatFullEn = `${catMapEn[cat] || cat} (${discEn})`;
 
     // Extract Tamil and English Student / Teacher / Project Title fields
@@ -9927,37 +9935,27 @@ ${n.message}
     if (!projectTitleTa) projectTitleTa = "-";
     if (!projectTitleEn) projectTitleEn = projectTitleTa;
 
-    // Prize / Rank in Tamil and English
+    // Prize / Rank vs Participant classification
+    let isParticipant = false;
     let rankCleanTextTa = "முதலிடம் (மாநில அளவிலான போட்டிக்கு தேர்வு)";
-    let rankVerbTa = "பெற்றுப்";
     let rankCleanTextEn = "FIRST PLACE (Selected for State-Level Science Fair)";
-    let rankPhraseEn = "and securing";
 
-    if (prizeRank.includes("முதலிடம்") || prizeRank.includes("1st") || prizeRank.includes("மாநில")) {
+    if (prizeRank.includes("பங்கேற்பாளர்") || prizeRank.includes("Participant")) {
+      isParticipant = true;
+      rankCleanTextTa = "பங்கேற்றமையைப்";
+      rankCleanTextEn = "ACTIVE PARTICIPATION";
+    } else if (prizeRank.includes("முதலிடம்") || prizeRank.includes("1st") || prizeRank.includes("மாநில")) {
       rankCleanTextTa = "முதலிடம் (மாநில அளவிலான போட்டிக்கு தேர்வு)";
-      rankVerbTa = "பெற்றுப்";
       rankCleanTextEn = "FIRST PLACE (Selected for State-Level Science Fair)";
-      rankPhraseEn = "and securing";
     } else if (prizeRank.includes("இரண்டாம்") || prizeRank.includes("2nd")) {
       rankCleanTextTa = "இரண்டாமிடம்";
-      rankVerbTa = "பெற்றுப்";
       rankCleanTextEn = "SECOND PLACE";
-      rankPhraseEn = "and securing";
     } else if (prizeRank.includes("மூன்றாம்") || prizeRank.includes("3rd")) {
       rankCleanTextTa = "மூன்றாமிடம்";
-      rankVerbTa = "பெற்றுப்";
       rankCleanTextEn = "THIRD PLACE";
-      rankPhraseEn = "and securing";
     } else if (prizeRank.includes("சிறப்ப") || prizeRank.includes("Special")) {
       rankCleanTextTa = "சிறப்பிடம்";
-      rankVerbTa = "பெற்றுப்";
       rankCleanTextEn = "SPECIAL PRIZE";
-      rankPhraseEn = "and securing";
-    } else if (prizeRank.includes("பங்கேற்பாளர்") || prizeRank.includes("Participant")) {
-      rankCleanTextTa = "பங்கேற்பாளர்";
-      rankVerbTa = "ஆகப் பங்கேற்றுப்";
-      rankCleanTextEn = "ACTIVE PARTICIPANT";
-      rankPhraseEn = "and participating as an";
     }
 
     // -----------------------------------------------------------------------
@@ -9988,185 +9986,219 @@ ${n.message}
       ctx.fillText("CERTIFICATE OF MERIT & SCIENTIFIC EXCELLENCE", centerX, 541, 860);
     } else if (mode === "ta") {
       ctx.font = "900 27px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
-      ctx.fillText("பாராட்டு மற்றும் வெற்றியாளர் சான்றிதழ்", centerX, 542, 860);
+      ctx.fillText("பாராட்டுச்சான்றிதழ்", centerX, 542, 860);
     } else {
       ctx.font = "900 24.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
-      ctx.fillText("பாராட்டு சான்றிதழ்  |  CERTIFICATE OF MERIT", centerX, 542, 860);
+      ctx.fillText("பாராட்டுச்சான்றிதழ்  |  CERTIFICATE OF MERIT", centerX, 542, 860);
     }
 
     // -----------------------------------------------------------------------
     // 3. DRAW CITATION BODY INSIDE PORTRAIT CARD (y = 584..1560)
-    //    STRICT UNIFORM FONT SIZES:
-    //    - Every regular word across all lines in a section has the EXACT SAME font size!
-    //    - Every highlighted key term has a consistent emphasized size & weight!
-    //    - Line 3 in both Tamil and English is concise so it NEVER shrinks!
+    //    Following the user's exact Tamil model text & clean English school line
     // -----------------------------------------------------------------------
-    const maxLineW = 980;
+    const maxLineW = 1020;
 
     if (mode === "bilingual") {
-      // Uniform font sizes for Bilingual Tamil section:
-      const TA_REG = 24;   // All regular Tamil words across all lines
-      const TA_KEY = 25.5; // All highlighted Tamil key terms
+      const TA_REG = 22.5; // Uniform regular Tamil font size
+      const TA_KEY = 23.5; // Uniform highlighted Tamil key term font size
 
-      // Line 1 (y = 638)
-      drawRichCenteredLineOnCert(ctx, [
+      // Collect Tamil lines dynamically so Teacher (5-6 lines) and Student (6-7 lines) are evenly centered vertically in y = 635..1005
+      const taLines = [];
+
+      // Line 1: சிவகங்கை மாவட்டம், [ஊர், பள்ளியின் பெயர்]யில்
+      taLines.push([
         { text: "சிவகங்கை மாவட்டம்,  ", size: TA_REG, color: "#1e293b", weight: "bold" },
         { text: formattedSchoolWithTown, size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
-      ], centerX, 638, maxLineW);
+      ]);
 
-      // Line 2 & Line 3 (y = 699, 760) - Student(s) and Guide Teacher on separate lines so 100% uniform font size is preserved!
+      // Line 2 (& Line 3 for Student Guide Teacher):
       if (cat === "Individual") {
-        drawRichCenteredLineOnCert(ctx, [
+        taLines.push([
           { text: s1ClassTa || "9-ஆம் வகுப்பு", size: TA_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
           { text: "  பயிலும் மாணவர் / மாணவி  ", size: TA_REG, color: "#1e293b", weight: "bold" },
           { text: s1NameTa || "-", size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
           { text: "  என்பவர்,", size: TA_REG, color: "#1e293b", weight: "bold" }
-        ], centerX, 699, maxLineW);
-
-        drawRichCenteredLineOnCert(ctx, [
-          { text: "வழிகாட்டி ஆசிரியர் திரு./திருமதி.  ", size: TA_REG, color: "#1e293b", weight: "bold" },
-          { text: teacherNameTa || "-", size: TA_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
-          { text: "  வழிகாட்டுதலுடன்,", size: TA_REG, color: "#1e293b", weight: "bold" }
-        ], centerX, 760, maxLineW);
+        ]);
+        if (teacherNameTa) {
+          taLines.push([
+            { text: "வழிகாட்டி ஆசிரியர் திரு./திருமதி.  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+            { text: teacherNameTa, size: TA_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
+            { text: "  வழிகாட்டுதலுடன்,", size: TA_REG, color: "#1e293b", weight: "bold" }
+          ]);
+        }
       } else if (cat === "Group") {
         const s1Part = `${s1NameTa || "-"} (${s1ClassTa || "9-ஆம் வகுப்பு"})`;
         const s2Part = s2NameTa ? `, ${s2NameTa} (${s2ClassTa || "9-ஆம் வகுப்பு"})` : "";
-        drawRichCenteredLineOnCert(ctx, [
+        taLines.push([
           { text: "பயிலும் மாணவர்கள்  ", size: TA_REG, color: "#1e293b", weight: "bold" },
           { text: s1Part + s2Part, size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
           { text: "  ஆகியோர்,", size: TA_REG, color: "#1e293b", weight: "bold" }
-        ], centerX, 699, maxLineW);
-
-        drawRichCenteredLineOnCert(ctx, [
-          { text: "வழிகாட்டி ஆசிரியர் திரு./திருமதி.  ", size: TA_REG, color: "#1e293b", weight: "bold" },
-          { text: teacherNameTa || "-", size: TA_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
-          { text: "  வழிகாட்டுதலுடன்,", size: TA_REG, color: "#1e293b", weight: "bold" }
-        ], centerX, 760, maxLineW);
+        ]);
+        if (teacherNameTa) {
+          taLines.push([
+            { text: "வழிகாட்டி ஆசிரியர் திரு./திருமதி.  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+            { text: teacherNameTa, size: TA_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
+            { text: "  வழிகாட்டுதலுடன்,", size: TA_REG, color: "#1e293b", weight: "bold" }
+          ]);
+        }
       } else {
-        drawRichCenteredLineOnCert(ctx, [
-          { text: "பணியாற்றும் பங்கேற்பாளர் ஆசிரியர் திரு./திருமதி.  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+        // Exact user model text: "பணியாற்றும் ஆசிரியர் திரு./திருமதி. கயல்விழி சு என்பவர்,"
+        taLines.push([
+          { text: "பணியாற்றும் ஆசிரியர் திரு./திருமதி.  ", size: TA_REG, color: "#1e293b", weight: "bold" },
           { text: teacherNameTa || "-", size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
           { text: "  என்பவர்,", size: TA_REG, color: "#1e293b", weight: "bold" }
-        ], centerX, 728, maxLineW);
+        ]);
       }
 
-      // Line 4 (y = 821) - Pure Tamil category & discipline so it renders at 100% full TA_REG / TA_KEY size!
-      drawRichCenteredLineOnCert(ctx, [
+      // Category & Discipline Line: "மாவட்ட அறிவியல் கண்காட்சியில் ஆசிரியர் பிரிவில் ( உயிரியல் / உயிர்வேதியியல் )"
+      taLines.push([
         { text: "மாவட்ட அறிவியல் கண்காட்சியில்  ", size: TA_REG, color: "#1e293b", weight: "bold" },
-        { text: winningCatFullTa, size: TA_KEY, color: "#047857", weight: "900", underline: true, underlineColor: "#6ee7b7" },
-        { text: "  பிரிவில்", size: TA_REG, color: "#1e293b", weight: "bold" }
-      ], centerX, 821, maxLineW);
+        { text: winningCatFullTa, size: TA_KEY, color: "#047857", weight: "900", underline: true, underlineColor: "#6ee7b7" }
+      ]);
 
-      // Line 5 (y = 882)
-      drawRichCenteredLineOnCert(ctx, [
+      // Exhibit Title Line: "“ Vitalguard ” என்ற அறிவியல் படைப்பினைச் சிறப்பாகப் படைத்து,"
+      taLines.push([
         { text: `“ ${projectTitleTa} ”`, size: TA_KEY, color: "#9a3412", weight: "900", underline: true, underlineColor: "#fdba74" },
         { text: "  என்ற அறிவியல் படைப்பினைச் சிறப்பாகப் படைத்து,", size: TA_REG, color: "#1e293b", weight: "bold" }
-      ], centerX, 882, maxLineW);
+      ]);
 
-      // Line 6 (y = 943)
-      drawRichCenteredLineOnCert(ctx, [
-        { text: "இப்போட்டியில்   ", size: TA_REG, color: "#1e293b", weight: "bold" },
-        { text: rankCleanTextTa, size: TA_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
-        { text: `   ${rankVerbTa}`, size: TA_REG, color: "#1e293b", weight: "bold" }
-      ], centerX, 943, maxLineW);
+      // Closing / Rank Line(s) following exact model text:
+      // For Participant: "இப்போட்டியில் பங்கேற்றமையைப் பாராட்டி நற்சான்றிதழ் வழங்கப்படுகிறது."
+      // For Winner: "இப்போட்டியில் [Rank] பெற்றமையைப் பாராட்டி" / "நற்சான்றிதழ் வழங்கப்படுகிறது."
+      if (isParticipant) {
+        taLines.push([
+          { text: "இப்போட்டியில்  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+          { text: "பங்கேற்றமையைப்", size: TA_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
+          { text: "  பாராட்டி நற்சான்றிதழ் வழங்கப்படுகிறது.", size: TA_REG, color: "#1e293b", weight: "bold" }
+        ]);
+      } else {
+        taLines.push([
+          { text: "இப்போட்டியில்   ", size: TA_REG, color: "#1e293b", weight: "bold" },
+          { text: rankCleanTextTa, size: TA_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
+          { text: "   பெற்றமையைப்", size: TA_REG, color: "#1e293b", weight: "bold" }
+        ]);
+        taLines.push([
+          { text: "பாராட்டி நற்சான்றிதழ் வழங்கப்படுகிறது.", size: TA_REG, color: "#1e293b", weight: "bold" }
+        ]);
+      }
 
-      // Line 7 (y = 1002)
-      const closeVerbTa = (cat === "Group") ? "பாராட்டப்படுகிறார்கள்" : "பாராட்டப்படுகிறார்";
-      drawRichCenteredLineOnCert(ctx, [
-        { text: `${closeVerbTa} என மனதாரப் பாராட்டி இச்சான்றிதழ் வழங்கப்படுகிறது.`, size: TA_REG, color: "#1e293b", weight: "bold" }
-      ], centerX, 1002, maxLineW);
+      // Vertically distribute taLines in y = 640..1000
+      const taCount = taLines.length;
+      const taStep = taCount <= 5 ? 72 : (taCount === 6 ? 65 : 59);
+      const taTotalH = (taCount - 1) * taStep;
+      const taStartY = Math.round(820 - taTotalH / 2);
+      taLines.forEach((lineSegs, idx) => {
+        drawRichCenteredLineOnCert(ctx, lineSegs, centerX, taStartY + idx * taStep, maxLineW);
+      });
 
-      // === SLEEK CENTER GOLD DIVIDER (y = 1044) ===
+      // === SLEEK CENTER GOLD DIVIDER (y = 1046) ===
       ctx.save();
       ctx.strokeStyle = "#d97706";
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(250, 1044);
-      ctx.lineTo(620, 1044);
-      ctx.moveTo(828, 1044);
-      ctx.lineTo(1198, 1044);
+      ctx.moveTo(250, 1046);
+      ctx.lineTo(620, 1046);
+      ctx.moveTo(828, 1046);
+      ctx.lineTo(1198, 1046);
       ctx.stroke();
       ctx.textAlign = "center";
       ctx.fillStyle = "#b45309";
       ctx.font = "bold 18px sans-serif";
-      ctx.fillText("✦   •   ❖   •   ✦", centerX, 1050);
+      ctx.fillText("✦   •   ❖   •   ✦", centerX, 1052);
       ctx.restore();
 
-      // === LOWER SECTION: ENGLISH CITATION (7 well-balanced lines, y = 1104..1500) ===
-      // Uniform font sizes for Bilingual English section:
-      const EN_REG = 22.5; // All regular English words across all lines
-      const EN_KEY = 24.5; // All highlighted English key terms
+      // === LOWER SECTION: ENGLISH CITATION (y = 1105..1505) ===
+      const EN_REG = 22.5; // Uniform regular English font size
+      const EN_KEY = 24.5; // Uniform highlighted English key term font size
 
-      // Line 1 (y = 1104)
+      const enLines = [];
+
+      // Line 1: Student(s) or Teacher
       if (cat === "Individual") {
-        drawRichCenteredLineOnCert(ctx, [
+        enLines.push([
           { text: "This is to certify that  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
           { text: s1NameEn || "-", size: EN_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
           { text: `  (${s1ClassEn}),`, size: EN_KEY, color: "#b91c1c", weight: "900", family: "sans-serif" }
-        ], centerX, 1104, maxLineW);
+        ]);
       } else if (cat === "Group") {
         const g1En = `${s1NameEn || "-"} (${s1ClassEn})`;
         const g2En = s2NameEn ? ` & ${s2NameEn} (${s2ClassEn})` : "";
-        drawRichCenteredLineOnCert(ctx, [
+        enLines.push([
           { text: "This is to certify that  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
           { text: g1En + g2En, size: EN_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" }
-        ], centerX, 1104, maxLineW);
+        ]);
       } else {
-        drawRichCenteredLineOnCert(ctx, [
-          { text: "This is to certify that Participating Teacher  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+        enLines.push([
+          { text: "This is to certify that Teacher  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
           { text: teacherNameEn || "-", size: EN_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" }
-        ], centerX, 1104, maxLineW);
+        ]);
       }
 
-      // Line 2 (y = 1170)
-      drawRichCenteredLineOnCert(ctx, [
+      // Line 2: School Name ONLY (NO "12 Sivagangai, Sivagangai District"!)
+      enLines.push([
         { text: "of  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
         { text: schoolNameEnFull, size: EN_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
-        { text: ", Sivagangai District,", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
-      ], centerX, 1170, maxLineW);
+        { text: ",", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+      ]);
 
-      // Line 3 (y = 1236) - Dedicated line for Guide Teacher & Exhibit presentation so it NEVER shrinks!
+      // Line 3: Guide Teacher (for Student categories) or Exhibit presentation (for Teacher category)
       if (cat !== "Teacher" && teacherNameEn) {
-        drawRichCenteredLineOnCert(ctx, [
+        enLines.push([
           { text: "guided by Mentor Teacher  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
           { text: teacherNameEn, size: EN_KEY, color: "#0f766e", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" },
           { text: ", has presented an exhibit", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
-        ], centerX, 1236, maxLineW);
+        ]);
       } else {
-        drawRichCenteredLineOnCert(ctx, [
+        enLines.push([
           { text: "has presented an innovative scientific exhibit at the District Science Fair", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
-        ], centerX, 1236, maxLineW);
+        ]);
       }
 
-      // Line 4 (y = 1302) - Category & Exhibit Title at full EN_REG / EN_KEY size
-      drawRichCenteredLineOnCert(ctx, [
+      // Line 4: Category & Exhibit Title
+      enLines.push([
         { text: "in  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
         { text: winningCatFullEn, size: EN_KEY, color: "#047857", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" },
         { text: "  titled  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
         { text: `“ ${projectTitleEn} ”`, size: EN_KEY, color: "#9a3412", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fdba74" }
-      ], centerX, 1302, maxLineW);
+      ]);
 
-      // Line 5 (y = 1368)
-      drawRichCenteredLineOnCert(ctx, [
-        { text: "at the District Level Southern India Science Fair held on 03.11.2026 at Sivagangai,", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
-      ], centerX, 1368, maxLineW);
+      // Line 5, 6, 7: Event & Award/Participation recognition
+      if (isParticipant) {
+        enLines.push([
+          { text: "at the District Level Southern India Science Fair held on 03.11.2026 at Sivagangai,", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ]);
+        enLines.push([
+          { text: "and is awarded this Certificate of Merit in appreciation of their  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: "ACTIVE PARTICIPATION", size: EN_KEY, color: "#b91c1c", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fca5a5" }
+        ]);
+        enLines.push([
+          { text: "and contribution to scientific inquiry, creativity, and technological innovation.", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ]);
+      } else {
+        enLines.push([
+          { text: "at the District Level Southern India Science Fair held on 03.11.2026 at Sivagangai,", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ]);
+        enLines.push([
+          { text: "and securing   ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: rankCleanTextEn, size: EN_KEY, color: "#b91c1c", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fca5a5" }
+        ]);
+        enLines.push([
+          { text: "in recognition of their scientific inquiry, creativity, and technological innovation.", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ]);
+      }
 
-      // Line 6 (y = 1434)
-      drawRichCenteredLineOnCert(ctx, [
-        { text: `${rankPhraseEn}   `, size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
-        { text: rankCleanTextEn, size: EN_KEY, color: "#b91c1c", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fca5a5" }
-      ], centerX, 1434, maxLineW);
-
-      // Line 7 (y = 1500)
-      drawRichCenteredLineOnCert(ctx, [
-        { text: "in recognition of their scientific inquiry, creativity, and technological innovation.", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
-      ], centerX, 1500, maxLineW);
+      const enCount = enLines.length;
+      const enStep = 65;
+      const enTotalH = (enCount - 1) * enStep;
+      const enStartY = Math.round(1304 - enTotalH / 2);
+      enLines.forEach((lineSegs, idx) => {
+        drawRichCenteredLineOnCert(ctx, lineSegs, centerX, enStartY + idx * enStep, maxLineW);
+      });
 
     } else if (mode === "ta") {
       // === FULL-PAGE TAMIL PORTRAIT CERTIFICATE (y = 635..1485) ===
-      // Strict uniform font sizes across ALL lines:
-      const TA_FULL_REG = 27.5; // All regular words
-      const TA_FULL_KEY = 29.5; // All highlighted key terms
+      const TA_FULL_REG = 24;
+      const TA_FULL_KEY = 25;
 
       ctx.save();
       ctx.fillStyle = "#eff6ff";
@@ -10182,76 +10214,94 @@ ${n.message}
       ctx.fillText("✦ இடம்: சிவகங்கை மன்னர் மேல்நிலைப்பள்ளி   |   நாள்: 03.11.2026 ✦", centerX, 663, 910);
       ctx.restore();
 
-      drawRichCenteredLineOnCert(ctx, [
+      const taFullLines = [];
+      taFullLines.push([
         { text: "சிவகங்கை மாவட்டம்,  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
         { text: formattedSchoolWithTown, size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
-      ], centerX, 775, maxLineW);
+      ]);
 
       if (cat === "Individual") {
-        drawRichCenteredLineOnCert(ctx, [
+        taFullLines.push([
           { text: s1ClassTa || "9-ஆம் வகுப்பு", size: TA_FULL_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
           { text: "  பயிலும் மாணவர் / மாணவி  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
           { text: s1NameTa || "-", size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
           { text: "  என்பவர்,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
-        ], centerX, 875, maxLineW);
-
-        drawRichCenteredLineOnCert(ctx, [
-          { text: "வழிகாட்டி ஆசிரியர் திரு./திருமதி.  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
-          { text: teacherNameTa || "-", size: TA_FULL_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
-          { text: "  வழிகாட்டுதலுடன்,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
-        ], centerX, 975, maxLineW);
+        ]);
+        if (teacherNameTa) {
+          taFullLines.push([
+            { text: "வழிகாட்டி ஆசிரியர் திரு./திருமதி.  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+            { text: teacherNameTa, size: TA_FULL_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
+            { text: "  வழிகாட்டுதலுடன்,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
+          ]);
+        }
       } else if (cat === "Group") {
         const s1Part = `${s1NameTa || "-"} (${s1ClassTa || "9-ஆம் வகுப்பு"})`;
         const s2Part = s2NameTa ? `,  ${s2NameTa} (${s2ClassTa || "9-ஆம் வகுப்பு"})` : "";
-        drawRichCenteredLineOnCert(ctx, [
+        taFullLines.push([
           { text: "பயிலும் மாணவர்கள்  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
           { text: s1Part + s2Part, size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
           { text: "  ஆகியோர்,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
-        ], centerX, 875, maxLineW);
-
-        drawRichCenteredLineOnCert(ctx, [
-          { text: "வழிகாட்டி ஆசிரியர் திரு./திருமதி.  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
-          { text: teacherNameTa || "-", size: TA_FULL_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
-          { text: "  வழிகாட்டுதலுடன்,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
-        ], centerX, 975, maxLineW);
+        ]);
+        if (teacherNameTa) {
+          taFullLines.push([
+            { text: "வழிகாட்டி ஆசிரியர் திரு./திருமதி.  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+            { text: teacherNameTa, size: TA_FULL_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
+            { text: "  வழிகாட்டுதலுடன்,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
+          ]);
+        }
       } else {
-        drawRichCenteredLineOnCert(ctx, [
-          { text: "பணியாற்றும் பங்கேற்பாளர் ஆசிரியர் திரு./திருமதி.  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+        taFullLines.push([
+          { text: "பணியாற்றும் ஆசிரியர் திரு./திருமதி.  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
           { text: teacherNameTa || "-", size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
           { text: "  என்பவர்,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
-        ], centerX, 925, maxLineW);
+        ]);
       }
 
-      drawRichCenteredLineOnCert(ctx, [
+      taFullLines.push([
         { text: "மாவட்ட அறிவியல் கண்காட்சியில்  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
-        { text: winningCatFullTa, size: TA_FULL_KEY, color: "#047857", weight: "900", underline: true, underlineColor: "#6ee7b7" },
-        { text: "  பிரிவில்", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
-      ], centerX, 1075, maxLineW);
+        { text: winningCatFullTa, size: TA_FULL_KEY, color: "#047857", weight: "900", underline: true, underlineColor: "#6ee7b7" }
+      ]);
 
-      drawRichCenteredLineOnCert(ctx, [
+      taFullLines.push([
         { text: `“ ${projectTitleTa} ”`, size: TA_FULL_KEY, color: "#9a3412", weight: "900", underline: true, underlineColor: "#fdba74" }
-      ], centerX, 1175, maxLineW);
+      ]);
 
-      drawRichCenteredLineOnCert(ctx, [
-        { text: "என்ற தலைப்பிலான அறிவியல் படைப்பினைச் சிறப்பாகக் காட்சிப்படுத்தி,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
-      ], centerX, 1270, maxLineW);
+      taFullLines.push([
+        { text: "என்ற அறிவியல் படைப்பினைச் சிறப்பாகப் படைத்து,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
+      ]);
 
-      drawRichCenteredLineOnCert(ctx, [
-        { text: "இப்போட்டியில்   ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
-        { text: rankCleanTextTa, size: TA_FULL_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
-        { text: `   ${rankVerbTa}`, size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
-      ], centerX, 1370, maxLineW);
+      if (isParticipant) {
+        taFullLines.push([
+          { text: "இப்போட்டியில்  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+          { text: "பங்கேற்றமையைப்", size: TA_FULL_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
+          { text: "  பாராட்டி", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
+        ]);
+        taFullLines.push([
+          { text: "நற்சான்றிதழ் வழங்கப்படுகிறது.", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
+        ]);
+      } else {
+        taFullLines.push([
+          { text: "இப்போட்டியில்   ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+          { text: rankCleanTextTa, size: TA_FULL_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
+          { text: "   பெற்றமையைப்", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
+        ]);
+        taFullLines.push([
+          { text: "பாராட்டி நற்சான்றிதழ் வழங்கப்படுகிறது.", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
+        ]);
+      }
 
-      const closeVerbTa = (cat === "Group") ? "பாராட்டப்படுகிறார்கள்" : "பாராட்டப்படுகிறார்";
-      drawRichCenteredLineOnCert(ctx, [
-        { text: `${closeVerbTa} என மனதாரப் பாராட்டி இச்சான்றிதழ் வழங்கப்படுகிறது.`, size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
-      ], centerX, 1468, maxLineW);
+      const tfCount = taFullLines.length;
+      const tfStep = tfCount <= 7 ? 105 : 96;
+      const tfTotalH = (tfCount - 1) * tfStep;
+      const tfStartY = Math.round(1120 - tfTotalH / 2);
+      taFullLines.forEach((lineSegs, idx) => {
+        drawRichCenteredLineOnCert(ctx, lineSegs, centerX, tfStartY + idx * tfStep, maxLineW);
+      });
 
     } else {
       // === FULL-PAGE ENGLISH PORTRAIT CERTIFICATE (y = 635..1485) ===
-      // Strict uniform font sizes across ALL lines:
-      const EN_FULL_REG = 25;   // All regular words
-      const EN_FULL_KEY = 27.5; // All highlighted key terms
+      const EN_FULL_REG = 25;
+      const EN_FULL_KEY = 27.5;
 
       ctx.save();
       ctx.fillStyle = "#eff6ff";
@@ -10267,64 +10317,81 @@ ${n.message}
       ctx.fillText("✦ Venue: Mannar Hr. Sec. School, Sivagangai   |   Date: 03.11.2026 ✦", centerX, 662, 910);
       ctx.restore();
 
-      drawRichCenteredLineOnCert(ctx, [
+      const enFullLines = [];
+      enFullLines.push([
         { text: "This is to proudly certify that", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
-      ], centerX, 760, maxLineW);
+      ]);
 
       if (cat === "Individual") {
-        drawRichCenteredLineOnCert(ctx, [
+        enFullLines.push([
           { text: s1NameEn || "-", size: EN_FULL_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
           { text: `   (${s1ClassEn})`, size: EN_FULL_KEY, color: "#b91c1c", weight: "900", family: "sans-serif" }
-        ], centerX, 850, maxLineW);
+        ]);
       } else if (cat === "Group") {
         const g1En = `${s1NameEn || "-"} (${s1ClassEn})`;
         const g2En = s2NameEn ? `  &  ${s2NameEn} (${s2ClassEn})` : "";
-        drawRichCenteredLineOnCert(ctx, [
+        enFullLines.push([
           { text: g1En + g2En, size: EN_FULL_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" }
-        ], centerX, 850, maxLineW);
+        ]);
       } else {
-        drawRichCenteredLineOnCert(ctx, [
-          { text: "Participating Teacher   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+        enFullLines.push([
+          { text: "Teacher   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
           { text: teacherNameEn || "-", size: EN_FULL_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" }
-        ], centerX, 850, maxLineW);
+        ]);
       }
 
-      drawRichCenteredLineOnCert(ctx, [
+      // School Name ONLY (NO "12 Sivagangai, Sivagangai District"!)
+      enFullLines.push([
         { text: "of   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
         { text: schoolNameEnFull, size: EN_FULL_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
-        { text: ", Sivagangai District,", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
-      ], centerX, 940, maxLineW);
+        { text: ",", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+      ]);
 
-      if (cat !== "Teacher") {
-        drawRichCenteredLineOnCert(ctx, [
+      if (cat !== "Teacher" && teacherNameEn) {
+        enFullLines.push([
           { text: "mentored by Guide Teacher   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
-          { text: teacherNameEn || "-", size: EN_FULL_KEY, color: "#0f766e", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" },
+          { text: teacherNameEn, size: EN_FULL_KEY, color: "#0f766e", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" },
           { text: ",", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
-        ], centerX, 1030, maxLineW);
+        ]);
       }
 
-      drawRichCenteredLineOnCert(ctx, [
+      enFullLines.push([
         { text: "has presented an exhibit in   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
         { text: winningCatFullEn, size: EN_FULL_KEY, color: "#047857", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" }
-      ], centerX, 1120, maxLineW);
+      ]);
 
-      drawRichCenteredLineOnCert(ctx, [
+      enFullLines.push([
         { text: "titled   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
         { text: `“ ${projectTitleEn} ”`, size: EN_FULL_KEY, color: "#9a3412", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fdba74" }
-      ], centerX, 1210, maxLineW);
+      ]);
 
-      drawRichCenteredLineOnCert(ctx, [
+      enFullLines.push([
         { text: "at the District Level Southern India Science Fair (SISF 2026 – 2027),", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
-      ], centerX, 1300, maxLineW);
+      ]);
 
-      drawRichCenteredLineOnCert(ctx, [
-        { text: `${rankPhraseEn}   `, size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
-        { text: rankCleanTextEn, size: EN_FULL_KEY, color: "#b91c1c", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fca5a5" }
-      ], centerX, 1390, maxLineW);
+      if (isParticipant) {
+        enFullLines.push([
+          { text: "and is awarded this Certificate of Merit for   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: "ACTIVE PARTICIPATION", size: EN_FULL_KEY, color: "#b91c1c", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fca5a5" }
+        ]);
+      } else {
+        enFullLines.push([
+          { text: "and securing   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: rankCleanTextEn, size: EN_FULL_KEY, color: "#b91c1c", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fca5a5" }
+        ]);
+      }
 
-      drawRichCenteredLineOnCert(ctx, [
+      enFullLines.push([
         { text: "in appreciation of their scientific inquiry, research aptitude, and innovative spirit.", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
-      ], centerX, 1475, maxLineW);
+      ]);
+
+      const efCount = enFullLines.length;
+      const efStep = efCount <= 8 ? 96 : 88;
+      const efTotalH = (efCount - 1) * efStep;
+      const efStartY = Math.round(1120 - efTotalH / 2);
+      enFullLines.forEach((lineSegs, idx) => {
+        drawRichCenteredLineOnCert(ctx, lineSegs, centerX, efStartY + idx * efStep, maxLineW);
+      });
     }
 
     // -----------------------------------------------------------------------
