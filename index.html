@@ -1703,6 +1703,9 @@
             <button type="button" class="btn-sm" style="background: #0d9488; padding: 7px 12px; font-weight: 800;" onclick="adminBulkAssignParticipantRank()" title="பரிசு தேர்வு செய்யப்படாத மற்ற விண்ணப்பங்களுக்கு 'பங்கேற்பாளர்' சான்றிதழ் நிலை வழங்கும்">
               🎖️ மற்றவர்களுக்கு 'பங்கேற்பாளர்' வழங்குக
             </button>
+            <button type="button" class="btn-sm" style="background: #dc2626; padding: 7px 12px; font-weight: 800;" onclick="adminResetAllWinners()" title="பதிவு செய்யப்பட்ட அனைத்து வெற்றியாளர் / பங்கேற்பாளர் நிலைகளையும் இரத்து செய்து மீட்டமைக்கும்">
+              🔄 அனைத்து வெற்றிநிலைகளையும் இரத்து செய்
+            </button>
             <button type="button" class="btn-sm" style="background: #15803d; padding: 7px 14px; font-weight: 700;" onclick="exportAdminApplicationsCsv()">
               📊 Excel / CSV பதிவிறக்கம்
             </button>
@@ -1843,6 +1846,9 @@
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button type="button" class="btn-sm" style="background: #0d9488; padding: 7px 12px; font-weight: 800;" onclick="adminBulkAssignParticipantRank()">
               🎖️ மீதமுள்ளவர்களுக்கு 'பங்கேற்பாளர்' வழங்குக
+            </button>
+            <button type="button" class="btn-sm" style="background: #dc2626; padding: 7px 12px; font-weight: 800;" onclick="adminResetAllWinners()">
+              🔄 அனைத்து வெற்றிநிலைகளையும் இரத்து செய்
             </button>
             <button type="button" class="btn-sm" style="background: #15803d; padding: 7px 14px; font-weight: 700;" onclick="exportWinnersCsv()">
               📊 பட்டியல் Excel / CSV பதிவிறக்கம்
@@ -8380,7 +8386,7 @@ ${n.message}
       }
       partHtml += `<div style="color:#475569; font-size:0.8rem; margin-top:2px;"><strong>ஆசிரியர்:</strong> ${a.guideTeacherName || "-"} (${a.guideTeacherMobile || "-"})</div>`;
 
-      const existingWin = adminWinnersList.find(w => w.regNo === a.regNo || (String(w.uNo).replace(/^0+/,"") === String(a.uNo).replace(/^0+/,"") && w.category === a.categoryOfEntry));
+      const existingWin = adminWinnersList.find(w => (w.regNo && w.regNo !== "-" && a.regNo && w.regNo === a.regNo) || (String(w.uNo || "").replace(/^0+/,"") === String(a.uNo || "").replace(/^0+/,"") && w.category === a.categoryOfEntry));
       const curRank = existingWin ? existingWin.prizeRank : "";
 
       return `<tr>
@@ -8391,16 +8397,17 @@ ${n.message}
         <td>${catBadgeMap[a.categoryOfEntry] || a.categoryOfEntry}</td>
         <td style="max-width:240px;">${partHtml}</td>
         <td style="max-width:230px;"><span style="font-size:0.78rem; font-weight:700; color:#0284c7;">${a.exhibitDiscipline || "-"}</span><br><strong>${a.exhibitTitle || "-"}</strong></td>
-        <td style="min-width:210px;">
+        <td style="min-width:220px;">
           <select class="form-control" style="padding:4px 6px; font-size:0.78rem; font-weight:700; margin-bottom:5px; border-color:${curRank ? '#d97706' : '#cbd5e1'}; background:${curRank ? '#fffbeb' : '#fff'};" onchange="adminInstantSetWinnerRank('${a.regNo}', this.value)">
-            <option value="">-- பரிசு / தகுதி தேர்வு --</option>
+            <option value="">-- பரிசு / தகுதி தேர்வு (இல்லை) --</option>
             <option value="🥇 முதலிடம் (மாநில அளவிலான போட்டிக்கு தேர்வு)" ${(curRank.includes("முதலிடம்") || curRank.includes("1st") || curRank.includes("மாநில")) ? "selected" : ""}>🥇 முதலிடம் (மாநில அளவிலான போட்டிக்கு தேர்வு)</option>
             <option value="🥈 இரண்டாமிடம்" ${(curRank.includes("இரண்டாம்") || curRank.includes("2nd")) ? "selected" : ""}>🥈 இரண்டாமிடம்</option>
             <option value="🥉 மூன்றாமிடம்" ${(curRank.includes("மூன்றாம்") || curRank.includes("3rd")) ? "selected" : ""}>🥉 மூன்றாமிடம்</option>
             <option value="🌟 சிறப்பிடம்" ${(curRank.includes("சிறப்ப") || curRank.includes("Special")) ? "selected" : ""}>🌟 சிறப்பிடம்</option>
             <option value="🎖️ பங்கேற்பாளர்" ${(curRank.includes("பங்கேற்பாளர்") || curRank.includes("Participant")) ? "selected" : ""}>🎖️ பங்கேற்பாளர்</option>
+            ${existingWin ? `<option value="REVOKE">❌ வெற்றிநிலை இரத்து (Cancel Winner)</option>` : ""}
           </select>
-          ${existingWin ? `<div style="display:flex; gap:4px; flex-wrap:wrap;"><button type="button" class="btn-sm" style="background:#0f766e; flex:1; justify-content:center; font-size:0.72rem; padding:4px 6px; font-weight:800;" onclick="adminDownloadWinnerCertificateByRegNo('${a.regNo}', 'bilingual')" title="இருமொழி சான்றிதழ் (தமிழ் & English Portrait)">📜 இருமொழி</button><button type="button" class="btn-sm" style="background:#059669; flex:1; justify-content:center; font-size:0.72rem; padding:4px 6px; font-weight:800;" onclick="adminDownloadWinnerCertificateByRegNo('${a.regNo}', 'ta')" title="தமிழ் சான்றிதழ் (Portrait)">📜 தமிழ்</button><button type="button" class="btn-sm" style="background:#2563eb; flex:1; justify-content:center; font-size:0.72rem; padding:4px 6px; font-weight:800;" onclick="adminDownloadWinnerCertificateByRegNo('${a.regNo}', 'en')" title="English Certificate (Portrait)">📜 EN</button></div>` : ""}
+          ${existingWin ? `<div style="display:flex; gap:4px; flex-wrap:wrap; margin-bottom:4px;"><button type="button" class="btn-sm" style="background:#0f766e; flex:1; justify-content:center; font-size:0.72rem; padding:4px 6px; font-weight:800;" onclick="adminDownloadWinnerCertificateByRegNo('${a.regNo}', 'bilingual')" title="இருமொழி சான்றிதழ் (தமிழ் & English Portrait)">📜 இருமொழி</button><button type="button" class="btn-sm" style="background:#059669; flex:1; justify-content:center; font-size:0.72rem; padding:4px 6px; font-weight:800;" onclick="adminDownloadWinnerCertificateByRegNo('${a.regNo}', 'ta')" title="தமிழ் சான்றிதழ் (Portrait)">📜 தமிழ்</button><button type="button" class="btn-sm" style="background:#2563eb; flex:1; justify-content:center; font-size:0.72rem; padding:4px 6px; font-weight:800;" onclick="adminDownloadWinnerCertificateByRegNo('${a.regNo}', 'en')" title="English Certificate (Portrait)">📜 EN</button></div><button type="button" class="btn-sm" style="background:#dc2626; width:100%; justify-content:center; font-size:0.73rem; padding:4px 8px; font-weight:800;" onclick="adminRevokeWinnerByRegNo('${a.regNo}')" title="இந்த விண்ணப்பத்தின் வெற்றிநிலையை இரத்து செய்">✖️ வெற்றிநிலை இரத்து (Cancel)</button>` : ""}
         </td>
         <td style="white-space:nowrap;">
           <div style="display:flex; gap:5px; align-items:center;">
@@ -8512,6 +8519,7 @@ ${n.message}
       adminWinnersList.push(winObj);
     }
 
+    unmarkWinnerRevoked(winObj.uNo, winObj.category, winObj.regNo, winObj.id);
     saveWinnersListToAllStores(adminWinnersList);
     if (scriptUrl && scriptUrl.startsWith("http")) {
       const qParams = new URLSearchParams(Object.assign({ action: "admin_save_winner" }, winObj)).toString();
@@ -8630,23 +8638,16 @@ ${n.message}
   }
 
   function deleteWinnerRecord(id) {
+    loadWinnersListIntoMemory();
     const w = adminWinnersList.find(item => item.id === id);
     if (!w) return;
-    const detailsHtml = `
-      <div><strong>📌 பதிவு வகை:</strong> வெற்றியாளர் / சான்றிதழ் பதிவு (Winner Entry)</div>
-      <div><strong>🏆 பரிசு நிலை:</strong> <span style="color:#b91c1c; font-weight:800;">${normalizePrizeRankLabel(w.prizeRank)}</span></div>
-      <div><strong>🏫 பள்ளி:</strong> ${w.schoolName || "-"} (U.NO: ${w.uNo || "-"})</div>
-      <div><strong>🔬 தலைப்பு:</strong> ${w.exhibitTitle || "-"}</div>
-    `;
-    openAdminDeleteConfirmModal(
-      "⚠️ வெற்றியாளர் பதிவை அழிக்க உறுதிப்படுத்தவும்",
-      detailsHtml,
-      function() {
-        adminWinnersList = adminWinnersList.filter(item => item.id !== id);
-        saveWinnersListToAllStores(adminWinnersList);
-        renderAdminStatsAndTables();
-      }
-    );
+    revokeWinnerStatusCore({
+      id: w.id,
+      regNo: w.regNo,
+      uNo: w.uNo,
+      udiseNo: w.udiseNo,
+      category: w.category
+    });
   }
 
   function renderAdminWinnersTable() {
@@ -8693,7 +8694,7 @@ ${n.message}
         <td style="white-space:nowrap;">
           <button type="button" class="btn-sm" style="background:#0f766e; margin-right:3px; font-weight:800; padding:4px 7px; font-size:0.74rem;" onclick="adminDownloadWinnerCertificateById('${w.id}', 'bilingual')" title="இருமொழி சான்றிதழ் (தமிழ் & English Portrait)">📜 தமிழ்+EN</button><button type="button" class="btn-sm" style="background:#059669; margin-right:3px; font-weight:800; padding:4px 7px; font-size:0.74rem;" onclick="adminDownloadWinnerCertificateById('${w.id}', 'ta')" title="தமிழ் சான்றிதழ் (Portrait)">📜 தமிழ்</button><button type="button" class="btn-sm" style="background:#2563eb; margin-right:4px; font-weight:800; padding:4px 7px; font-size:0.74rem;" onclick="adminDownloadWinnerCertificateById('${w.id}', 'en')" title="English Certificate (Portrait)">📜 EN</button>
           <button type="button" class="btn-sm" style="background:#2b6cb0; margin-right:4px;" onclick="editWinnerRecord('${w.id}')" title="திருத்து">✏️</button>
-          <button type="button" class="btn-sm" style="background:#dc2626;" onclick="deleteWinnerRecord('${w.id}')" title="நீக்கு">🗑️</button>
+          <button type="button" class="btn-sm" style="background:#dc2626; font-weight:800; padding:4px 8px; font-size:0.74rem;" onclick="deleteWinnerRecord('${w.id}')" title="வெற்றிநிலையை இரத்து செய் (Revoke Winner Status)">✖️ இரத்து</button>
         </td>
       </tr>
     `;
@@ -9246,6 +9247,79 @@ ${n.message}
   const sisfCertBgImg = new Image();
   sisfCertBgImg.src = CERT_BG_DATA_URI;
 
+  function getRevokedWinnersMap() {
+    try {
+      const raw = localStorage.getItem("SISF_REVOKED_WINNERS") || sessionStorage.getItem("SISF_REVOKED_WINNERS");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object") return parsed;
+      }
+      if (window.name && window.name.startsWith("{")) {
+        const wn = JSON.parse(window.name);
+        if (wn && wn.revokedWinners && typeof wn.revokedWinners === "object") return wn.revokedWinners;
+      }
+    } catch (e) {}
+    return {};
+  }
+
+  function saveRevokedWinnersMap(mapObj) {
+    const safeMap = (mapObj && typeof mapObj === "object") ? mapObj : {};
+    try { localStorage.setItem("SISF_REVOKED_WINNERS", JSON.stringify(safeMap)); } catch (e) {}
+    try { sessionStorage.setItem("SISF_REVOKED_WINNERS", JSON.stringify(safeMap)); } catch (e) {}
+    try {
+      let wn = {};
+      if (window.name && window.name.startsWith("{")) wn = JSON.parse(window.name);
+      wn.revokedWinners = safeMap;
+      window.name = JSON.stringify(wn);
+    } catch (e) {}
+  }
+
+  function markWinnerAsRevoked(uNo, category, regNo, id) {
+    const rev = getRevokedWinnersMap();
+    const cleanUno = String(uNo || "").replace(/^0+/, "").trim();
+    const cleanCat = String(category || "").trim();
+    const cleanReg = (regNo && regNo !== "-") ? String(regNo).trim() : "";
+    const cleanId = String(id || "").trim();
+    const ts = Date.now();
+    if (cleanId) rev["ID:" + cleanId] = ts;
+    if (cleanReg) rev["REG:" + cleanReg] = ts;
+    if (cleanUno && cleanCat) {
+      rev["UC:" + cleanUno + "_" + cleanCat] = ts;
+      rev["ID:WIN_" + cleanUno + "_" + cleanCat] = ts;
+    }
+    saveRevokedWinnersMap(rev);
+  }
+
+  function unmarkWinnerRevoked(uNo, category, regNo, id) {
+    const rev = getRevokedWinnersMap();
+    const cleanUno = String(uNo || "").replace(/^0+/, "").trim();
+    const cleanCat = String(category || "").trim();
+    const cleanReg = (regNo && regNo !== "-") ? String(regNo).trim() : "";
+    const cleanId = String(id || "").trim();
+    delete rev["ALL_RESET"];
+    if (cleanId) delete rev["ID:" + cleanId];
+    if (cleanReg) delete rev["REG:" + cleanReg];
+    if (cleanUno && cleanCat) {
+      delete rev["UC:" + cleanUno + "_" + cleanCat];
+      delete rev["ID:WIN_" + cleanUno + "_" + cleanCat];
+    }
+    saveRevokedWinnersMap(rev);
+  }
+
+  function isWinnerRecordRevoked(wObj) {
+    if (!wObj) return false;
+    const rev = getRevokedWinnersMap();
+    if (rev["ALL_RESET"]) return true;
+    const cleanUno = String(wObj.uNo || "").replace(/^0+/, "").trim();
+    const cleanCat = String(wObj.category || "").trim();
+    const cleanReg = (wObj.regNo && wObj.regNo !== "-") ? String(wObj.regNo).trim() : "";
+    const cleanId = String(wObj.id || "").trim();
+    if (cleanId && rev["ID:" + cleanId]) return true;
+    if (cleanReg && rev["REG:" + cleanReg]) return true;
+    if (cleanUno && cleanCat && rev["UC:" + cleanUno + "_" + cleanCat]) return true;
+    return false;
+  }
+
   function saveWinnersListToAllStores(list) {
     adminWinnersList = Array.isArray(list) ? list : [];
     try { localStorage.setItem("SISF_WINNERS_LIST", JSON.stringify(adminWinnersList)); } catch (e) {}
@@ -9260,22 +9334,25 @@ ${n.message}
 
   function loadWinnersListIntoMemory() {
     try {
-      const s = localStorage.getItem("SISF_WINNERS_LIST") || sessionStorage.getItem("SISF_WINNERS_LIST");
-      if (s) {
+      const s = localStorage.getItem("SISF_WINNERS_LIST") !== null
+        ? localStorage.getItem("SISF_WINNERS_LIST")
+        : sessionStorage.getItem("SISF_WINNERS_LIST");
+      if (s !== null && s !== undefined) {
         const parsed = JSON.parse(s);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          adminWinnersList = parsed;
+        if (Array.isArray(parsed)) {
+          adminWinnersList = parsed.filter(w => !isWinnerRecordRevoked(w));
           return adminWinnersList;
         }
       }
       if (window.name && window.name.startsWith("{")) {
         const wn = JSON.parse(window.name);
-        if (wn && Array.isArray(wn.winnersList) && wn.winnersList.length > 0) {
-          adminWinnersList = wn.winnersList;
+        if (wn && Array.isArray(wn.winnersList)) {
+          adminWinnersList = wn.winnersList.filter(w => !isWinnerRecordRevoked(w));
           return adminWinnersList;
         }
       }
     } catch (e) {}
+    adminWinnersList = (adminWinnersList || []).filter(w => !isWinnerRecordRevoked(w));
     return adminWinnersList;
   }
 
@@ -9288,21 +9365,27 @@ ${n.message}
           if (resp && resp.table && resp.table.rows) {
             const rows = resp.table.rows;
             const winMap = {};
-            adminWinnersList.forEach(w => { winMap[w.id || (w.uNo + "_" + w.category)] = w; });
+            adminWinnersList.forEach(w => {
+              if (!isWinnerRecordRevoked(w)) {
+                const k = String(w.uNo || "").replace(/^0+/, "") + "_" + w.category;
+                winMap[k] = w;
+              }
+            });
             for (let i = 0; i < rows.length; i++) {
               const c = rows[i].c || [];
               const val = (idx) => (c[idx] && c[idx].v !== null && c[idx].v !== undefined) ? String(c[idx].f || c[idx].v).trim() : "";
               const rId = val(0);
               const rCat = val(2);
               const rRank = val(3);
-              if (!rCat || rId === "ID") continue;
+              if (!rCat || !rRank || rId === "ID") continue;
+              const cleanUno = val(5).replace(/^0+/, "");
               const wObj = {
-                id: rId || ("WIN_" + i),
+                id: rId || ("WIN_" + cleanUno + "_" + rCat),
                 updatedAt: val(1),
                 category: rCat,
                 prizeRank: rRank,
                 regNo: val(4) || "-",
-                uNo: val(5).replace(/^0+/, ""),
+                uNo: cleanUno,
                 schoolName: val(6),
                 student1: val(7) || "-",
                 student2: val(8) || "-",
@@ -9310,7 +9393,9 @@ ${n.message}
                 discipline: val(10) || "",
                 exhibitTitle: val(11) || ""
               };
-              winMap[wObj.uNo + "_" + wObj.category] = wObj;
+              if (!isWinnerRecordRevoked(wObj)) {
+                winMap[cleanUno + "_" + rCat] = wObj;
+              }
             }
             saveWinnersListToAllStores(Object.values(winMap));
             if (loggedInSchool) renderDashboardUI();
@@ -9334,6 +9419,7 @@ ${n.message}
     const targetRegNo = String((appData && appData.regNo) || "").trim();
 
     return adminWinnersList.find(w => {
+      if (isWinnerRecordRevoked(w)) return false;
       if (w.category && w.category !== catKey) return false;
       const wUno = String(w.uNo || "").replace(/^0+/, "").trim();
       if (targetRegNo && w.regNo && w.regNo !== "-" && w.regNo === targetRegNo) return true;
@@ -9343,27 +9429,112 @@ ${n.message}
     }) || null;
   }
 
+  function revokeWinnerStatusCore(target) {
+    loadWinnersListIntoMemory();
+    const cleanId = String((target && target.id) || "").trim();
+    const cleanReg = (target && target.regNo && target.regNo !== "-") ? String(target.regNo).trim() : "";
+    const cleanUno = String((target && target.uNo) || "").replace(/^0+/, "").trim();
+    const cleanUdise = String((target && target.udiseNo) || "").trim();
+    const cleanCat = String((target && target.category) || "").trim();
+
+    markWinnerAsRevoked(cleanUno, cleanCat, cleanReg, cleanId);
+
+    adminWinnersList = adminWinnersList.filter(w => {
+      const wId = String(w.id || "").trim();
+      const wReg = (w.regNo && w.regNo !== "-") ? String(w.regNo).trim() : "";
+      const wUno = String(w.uNo || "").replace(/^0+/, "").trim();
+      const wCat = String(w.category || "").trim();
+
+      if (cleanId && wId === cleanId) return false;
+      if (cleanReg && wReg === cleanReg) return false;
+      if (cleanUno && wUno === cleanUno && (!cleanCat || wCat === cleanCat)) return false;
+      return true;
+    });
+
+    saveWinnersListToAllStores(adminWinnersList);
+    renderAdminStatsAndTables();
+    if (loggedInSchool) renderDashboardUI();
+
+    const payload = {
+      action: "admin_delete_winner",
+      id: cleanId,
+      regNo: cleanReg,
+      uNo: cleanUno,
+      udiseNo: cleanUdise,
+      category: cleanCat
+    };
+    if (scriptUrl && scriptUrl.startsWith("http")) {
+      const qParams = new URLSearchParams(payload).toString();
+      fetchJsonp(scriptUrl + "?" + qParams, 4500).catch(() => {});
+    }
+    sendToScriptReliably(payload).catch(() => {});
+  }
+
+  function adminRevokeWinnerByRegNo(regNo) {
+    loadWinnersListIntoMemory();
+    const app = adminAllApps.find(a => a.regNo === regNo);
+    const existingWin = adminWinnersList.find(w =>
+      (w.regNo && w.regNo !== "-" && w.regNo === regNo) ||
+      (app && String(w.uNo || "").replace(/^0+/, "") === String(app.uNo || "").replace(/^0+/, "") && w.category === app.categoryOfEntry)
+    );
+    revokeWinnerStatusCore({
+      id: existingWin ? existingWin.id : "",
+      regNo: regNo,
+      uNo: (app && app.uNo) || (existingWin && existingWin.uNo) || "",
+      udiseNo: (app && app.udiseNo) || "",
+      category: (app && app.categoryOfEntry) || (existingWin && existingWin.category) || ""
+    });
+  }
+
+  function adminResetAllWinners() {
+    loadWinnersListIntoMemory();
+    if (!adminWinnersList || adminWinnersList.length === 0) {
+      alert("தற்போது வெற்றியாளர் / சான்றிதழ் பதிவுகள் ஏதுமில்லை.");
+      return;
+    }
+    const count = adminWinnersList.length;
+    const rev = getRevokedWinnersMap();
+    rev["ALL_RESET"] = Date.now();
+    adminWinnersList.forEach(w => {
+      const cleanUno = String(w.uNo || "").replace(/^0+/, "").trim();
+      if (w.id) rev["ID:" + w.id] = Date.now();
+      if (w.regNo && w.regNo !== "-") rev["REG:" + w.regNo] = Date.now();
+      if (cleanUno && w.category) rev["UC:" + cleanUno + "_" + w.category] = Date.now();
+    });
+    saveRevokedWinnersMap(rev);
+    adminWinnersList = [];
+    saveWinnersListToAllStores([]);
+    renderAdminStatsAndTables();
+    if (loggedInSchool) renderDashboardUI();
+
+    const payload = { action: "admin_delete_winner", clearAll: "true", id: "ALL" };
+    if (scriptUrl && scriptUrl.startsWith("http")) {
+      const qParams = new URLSearchParams(payload).toString();
+      fetchJsonp(scriptUrl + "?" + qParams, 4500).catch(() => {});
+    }
+    sendToScriptReliably(payload).catch(() => {});
+    alert(`✅ பதிவு செய்யப்பட்டிருந்த ${count} வெற்றியாளர் / பங்கேற்பாளர் நிலைகளும் முழுமையாக இரத்து செய்யப்பட்டு மீட்டமைக்கப்பட்டன!`);
+  }
+
   function adminInstantSetWinnerRank(regNo, selectedRank) {
     loadWinnersListIntoMemory();
     const app = adminAllApps.find(a => a.regNo === regNo);
     if (!app) return;
 
-    if (!selectedRank) {
-      // Remove from winners list if unselected
-      adminWinnersList = adminWinnersList.filter(w => !(w.regNo === regNo || (String(w.uNo).replace(/^0+/,"") === String(app.uNo).replace(/^0+/,"") && w.category === app.categoryOfEntry)));
-      saveWinnersListToAllStores(adminWinnersList);
-      renderAdminStatsAndTables();
+    if (!selectedRank || selectedRank === "REVOKE") {
+      adminRevokeWinnerByRegNo(regNo);
       return;
     }
 
-    const mSchool = MASTER_SCHOOLS.find(s => s.udiseNo === app.udiseNo || s.uNo === String(app.uNo || "").replace(/^0+/, ""));
+    const cleanUno = String(app.uNo || "").replace(/^0+/, "");
+    const mSchool = MASTER_SCHOOLS.find(s => s.udiseNo === app.udiseNo || s.uNo === cleanUno);
     const sNameClean = (mSchool ? mSchool.nameTa : (app.nameTa || app.schoolAddress || "")).replace(/\s*\([^)]*\)/g, "").trim();
 
     const winObj = {
-      id: "WIN_" + (app.uNo || app.udiseNo) + "_" + app.categoryOfEntry,
+      id: "WIN_" + (cleanUno || app.udiseNo) + "_" + app.categoryOfEntry,
       category: app.categoryOfEntry,
       prizeRank: selectedRank,
-      uNo: String(app.uNo || "").replace(/^0+/, ""),
+      uNo: cleanUno,
       udiseNo: app.udiseNo || "",
       schoolName: sNameClean,
       regNo: app.regNo || "-",
@@ -9380,7 +9551,13 @@ ${n.message}
       updatedAt: new Date().toLocaleString("en-IN")
     };
 
-    const existingIdx = adminWinnersList.findIndex(w => w.id === winObj.id || (w.regNo !== "-" && w.regNo === winObj.regNo));
+    unmarkWinnerRevoked(winObj.uNo, winObj.category, winObj.regNo, winObj.id);
+
+    const existingIdx = adminWinnersList.findIndex(w =>
+      w.id === winObj.id ||
+      (w.regNo && w.regNo !== "-" && w.regNo === winObj.regNo) ||
+      (String(w.uNo || "").replace(/^0+/, "") === cleanUno && w.category === winObj.category)
+    );
     if (existingIdx >= 0) {
       adminWinnersList[existingIdx] = winObj;
     } else {
@@ -9408,14 +9585,14 @@ ${n.message}
 
   function adminDownloadWinnerCertificateByRegNo(regNo, langMode) {
     const app = adminAllApps.find(a => a.regNo === regNo);
-    const winRec = adminWinnersList.find(w => w.regNo === regNo || (app && String(w.uNo).replace(/^0+/,"") === String(app.uNo).replace(/^0+/,"") && w.category === app.categoryOfEntry));
+    const winRec = adminWinnersList.find(w => (w.regNo && w.regNo !== "-" && w.regNo === regNo) || (app && String(w.uNo).replace(/^0+/,"") === String(app.uNo).replace(/^0+/,"") && w.category === app.categoryOfEntry));
     generateAndDownloadWinnerCertificatePdf(winRec, app, langMode || "bilingual");
   }
 
   function adminDownloadWinnerCertificateById(winId, langMode) {
     const winRec = adminWinnersList.find(w => w.id === winId);
     if (!winRec) return;
-    const app = adminAllApps.find(a => a.regNo === winRec.regNo || (String(a.uNo).replace(/^0+/,"") === String(winRec.uNo).replace(/^0+/,"") && a.categoryOfEntry === winRec.category));
+    const app = adminAllApps.find(a => (a.regNo && winRec.regNo && winRec.regNo !== "-" && a.regNo === winRec.regNo) || (String(a.uNo).replace(/^0+/,"") === String(winRec.uNo).replace(/^0+/,"") && a.categoryOfEntry === winRec.category));
     generateAndDownloadWinnerCertificatePdf(winRec, app, langMode || "bilingual");
   }
 
@@ -9473,7 +9650,6 @@ ${n.message}
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
-    // Catmull-Rom / dense cubic interpolation with variable nib width
     const dense = [];
     for (let i = 0; i < pts.length - 1; i++) {
       const p0 = pts[Math.max(0, i - 1)];
@@ -9511,15 +9687,12 @@ ${n.message}
 
   function drawNaturalCeoSignature(ctx, cx, cy) {
     ctx.save();
-    // Place compact, natural fountain-pen signature centered at (cx, cy), width ~124px, height ~38px
     ctx.translate(cx - 62, cy - 18);
-    // Subtle natural cursive slant
     ctx.transform(1, -0.04, -0.12, 1, 0, 0);
 
     const inkMain = "#046c3e";
     const inkCore = "#035430";
 
-    // 1. Initial cursive letter ("க" / "K" loop with downstroke, loop-back, and curved tail)
     drawVariablePressureStroke(ctx, [
       [14, 4, 1.3],
       [11, 16, 2.3],
@@ -9532,13 +9705,11 @@ ${n.message}
       [21, 28, 1.3]
     ], 1.3, 2.3, 1.2, inkMain);
 
-    // 2. Crisp fountain-pen initial dot
     ctx.fillStyle = inkCore;
     ctx.beginPath();
     ctx.ellipse(35.5, 24.5, 1.6, 1.3, -0.25, 0, Math.PI * 2);
     ctx.fill();
 
-    // 3. Connected cursive middle body (flowing arch + tall ascender loop + graceful descender + trailing wave)
     drawVariablePressureStroke(ctx, [
       [44, 24, 1.2],
       [50, 14, 2.0],
@@ -9554,7 +9725,6 @@ ${n.message}
       [69, 43, 1.2]
     ], 1.2, 2.4, 1.1, inkMain);
 
-    // 4. Fast, natural cursive trailing wave & rising underline flourish (tapers to a razor-fine tip)
     drawVariablePressureStroke(ctx, [
       [84, 21, 1.5],
       [92, 19, 2.0],
@@ -9658,31 +9828,32 @@ ${n.message}
       ? `${rawSchoolNameEn}, ${blockEn}`
       : rawSchoolNameEn;
 
-    const discMapTa = {
-      "Physics": "இயற்பியல் (Physics)",
-      "Chemistry": "வேதியியல் (Chemistry)",
-      "Mathematics": "கணிதம் (Mathematics)",
-      "Environmental Science": "சுற்றுச்சூழல் அறிவியல் (Env. Science)",
-      "Engineering": "பொறியியல் (Engineering)",
-      "Bioscience / Biochemistry": "உயிரியல் / உயிர் வேதியியல் (Bioscience)",
-      "Earth & Space Science": "பூமி & விண்வெளி அறிவியல் (Earth & Space)",
-      "Computer Science": "கணினி அறிவியல் (Computer Science)"
+    // Pure Tamil discipline & category names for Tamil citation so Line 3 never shrinks!
+    const discMapTaClean = {
+      "Physics": "இயற்பியல்",
+      "Chemistry": "வேதியியல்",
+      "Mathematics": "கணிதம்",
+      "Environmental Science": "சுற்றுச்சூழல் அறிவியல்",
+      "Engineering": "பொறியியல்",
+      "Bioscience / Biochemistry": "உயிரியல் / உயிர் வேதியியல்",
+      "Earth & Space Science": "பூமி & விண்வெளி அறிவியல்",
+      "Computer Science": "கணினி அறிவியல்"
     };
     const rawDisc = (winRec && winRec.discipline) || (appData && appData.exhibitDiscipline) || "Physics";
-    const discTa = discMapTa[rawDisc] || rawDisc;
+    const discTaClean = discMapTaClean[rawDisc] || rawDisc.split(" (")[0];
     const discEn = rawDisc;
 
-    const catMapTa = {
-      "Individual": "தனிநபர் பிரிவு (Individual)",
-      "Group": "குழுப் பிரிவு (Group)",
-      "Teacher": "ஆசிரியர் பிரிவு (Teacher)"
+    const catMapTaClean = {
+      "Individual": "தனிநபர்",
+      "Group": "குழு",
+      "Teacher": "ஆசிரியர்"
     };
     const catMapEn = {
-      "Individual": "Student Individual Category",
-      "Group": "Student Group Category",
+      "Individual": "Individual Category",
+      "Group": "Group Category",
       "Teacher": "Teacher Category"
     };
-    const winningCatFullTa = `${catMapTa[cat] || cat} – ${discTa}`;
+    const winningCatFullTa = `${catMapTaClean[cat] || cat} – ${discTaClean}`;
     const winningCatFullEn = `${catMapEn[cat] || cat} (${discEn})`;
 
     // Extract Tamil and English Student / Teacher / Project Title fields
@@ -9790,12 +9961,11 @@ ${n.message}
     }
 
     // -----------------------------------------------------------------------
-    // 2. DRAW PORTRAIT HEADER, HERO BANNER & SUBHEADER (CLEAN, NO MOTTO LINE)
+    // 2. DRAW PORTRAIT HEADER, HERO BANNER & SUBHEADER
     // -----------------------------------------------------------------------
     const centerX = 724;
     ctx.textAlign = "center";
 
-    // Department Header between Medallions (x = 365..1083, maxW = 700)
     ctx.fillStyle = "#0f172a";
     ctx.font = "900 28px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
     ctx.fillText("பள்ளிக்கல்வித்துறை – சிவகங்கை மாவட்டம்", centerX, 272, 700);
@@ -9804,7 +9974,6 @@ ${n.message}
     ctx.font = "bold 18px sans-serif";
     ctx.fillText("DEPARTMENT OF SCHOOL EDUCATION – SIVAGANGAI DISTRICT", centerX, 314, 700);
 
-    // Hero Banner (x = 196..1252, y = 376..482)
     ctx.fillStyle = "#fde047";
     ctx.font = "900 28.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
     ctx.fillText("மாவட்ட அளவிலான தென்னிந்திய அறிவியல் கண்காட்சி – 2026", centerX, 422, 990);
@@ -9813,7 +9982,6 @@ ${n.message}
     ctx.font = "bold 18.5px sans-serif";
     ctx.fillText("DISTRICT LEVEL SOUTHERN INDIA SCIENCE FAIR (SISF 2026 – 2027)", centerX, 458, 990);
 
-    // Subheader Pill (x = 270..1178, y = 500..564)
     ctx.fillStyle = "#991b1b";
     if (mode === "en") {
       ctx.font = "900 23.5px sans-serif";
@@ -9828,141 +9996,178 @@ ${n.message}
 
     // -----------------------------------------------------------------------
     // 3. DRAW CITATION BODY INSIDE PORTRAIT CARD (y = 584..1560)
-    //    (No TAMIL CITATION / ENGLISH CITATION labels, no bottom motivation box)
+    //    STRICT UNIFORM FONT SIZES:
+    //    - Every regular word across all lines in a section has the EXACT SAME font size!
+    //    - Every highlighted key term has a consistent emphasized size & weight!
+    //    - Line 3 in both Tamil and English is concise so it NEVER shrinks!
     // -----------------------------------------------------------------------
-    const maxLineW = 950;
+    const maxLineW = 980;
 
     if (mode === "bilingual") {
-      // === UPPER SECTION: TAMIL CITATION (y = 655..995) ===
-      drawRichCenteredLineOnCert(ctx, [
-        { text: "சிவகங்கை மாவட்டம்,  ", size: 25, color: "#1e293b", weight: "bold" },
-        { text: formattedSchoolWithTown, size: 26, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
-      ], centerX, 655, maxLineW);
+      // Uniform font sizes for Bilingual Tamil section:
+      const TA_REG = 24;   // All regular Tamil words across all lines
+      const TA_KEY = 25.5; // All highlighted Tamil key terms
 
+      // Line 1 (y = 638)
+      drawRichCenteredLineOnCert(ctx, [
+        { text: "சிவகங்கை மாவட்டம்,  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+        { text: formattedSchoolWithTown, size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
+      ], centerX, 638, maxLineW);
+
+      // Line 2 & Line 3 (y = 699, 760) - Student(s) and Guide Teacher on separate lines so 100% uniform font size is preserved!
       if (cat === "Individual") {
         drawRichCenteredLineOnCert(ctx, [
-          { text: s1ClassTa || "9-ஆம் வகுப்பு", size: 24.5, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
-          { text: "  பயிலும் மாணவர் / மாணவி  ", size: 24, color: "#1e293b", weight: "bold" },
-          { text: s1NameTa || "-", size: 25.5, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
-          { text: teacherNameTa ? `  (வழிகாட்டி: ${teacherNameTa})` : "", size: 23, color: "#0f766e", weight: "bold" },
-          { text: "  என்பவர்,", size: 24, color: "#1e293b", weight: "bold" }
-        ], centerX, 723, maxLineW);
+          { text: s1ClassTa || "9-ஆம் வகுப்பு", size: TA_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
+          { text: "  பயிலும் மாணவர் / மாணவி  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+          { text: s1NameTa || "-", size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
+          { text: "  என்பவர்,", size: TA_REG, color: "#1e293b", weight: "bold" }
+        ], centerX, 699, maxLineW);
+
+        drawRichCenteredLineOnCert(ctx, [
+          { text: "வழிகாட்டி ஆசிரியர் திரு./திருமதி.  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+          { text: teacherNameTa || "-", size: TA_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
+          { text: "  வழிகாட்டுதலுடன்,", size: TA_REG, color: "#1e293b", weight: "bold" }
+        ], centerX, 760, maxLineW);
       } else if (cat === "Group") {
         const s1Part = `${s1NameTa || "-"} (${s1ClassTa || "9-ஆம் வகுப்பு"})`;
         const s2Part = s2NameTa ? `, ${s2NameTa} (${s2ClassTa || "9-ஆம் வகுப்பு"})` : "";
         drawRichCenteredLineOnCert(ctx, [
-          { text: "பயிலும் மாணவர்கள்  ", size: 23.5, color: "#1e293b", weight: "bold" },
-          { text: s1Part + s2Part, size: 24.5, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
-          { text: teacherNameTa ? `  [வழிகாட்டி: ${teacherNameTa}]` : "", size: 22.5, color: "#0f766e", weight: "bold" },
-          { text: "  ஆகியோர்,", size: 23.5, color: "#1e293b", weight: "bold" }
-        ], centerX, 723, maxLineW);
+          { text: "பயிலும் மாணவர்கள்  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+          { text: s1Part + s2Part, size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
+          { text: "  ஆகியோர்,", size: TA_REG, color: "#1e293b", weight: "bold" }
+        ], centerX, 699, maxLineW);
+
+        drawRichCenteredLineOnCert(ctx, [
+          { text: "வழிகாட்டி ஆசிரியர் திரு./திருமதி.  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+          { text: teacherNameTa || "-", size: TA_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
+          { text: "  வழிகாட்டுதலுடன்,", size: TA_REG, color: "#1e293b", weight: "bold" }
+        ], centerX, 760, maxLineW);
       } else {
         drawRichCenteredLineOnCert(ctx, [
-          { text: "பணியாற்றும் பங்கேற்பாளர் ஆசிரியர் திரு./திருமதி.  ", size: 24, color: "#1e293b", weight: "bold" },
-          { text: teacherNameTa || "-", size: 25.5, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
-          { text: "  என்பவர்,", size: 24, color: "#1e293b", weight: "bold" }
-        ], centerX, 723, maxLineW);
+          { text: "பணியாற்றும் பங்கேற்பாளர் ஆசிரியர் திரு./திருமதி.  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+          { text: teacherNameTa || "-", size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
+          { text: "  என்பவர்,", size: TA_REG, color: "#1e293b", weight: "bold" }
+        ], centerX, 728, maxLineW);
       }
 
+      // Line 4 (y = 821) - Pure Tamil category & discipline so it renders at 100% full TA_REG / TA_KEY size!
       drawRichCenteredLineOnCert(ctx, [
-        { text: "03.11.2026 அன்று நடைபெற்ற மாவட்ட அறிவியல் கண்காட்சியில்  ", size: 23.5, color: "#1e293b", weight: "bold" },
-        { text: winningCatFullTa, size: 24.5, color: "#047857", weight: "900", underline: true, underlineColor: "#6ee7b7" },
-        { text: "  பிரிவில்", size: 23.5, color: "#1e293b", weight: "bold" }
-      ], centerX, 791, maxLineW);
+        { text: "மாவட்ட அறிவியல் கண்காட்சியில்  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+        { text: winningCatFullTa, size: TA_KEY, color: "#047857", weight: "900", underline: true, underlineColor: "#6ee7b7" },
+        { text: "  பிரிவில்", size: TA_REG, color: "#1e293b", weight: "bold" }
+      ], centerX, 821, maxLineW);
 
+      // Line 5 (y = 882)
       drawRichCenteredLineOnCert(ctx, [
-        { text: `“ ${projectTitleTa} ”`, size: 25, color: "#9a3412", weight: "900", underline: true, underlineColor: "#fdba74" },
-        { text: "  என்ற தலைப்பிலான அறிவியல் படைப்பினைச் சிறப்பாகப் படைத்து,", size: 23.5, color: "#1e293b", weight: "bold" }
-      ], centerX, 859, maxLineW);
+        { text: `“ ${projectTitleTa} ”`, size: TA_KEY, color: "#9a3412", weight: "900", underline: true, underlineColor: "#fdba74" },
+        { text: "  என்ற அறிவியல் படைப்பினைச் சிறப்பாகப் படைத்து,", size: TA_REG, color: "#1e293b", weight: "bold" }
+      ], centerX, 882, maxLineW);
 
+      // Line 6 (y = 943)
       drawRichCenteredLineOnCert(ctx, [
-        { text: "இப்போட்டியில்   ", size: 24, color: "#1e293b", weight: "bold" },
-        { text: rankCleanTextTa, size: 25.5, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
-        { text: `   ${rankVerbTa}`, size: 24, color: "#1e293b", weight: "bold" }
-      ], centerX, 927, maxLineW);
+        { text: "இப்போட்டியில்   ", size: TA_REG, color: "#1e293b", weight: "bold" },
+        { text: rankCleanTextTa, size: TA_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
+        { text: `   ${rankVerbTa}`, size: TA_REG, color: "#1e293b", weight: "bold" }
+      ], centerX, 943, maxLineW);
 
+      // Line 7 (y = 1002)
       const closeVerbTa = (cat === "Group") ? "பாராட்டப்படுகிறார்கள்" : "பாராட்டப்படுகிறார்";
       drawRichCenteredLineOnCert(ctx, [
-        { text: `${closeVerbTa} என மனதாரப் பாராட்டி இச்சான்றிதழ் வழங்கப்படுகிறது.`, size: 24, color: "#1e293b", weight: "bold" }
-      ], centerX, 995, maxLineW);
+        { text: `${closeVerbTa} என மனதாரப் பாராட்டி இச்சான்றிதழ் வழங்கப்படுகிறது.`, size: TA_REG, color: "#1e293b", weight: "bold" }
+      ], centerX, 1002, maxLineW);
 
-      // === SLEEK CENTER GOLD DIVIDER (y = 1052) ===
+      // === SLEEK CENTER GOLD DIVIDER (y = 1044) ===
       ctx.save();
       ctx.strokeStyle = "#d97706";
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(250, 1052);
-      ctx.lineTo(620, 1052);
-      ctx.moveTo(828, 1052);
-      ctx.lineTo(1198, 1052);
+      ctx.moveTo(250, 1044);
+      ctx.lineTo(620, 1044);
+      ctx.moveTo(828, 1044);
+      ctx.lineTo(1198, 1044);
       ctx.stroke();
       ctx.textAlign = "center";
       ctx.fillStyle = "#b45309";
       ctx.font = "bold 18px sans-serif";
-      ctx.fillText("✦   •   ❖   •   ✦", centerX, 1058);
+      ctx.fillText("✦   •   ❖   •   ✦", centerX, 1050);
       ctx.restore();
 
-      // === LOWER SECTION: ENGLISH CITATION (y = 1118..1502) ===
+      // === LOWER SECTION: ENGLISH CITATION (7 well-balanced lines, y = 1104..1500) ===
+      // Uniform font sizes for Bilingual English section:
+      const EN_REG = 22.5; // All regular English words across all lines
+      const EN_KEY = 24.5; // All highlighted English key terms
+
+      // Line 1 (y = 1104)
       if (cat === "Individual") {
         drawRichCenteredLineOnCert(ctx, [
-          { text: "This is to certify that  ", size: 22.5, color: "#1e293b", weight: "bold", family: "sans-serif" },
-          { text: s1NameEn || "-", size: 24, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
-          { text: `  (${s1ClassEn}),`, size: 22.5, color: "#b91c1c", weight: "900", family: "sans-serif" }
-        ], centerX, 1118, maxLineW);
+          { text: "This is to certify that  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: s1NameEn || "-", size: EN_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
+          { text: `  (${s1ClassEn}),`, size: EN_KEY, color: "#b91c1c", weight: "900", family: "sans-serif" }
+        ], centerX, 1104, maxLineW);
       } else if (cat === "Group") {
         const g1En = `${s1NameEn || "-"} (${s1ClassEn})`;
         const g2En = s2NameEn ? ` & ${s2NameEn} (${s2ClassEn})` : "";
         drawRichCenteredLineOnCert(ctx, [
-          { text: "This is to certify that  ", size: 22, color: "#1e293b", weight: "bold", family: "sans-serif" },
-          { text: g1En + g2En, size: 23, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" }
-        ], centerX, 1118, maxLineW);
+          { text: "This is to certify that  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: g1En + g2En, size: EN_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" }
+        ], centerX, 1104, maxLineW);
       } else {
         drawRichCenteredLineOnCert(ctx, [
-          { text: "This is to certify that Participating Teacher  ", size: 22.5, color: "#1e293b", weight: "bold", family: "sans-serif" },
-          { text: teacherNameEn || "-", size: 24, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" }
-        ], centerX, 1118, maxLineW);
+          { text: "This is to certify that Participating Teacher  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: teacherNameEn || "-", size: EN_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" }
+        ], centerX, 1104, maxLineW);
       }
 
+      // Line 2 (y = 1170)
       drawRichCenteredLineOnCert(ctx, [
-        { text: "of  ", size: 22.5, color: "#1e293b", weight: "bold", family: "sans-serif" },
-        { text: schoolNameEnFull, size: 23.5, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
-        { text: ", Sivagangai District,", size: 22.5, color: "#1e293b", weight: "bold", family: "sans-serif" }
-      ], centerX, 1182, maxLineW);
+        { text: "of  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+        { text: schoolNameEnFull, size: EN_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
+        { text: ", Sivagangai District,", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+      ], centerX, 1170, maxLineW);
 
+      // Line 3 (y = 1236) - Dedicated line for Guide Teacher & Exhibit presentation so it NEVER shrinks!
       if (cat !== "Teacher" && teacherNameEn) {
         drawRichCenteredLineOnCert(ctx, [
-          { text: "guided by Mentor Teacher  ", size: 22, color: "#1e293b", weight: "bold", family: "sans-serif" },
-          { text: teacherNameEn, size: 23, color: "#0f766e", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" },
-          { text: ", presented a scientific exhibit in  ", size: 22, color: "#1e293b", weight: "bold", family: "sans-serif" },
-          { text: winningCatFullEn, size: 22.5, color: "#047857", weight: "900", family: "sans-serif" }
-        ], centerX, 1246, maxLineW);
+          { text: "guided by Mentor Teacher  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: teacherNameEn, size: EN_KEY, color: "#0f766e", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" },
+          { text: ", has presented an exhibit", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ], centerX, 1236, maxLineW);
       } else {
         drawRichCenteredLineOnCert(ctx, [
-          { text: "has presented an innovative scientific exhibit under  ", size: 22.5, color: "#1e293b", weight: "bold", family: "sans-serif" },
-          { text: winningCatFullEn, size: 23.5, color: "#047857", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" }
-        ], centerX, 1246, maxLineW);
+          { text: "has presented an innovative scientific exhibit at the District Science Fair", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ], centerX, 1236, maxLineW);
       }
 
+      // Line 4 (y = 1302) - Category & Exhibit Title at full EN_REG / EN_KEY size
       drawRichCenteredLineOnCert(ctx, [
-        { text: "titled  ", size: 22.5, color: "#1e293b", weight: "bold", family: "sans-serif" },
-        { text: `“ ${projectTitleEn} ”`, size: 24, color: "#9a3412", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fdba74" }
-      ], centerX, 1310, maxLineW);
+        { text: "in  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+        { text: winningCatFullEn, size: EN_KEY, color: "#047857", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" },
+        { text: "  titled  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+        { text: `“ ${projectTitleEn} ”`, size: EN_KEY, color: "#9a3412", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fdba74" }
+      ], centerX, 1302, maxLineW);
 
+      // Line 5 (y = 1368)
       drawRichCenteredLineOnCert(ctx, [
-        { text: "at the District Level Southern India Science Fair held on 03.11.2026 at Sivagangai,", size: 22, color: "#1e293b", weight: "bold", family: "sans-serif" }
-      ], centerX, 1374, maxLineW);
+        { text: "at the District Level Southern India Science Fair held on 03.11.2026 at Sivagangai,", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+      ], centerX, 1368, maxLineW);
 
+      // Line 6 (y = 1434)
       drawRichCenteredLineOnCert(ctx, [
-        { text: `${rankPhraseEn}   `, size: 22.5, color: "#1e293b", weight: "bold", family: "sans-serif" },
-        { text: rankCleanTextEn, size: 24, color: "#b91c1c", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fca5a5" }
-      ], centerX, 1438, maxLineW);
+        { text: `${rankPhraseEn}   `, size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+        { text: rankCleanTextEn, size: EN_KEY, color: "#b91c1c", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fca5a5" }
+      ], centerX, 1434, maxLineW);
 
+      // Line 7 (y = 1500)
       drawRichCenteredLineOnCert(ctx, [
-        { text: "in recognition of their scientific inquiry, creativity, and technological innovation.", size: 21.5, color: "#334155", weight: "bold", family: "sans-serif" }
-      ], centerX, 1502, maxLineW);
+        { text: "in recognition of their scientific inquiry, creativity, and technological innovation.", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+      ], centerX, 1500, maxLineW);
 
     } else if (mode === "ta") {
       // === FULL-PAGE TAMIL PORTRAIT CERTIFICATE (y = 635..1485) ===
+      // Strict uniform font sizes across ALL lines:
+      const TA_FULL_REG = 27.5; // All regular words
+      const TA_FULL_KEY = 29.5; // All highlighted key terms
+
       ctx.save();
       ctx.fillStyle = "#eff6ff";
       ctx.strokeStyle = "#93c5fd";
@@ -9978,72 +10183,76 @@ ${n.message}
       ctx.restore();
 
       drawRichCenteredLineOnCert(ctx, [
-        { text: "சிவகங்கை மாவட்டம்,  ", size: 28.5, color: "#1e293b", weight: "bold" },
-        { text: formattedSchoolWithTown, size: 30, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
+        { text: "சிவகங்கை மாவட்டம்,  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+        { text: formattedSchoolWithTown, size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
       ], centerX, 775, maxLineW);
 
       if (cat === "Individual") {
         drawRichCenteredLineOnCert(ctx, [
-          { text: s1ClassTa || "9-ஆம் வகுப்பு", size: 28.5, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
-          { text: "  பயிலும் மாணவர் / மாணவி  ", size: 28, color: "#1e293b", weight: "bold" },
-          { text: s1NameTa || "-", size: 30, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
-          { text: "  என்பவர்,", size: 28, color: "#1e293b", weight: "bold" }
+          { text: s1ClassTa || "9-ஆம் வகுப்பு", size: TA_FULL_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
+          { text: "  பயிலும் மாணவர் / மாணவி  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+          { text: s1NameTa || "-", size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
+          { text: "  என்பவர்,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
         ], centerX, 875, maxLineW);
 
         drawRichCenteredLineOnCert(ctx, [
-          { text: "வழிகாட்டி ஆசிரியர்: திரு./திருமதி.  ", size: 26.5, color: "#334155", weight: "bold" },
-          { text: teacherNameTa || "-", size: 28, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
-          { text: "  அவர்களின் வழிகாட்டுதலுடன்,", size: 26.5, color: "#334155", weight: "bold" }
+          { text: "வழிகாட்டி ஆசிரியர் திரு./திருமதி.  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+          { text: teacherNameTa || "-", size: TA_FULL_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
+          { text: "  வழிகாட்டுதலுடன்,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
         ], centerX, 975, maxLineW);
       } else if (cat === "Group") {
         const s1Part = `${s1NameTa || "-"} (${s1ClassTa || "9-ஆம் வகுப்பு"})`;
         const s2Part = s2NameTa ? `,  ${s2NameTa} (${s2ClassTa || "9-ஆம் வகுப்பு"})` : "";
         drawRichCenteredLineOnCert(ctx, [
-          { text: "பயிலும் மாணவர்கள்  ", size: 27, color: "#1e293b", weight: "bold" },
-          { text: s1Part + s2Part, size: 28.5, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
-          { text: "  ஆகியோர்,", size: 27, color: "#1e293b", weight: "bold" }
+          { text: "பயிலும் மாணவர்கள்  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+          { text: s1Part + s2Part, size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
+          { text: "  ஆகியோர்,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
         ], centerX, 875, maxLineW);
 
         drawRichCenteredLineOnCert(ctx, [
-          { text: "வழிகாட்டி ஆசிரியர்: திரு./திருமதி.  ", size: 26.5, color: "#334155", weight: "bold" },
-          { text: teacherNameTa || "-", size: 28, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
-          { text: "  அவர்களின் வழிகாட்டுதலுடன்,", size: 26.5, color: "#334155", weight: "bold" }
+          { text: "வழிகாட்டி ஆசிரியர் திரு./திருமதி.  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+          { text: teacherNameTa || "-", size: TA_FULL_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
+          { text: "  வழிகாட்டுதலுடன்,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
         ], centerX, 975, maxLineW);
       } else {
         drawRichCenteredLineOnCert(ctx, [
-          { text: "பணியாற்றும் பங்கேற்பாளர் ஆசிரியர் திரு./திருமதி.  ", size: 28, color: "#1e293b", weight: "bold" },
-          { text: teacherNameTa || "-", size: 30, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
-          { text: "  என்பவர்,", size: 28, color: "#1e293b", weight: "bold" }
+          { text: "பணியாற்றும் பங்கேற்பாளர் ஆசிரியர் திரு./திருமதி.  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+          { text: teacherNameTa || "-", size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
+          { text: "  என்பவர்,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
         ], centerX, 925, maxLineW);
       }
 
       drawRichCenteredLineOnCert(ctx, [
-        { text: "மாவட்ட அறிவியல் கண்காட்சியில்  ", size: 26, color: "#1e293b", weight: "bold" },
-        { text: winningCatFullTa, size: 27, color: "#047857", weight: "900", underline: true, underlineColor: "#6ee7b7" },
-        { text: "  பிரிவில்", size: 26, color: "#1e293b", weight: "bold" }
+        { text: "மாவட்ட அறிவியல் கண்காட்சியில்  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+        { text: winningCatFullTa, size: TA_FULL_KEY, color: "#047857", weight: "900", underline: true, underlineColor: "#6ee7b7" },
+        { text: "  பிரிவில்", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
       ], centerX, 1075, maxLineW);
 
       drawRichCenteredLineOnCert(ctx, [
-        { text: `“ ${projectTitleTa} ”`, size: 30, color: "#9a3412", weight: "900", underline: true, underlineColor: "#fdba74" }
+        { text: `“ ${projectTitleTa} ”`, size: TA_FULL_KEY, color: "#9a3412", weight: "900", underline: true, underlineColor: "#fdba74" }
       ], centerX, 1175, maxLineW);
 
       drawRichCenteredLineOnCert(ctx, [
-        { text: "என்ற தலைப்பிலான அறிவியல் படைப்பினைச் சிறப்பாகக் காட்சிப்படுத்தி,", size: 27.5, color: "#1e293b", weight: "bold" }
+        { text: "என்ற தலைப்பிலான அறிவியல் படைப்பினைச் சிறப்பாகக் காட்சிப்படுத்தி,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
       ], centerX, 1270, maxLineW);
 
       drawRichCenteredLineOnCert(ctx, [
-        { text: "இப்போட்டியில்   ", size: 28, color: "#1e293b", weight: "bold" },
-        { text: rankCleanTextTa, size: 30, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
-        { text: `   ${rankVerbTa}`, size: 28, color: "#1e293b", weight: "bold" }
+        { text: "இப்போட்டியில்   ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+        { text: rankCleanTextTa, size: TA_FULL_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
+        { text: `   ${rankVerbTa}`, size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
       ], centerX, 1370, maxLineW);
 
       const closeVerbTa = (cat === "Group") ? "பாராட்டப்படுகிறார்கள்" : "பாராட்டப்படுகிறார்";
       drawRichCenteredLineOnCert(ctx, [
-        { text: `${closeVerbTa} என மனதாரப் பாராட்டி இச்சான்றிதழ் வழங்கப்படுகிறது.`, size: 27.5, color: "#1e293b", weight: "bold" }
+        { text: `${closeVerbTa} என மனதாரப் பாராட்டி இச்சான்றிதழ் வழங்கப்படுகிறது.`, size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
       ], centerX, 1468, maxLineW);
 
     } else {
       // === FULL-PAGE ENGLISH PORTRAIT CERTIFICATE (y = 635..1485) ===
+      // Strict uniform font sizes across ALL lines:
+      const EN_FULL_REG = 25;   // All regular words
+      const EN_FULL_KEY = 27.5; // All highlighted key terms
+
       ctx.save();
       ctx.fillStyle = "#eff6ff";
       ctx.strokeStyle = "#93c5fd";
@@ -10059,62 +10268,62 @@ ${n.message}
       ctx.restore();
 
       drawRichCenteredLineOnCert(ctx, [
-        { text: "This is to proudly certify that", size: 25.5, color: "#334155", weight: "bold", family: "sans-serif" }
+        { text: "This is to proudly certify that", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
       ], centerX, 760, maxLineW);
 
       if (cat === "Individual") {
         drawRichCenteredLineOnCert(ctx, [
-          { text: s1NameEn || "-", size: 29.5, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
-          { text: `   (${s1ClassEn})`, size: 26.5, color: "#b91c1c", weight: "900", family: "sans-serif" }
+          { text: s1NameEn || "-", size: EN_FULL_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
+          { text: `   (${s1ClassEn})`, size: EN_FULL_KEY, color: "#b91c1c", weight: "900", family: "sans-serif" }
         ], centerX, 850, maxLineW);
       } else if (cat === "Group") {
         const g1En = `${s1NameEn || "-"} (${s1ClassEn})`;
         const g2En = s2NameEn ? `  &  ${s2NameEn} (${s2ClassEn})` : "";
         drawRichCenteredLineOnCert(ctx, [
-          { text: g1En + g2En, size: 27, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" }
+          { text: g1En + g2En, size: EN_FULL_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" }
         ], centerX, 850, maxLineW);
       } else {
         drawRichCenteredLineOnCert(ctx, [
-          { text: "Participating Teacher   ", size: 25.5, color: "#1e293b", weight: "bold", family: "sans-serif" },
-          { text: teacherNameEn || "-", size: 29, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" }
+          { text: "Participating Teacher   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: teacherNameEn || "-", size: EN_FULL_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" }
         ], centerX, 850, maxLineW);
       }
 
       drawRichCenteredLineOnCert(ctx, [
-        { text: "of   ", size: 25, color: "#1e293b", weight: "bold", family: "sans-serif" },
-        { text: schoolNameEnFull, size: 27, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
-        { text: ", Sivagangai District,", size: 25, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        { text: "of   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+        { text: schoolNameEnFull, size: EN_FULL_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
+        { text: ", Sivagangai District,", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
       ], centerX, 940, maxLineW);
 
       if (cat !== "Teacher") {
         drawRichCenteredLineOnCert(ctx, [
-          { text: "mentored by Guide Teacher   ", size: 24.5, color: "#334155", weight: "bold", family: "sans-serif" },
-          { text: teacherNameEn || "-", size: 26.5, color: "#0f766e", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" },
-          { text: ",", size: 24.5, color: "#334155", weight: "bold", family: "sans-serif" }
+          { text: "mentored by Guide Teacher   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: teacherNameEn || "-", size: EN_FULL_KEY, color: "#0f766e", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" },
+          { text: ",", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
         ], centerX, 1030, maxLineW);
       }
 
       drawRichCenteredLineOnCert(ctx, [
-        { text: "has presented an outstanding scientific exhibit in   ", size: 25, color: "#1e293b", weight: "bold", family: "sans-serif" },
-        { text: winningCatFullEn, size: 26, color: "#047857", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" }
+        { text: "has presented an exhibit in   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+        { text: winningCatFullEn, size: EN_FULL_KEY, color: "#047857", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" }
       ], centerX, 1120, maxLineW);
 
       drawRichCenteredLineOnCert(ctx, [
-        { text: "titled   ", size: 25, color: "#1e293b", weight: "bold", family: "sans-serif" },
-        { text: `“ ${projectTitleEn} ”`, size: 28, color: "#9a3412", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fdba74" }
+        { text: "titled   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+        { text: `“ ${projectTitleEn} ”`, size: EN_FULL_KEY, color: "#9a3412", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fdba74" }
       ], centerX, 1210, maxLineW);
 
       drawRichCenteredLineOnCert(ctx, [
-        { text: "at the District Level Southern India Science Fair (SISF 2026 – 2027),", size: 24.5, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        { text: "at the District Level Southern India Science Fair (SISF 2026 – 2027),", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
       ], centerX, 1300, maxLineW);
 
       drawRichCenteredLineOnCert(ctx, [
-        { text: `${rankPhraseEn}   `, size: 25.5, color: "#1e293b", weight: "bold", family: "sans-serif" },
-        { text: rankCleanTextEn, size: 28, color: "#b91c1c", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fca5a5" }
+        { text: `${rankPhraseEn}   `, size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+        { text: rankCleanTextEn, size: EN_FULL_KEY, color: "#b91c1c", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fca5a5" }
       ], centerX, 1390, maxLineW);
 
       drawRichCenteredLineOnCert(ctx, [
-        { text: "in appreciation of their scientific inquiry, research aptitude, and innovative spirit.", size: 24, color: "#334155", weight: "bold", family: "sans-serif" }
+        { text: "in appreciation of their scientific inquiry, research aptitude, and innovative spirit.", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
       ], centerX, 1475, maxLineW);
     }
 
