@@ -9613,20 +9613,75 @@ ${n.message}
     renderWinnerCertificateCanvasToPdf(winRec, appData, mode);
   }
 
-  function formatSchoolAndTownForCert(rawSchoolNameTa) {
+  function splitTownIntoOrderedPlacesTa(townStr) {
+    const commaParts = String(townStr || "")
+      .split(",")
+      .map(p => p.replace(/^[\s,\-]+|[\s,\-]+$/g, "").trim())
+      .filter(Boolean);
+    const suffixes = new Set([
+      "நகர்", "புதூர்", "பட்டி", "கோட்டை", "மங்கலம்", "வயல்", "குடி",
+      "ஊருணி", "காலனி", "ரோடு", "வீதி", "சாலை", "தெற்கு", "வடக்கு", "கிழக்கு", "மேற்கு"
+    ]);
+    const places = [];
+    commaParts.forEach(part => {
+      const words = part.split(/\s+/).map(w => w.replace(/^[\s,\-]+|[\s,\-]+$/g, "").trim()).filter(Boolean);
+      if (words.length <= 1) {
+        if (words.length === 1) places.push(words[0].replace(/\.+$/, ""));
+        return;
+      }
+      const merged = [];
+      for (let i = 0; i < words.length; i++) {
+        let w = words[i];
+        // If token is an initial like "டி.", "டி.டி.", "மு.", "ஆர்.எஸ்.", join with next word
+        if (w.includes(".") && w.length <= 8 && i + 1 < words.length) {
+          if (!w.endsWith(".")) w += ".";
+          words[i + 1] = w + words[i + 1];
+          continue;
+        }
+        w = w.replace(/\.+$/, "");
+        if (suffixes.has(w) && merged.length > 0) {
+          // If previous token ends with "." (like "டி.டி."), attach directly without space; else with space
+          merged[merged.length - 1] = merged[merged.length - 1].endsWith(".")
+            ? (merged[merged.length - 1] + w)
+            : (merged[merged.length - 1] + " " + w);
+        } else {
+          merged.push(w);
+        }
+      }
+      merged.forEach(m => places.push(m));
+    });
+    // If there are 2 or more place names (e.g. ["டி.டி.நகர்", "காரைக்குடி"]), reverse so Main Town comes first: ["காரைக்குடி", "டி.டி.நகர்"]
+    if (places.length >= 2) {
+      places.reverse();
+    }
+    return places;
+  }
+
+  function parseSchoolAndTownPartsForCert(rawSchoolNameTa) {
     let str = String(rawSchoolNameTa || "").split(" / ")[0].replace(/\s*\([^)]*\)/g, "").trim();
-    if (!str) return "அரசு உயர்நிலைப்பள்ளியில்";
+    if (!str) return { townPrefix: "", schoolInflected: "அரசு உயர்நிலைப்பள்ளியில்", combined: "அரசு உயர்நிலைப்பள்ளியில்" };
     const idx = str.lastIndexOf("பள்ளி");
     if (idx !== -1) {
       let schoolPart = str.slice(0, idx + 5).replace(/^[\s,.\-]+|[\s,.\-]+$/g, "").trim();
       let townPart = str.slice(idx + 5).replace(/^[\s,.\-]+|[\s,.\-]+$/g, "").trim();
       const schoolInflected = schoolPart + "யில்";
       if (townPart) {
-        return `${townPart}, ${schoolInflected}`;
+        const orderedPlaces = splitTownIntoOrderedPlacesTa(townPart);
+        const townPrefix = orderedPlaces.length > 0 ? orderedPlaces.join(", ") : townPart;
+        return {
+          townPrefix: townPrefix,
+          schoolInflected: schoolInflected,
+          combined: `${townPrefix}, ${schoolInflected}`
+        };
       }
-      return schoolInflected;
+      return { townPrefix: "", schoolInflected: schoolInflected, combined: schoolInflected };
     }
-    return str + " பள்ளியில்";
+    const inf = str + " பள்ளியில்";
+    return { townPrefix: "", schoolInflected: inf, combined: inf };
+  }
+
+  function formatSchoolAndTownForCert(rawSchoolNameTa) {
+    return parseSchoolAndTownPartsForCert(rawSchoolNameTa).combined;
   }
 
   function formatClassInEnglish(rawCl) {
@@ -10005,11 +10060,22 @@ ${n.message}
       // Collect Tamil lines dynamically so Teacher (5-6 lines) and Student (6-7 lines) are evenly centered vertically in y = 635..1005
       const taLines = [];
 
-      // Line 1: சிவகங்கை மாவட்டம், [ஊர், பள்ளியின் பெயர்]யில்
-      taLines.push([
-        { text: "சிவகங்கை மாவட்டம்,  ", size: TA_REG, color: "#1e293b", weight: "bold" },
-        { text: formattedSchoolWithTown, size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
-      ]);
+      // Line 1: சிவகங்கை மாவட்டம், [ஊர், பள்ளியின் பெயர்]யில் (split into 2 full-size lines if very long so it never shrinks!)
+      const schParts = parseSchoolAndTownPartsForCert(rawSchoolNameTa);
+      if (schParts.townPrefix && schParts.combined.length > 52) {
+        taLines.push([
+          { text: "சிவகங்கை மாவட்டம்,  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+          { text: schParts.townPrefix + ",", size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
+        ]);
+        taLines.push([
+          { text: schParts.schoolInflected, size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
+        ]);
+      } else {
+        taLines.push([
+          { text: "சிவகங்கை மாவட்டம்,  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+          { text: formattedSchoolWithTown, size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
+        ]);
+      }
 
       // Line 2 (& Line 3 for Student Guide Teacher):
       if (cat === "Individual") {
@@ -10082,32 +10148,47 @@ ${n.message}
         ]);
       }
 
-      // Vertically distribute taLines in y = 640..1000
+      // === TOP VENUE & DATE PILL BADGE IN BILINGUAL CERTIFICATE (y = 602..650) ===
+      ctx.save();
+      ctx.fillStyle = "#eff6ff";
+      ctx.strokeStyle = "#93c5fd";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(225, 602, 998, 48, 24);
+      ctx.fill();
+      ctx.stroke();
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#1e3a8a";
+      ctx.font = "900 18.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("✦ இடம்: சிவகங்கை மன்னர் மேல்நிலைப்பள்ளி  |  Venue: Mannar Hr. Sec. School, Sivagangai (03.11.2026) ✦", centerX, 633, 960);
+      ctx.restore();
+
+      // Vertically distribute taLines in y = 695..1025
       const taCount = taLines.length;
-      const taStep = taCount <= 5 ? 72 : (taCount === 6 ? 65 : 59);
+      const taStep = taCount <= 5 ? 65 : (taCount === 6 ? 58 : (taCount === 7 ? 52 : 46));
       const taTotalH = (taCount - 1) * taStep;
-      const taStartY = Math.round(820 - taTotalH / 2);
+      const taStartY = Math.round(860 - taTotalH / 2);
       taLines.forEach((lineSegs, idx) => {
         drawRichCenteredLineOnCert(ctx, lineSegs, centerX, taStartY + idx * taStep, maxLineW);
       });
 
-      // === SLEEK CENTER GOLD DIVIDER (y = 1046) ===
+      // === SLEEK CENTER GOLD DIVIDER (y = 1068) ===
       ctx.save();
       ctx.strokeStyle = "#d97706";
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(250, 1046);
-      ctx.lineTo(620, 1046);
-      ctx.moveTo(828, 1046);
-      ctx.lineTo(1198, 1046);
+      ctx.moveTo(250, 1068);
+      ctx.lineTo(620, 1068);
+      ctx.moveTo(828, 1068);
+      ctx.lineTo(1198, 1068);
       ctx.stroke();
       ctx.textAlign = "center";
       ctx.fillStyle = "#b45309";
       ctx.font = "bold 18px sans-serif";
-      ctx.fillText("✦   •   ❖   •   ✦", centerX, 1052);
+      ctx.fillText("✦   •   ❖   •   ✦", centerX, 1074);
       ctx.restore();
 
-      // === LOWER SECTION: ENGLISH CITATION (y = 1105..1505) ===
+      // === LOWER SECTION: ENGLISH CITATION (y = 1125..1515) ===
       const EN_REG = 22.5; // Uniform regular English font size
       const EN_KEY = 24.5; // Uniform highlighted English key term font size
 
@@ -10162,10 +10243,10 @@ ${n.message}
         { text: `“ ${projectTitleEn} ”`, size: EN_KEY, color: "#9a3412", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fdba74" }
       ]);
 
-      // Line 5, 6, 7: Event & Award/Participation recognition
+      // Line 5, 6, 7: Event (with Venue) & Award/Participation recognition
       if (isParticipant) {
         enLines.push([
-          { text: "at the District Level Southern India Science Fair held on 03.11.2026 at Sivagangai,", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+          { text: "at the District Science Fair held on 03.11.2026 at Mannar Hr. Sec. School, Sivagangai,", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
         ]);
         enLines.push([
           { text: "and is awarded this Certificate of Merit in appreciation of their  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
@@ -10176,7 +10257,7 @@ ${n.message}
         ]);
       } else {
         enLines.push([
-          { text: "at the District Level Southern India Science Fair held on 03.11.2026 at Sivagangai,", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+          { text: "at the District Science Fair held on 03.11.2026 at Mannar Hr. Sec. School, Sivagangai,", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
         ]);
         enLines.push([
           { text: "and securing   ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
@@ -10188,9 +10269,9 @@ ${n.message}
       }
 
       const enCount = enLines.length;
-      const enStep = 65;
+      const enStep = 61;
       const enTotalH = (enCount - 1) * enStep;
-      const enStartY = Math.round(1304 - enTotalH / 2);
+      const enStartY = Math.round(1322 - enTotalH / 2);
       enLines.forEach((lineSegs, idx) => {
         drawRichCenteredLineOnCert(ctx, lineSegs, centerX, enStartY + idx * enStep, maxLineW);
       });
@@ -10215,10 +10296,21 @@ ${n.message}
       ctx.restore();
 
       const taFullLines = [];
-      taFullLines.push([
-        { text: "சிவகங்கை மாவட்டம்,  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
-        { text: formattedSchoolWithTown, size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
-      ]);
+      const schPartsFull = parseSchoolAndTownPartsForCert(rawSchoolNameTa);
+      if (schPartsFull.townPrefix && schPartsFull.combined.length > 52) {
+        taFullLines.push([
+          { text: "சிவகங்கை மாவட்டம்,  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+          { text: schPartsFull.townPrefix + ",", size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
+        ]);
+        taFullLines.push([
+          { text: schPartsFull.schoolInflected, size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
+        ]);
+      } else {
+        taFullLines.push([
+          { text: "சிவகங்கை மாவட்டம்,  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+          { text: formattedSchoolWithTown, size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
+        ]);
+      }
 
       if (cat === "Individual") {
         taFullLines.push([
@@ -10291,7 +10383,7 @@ ${n.message}
       }
 
       const tfCount = taFullLines.length;
-      const tfStep = tfCount <= 7 ? 105 : 96;
+      const tfStep = tfCount <= 7 ? 102 : (tfCount === 8 ? 90 : 80);
       const tfTotalH = (tfCount - 1) * tfStep;
       const tfStartY = Math.round(1120 - tfTotalH / 2);
       taFullLines.forEach((lineSegs, idx) => {
