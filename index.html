@@ -1623,6 +1623,9 @@
         </div>
       </div>
       <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+        <button type="button" class="btn-sm" style="background: #0f766e; border: 1.5px solid #99f6e4; padding: 8px 14px; font-weight: 800; font-size: 0.85rem;" onclick="switchAdminSubTab('reports')">
+          📋 வருகைப்பதிவேடு & வெற்றியாளர் அறிக்கை (Reports)
+        </button>
         <button type="button" class="btn-sm" style="background: #4f46e5; border: 1.5px solid #c7d2fe; padding: 8px 14px; font-weight: 800; font-size: 0.85rem;" onclick="switchAdminSubTab('judges')">
           ⚖️ போட்டி நடுவர் பதிவு (Judges Table)
         </button>
@@ -1738,6 +1741,9 @@
       <button type="button" class="admin-nav-btn" id="admTabBtnJudges" onclick="switchAdminSubTab('judges')">
         ⚖️ நடுவர்கள் விவரம் & சான்றிதழ் (Judges & Certificates)
       </button>
+      <button type="button" class="admin-nav-btn" id="admTabBtnReports" onclick="switchAdminSubTab('reports')">
+        📋 மாணவர் வருகைப்பதிவேடு & வெற்றியாளர் அறிக்கை (Reports)
+      </button>
       <button type="button" class="admin-nav-btn" id="admTabBtnPasswords" onclick="switchAdminSubTab('passwords')">
         🏫 பதிவு செய்த பள்ளிகள் & கடவுச்சொல் (Registered Schools & Passwords)
       </button>
@@ -1773,6 +1779,9 @@
             </button>
             <button type="button" class="btn-sm" style="background: #dc2626; padding: 7px 12px; font-weight: 800;" onclick="adminResetAllWinners()" title="பதிவு செய்யப்பட்ட அனைத்து வெற்றியாளர் / பங்கேற்பாளர் நிலைகளையும் இரத்து செய்து மீட்டமைக்கும்">
               🔄 அனைத்து வெற்றிநிலைகளையும் இரத்து செய்
+            </button>
+            <button type="button" class="btn-sm" style="background: #0f766e; padding: 7px 14px; font-weight: 800;" onclick="downloadAttendanceReportPdf()" title="மாணவர் மற்றும் வழிகாட்டி ஆசிரியர் வருகைப்பதிவேடு அறிக்கை (A4 PDF)">
+              📋 மாணவர் வருகைப்பதிவேடு அறிக்கை (PDF)
             </button>
             <button type="button" class="btn-sm" style="background: #15803d; padding: 7px 14px; font-weight: 700;" onclick="exportAdminApplicationsCsv()">
               📊 Excel / CSV பதிவிறக்கம்
@@ -1917,6 +1926,9 @@
             </button>
             <button type="button" class="btn-sm" style="background: #dc2626; padding: 7px 12px; font-weight: 800;" onclick="adminResetAllWinners()">
               🔄 அனைத்து வெற்றிநிலைகளையும் இரத்து செய்
+            </button>
+            <button type="button" class="btn-sm" style="background: #b45309; padding: 7px 14px; font-weight: 800;" onclick="downloadWinnersReportPdf()" title="வெற்றி பெற்றவர்களின் முழு விவர அறிக்கை (A4 PDF)">
+              🏆 வெற்றி பெற்றவர்கள் விவர அறிக்கை (PDF)
             </button>
             <button type="button" class="btn-sm" style="background: #15803d; padding: 7px 14px; font-weight: 700;" onclick="exportWinnersCsv()">
               📊 பட்டியல் Excel / CSV பதிவிறக்கம்
@@ -2299,13 +2311,19 @@
                     </div>
                   </td>
 
-                  <!-- COLUMN 3: SCHOOL SELECTION DROPDOWN & TAMIL/ENGLISH SCHOOL NAME -->
+                  <!-- COLUMN 3: SCHOOL / OFFICE SELECTION DROPDOWN & CUSTOM SCHOOL/OFFICE ADDITION -->
                   <td style="padding: 10px;">
                     <div style="margin-bottom: 6px;">
-                      <label style="display:block; font-size:0.74rem; font-weight:800; color:#0f766e; margin-bottom:3px;">🏫 பள்ளியின் பெயரைத் தேர்ந்தெடுக்க (Select School):</label>
+                      <div style="display:flex; justify-content:space-between; align-items:center; gap:4px; margin-bottom:3px; flex-wrap:wrap;">
+                        <label style="font-size:0.74rem; font-weight:800; color:#0f766e; margin:0;">🏫 பள்ளி / அலுவலகம் தேர்ந்தெடுக்க:</label>
+                        <button type="button" class="btn-sm" style="background:#d97706; color:#fff; padding:2px 8px; font-size:0.72rem; font-weight:800; border-radius:5px;" onclick="toggleCustomInstitutionAddBox()">
+                          ➕ புதிய பள்ளி / அலுவலகம் சேர்
+                        </button>
+                      </div>
                       <div style="display: flex; gap: 4px; margin-bottom: 4px;">
                         <select id="judgeBlockFilterSel" class="form-control" style="width: 122px; flex-shrink: 0; padding: 4px 6px; font-size: 0.78rem; font-weight: 700; background: #f0fdf4; border-color: #86efac;" onchange="populateJudgeSchoolsDropdown()">
-                          <option value="ALL">அனைத்து வட்டாரம்</option>
+                          <option value="ALL">அனைத்தும் (All)</option>
+                          <option value="CUSTOM_OFFICES">🏢 அலுவலகம் / கல்லூரி / புதியவை</option>
                           <option value="01 S.Pudur">01 S.Pudur</option>
                           <option value="02 Singampunari">02 Singampunari</option>
                           <option value="03 Thiruppathur">03 Thiruppathur</option>
@@ -2323,16 +2341,48 @@
                         <button type="button" class="btn-sm" style="background: #4f46e5; padding: 4px 8px; font-size: 0.76rem; white-space: nowrap;" onclick="lookupSchoolForJudgeForm()">🔍 பள்ளி நிரப்பு</button>
                       </div>
                       <select id="judgeSchoolSelectDropdown" class="form-control" style="padding: 5px 8px; font-size: 0.82rem; font-weight: 700; border-color: #10b981; background: #ecfdf5; color: #065f46;" onchange="onJudgeSchoolDropdownSelect(this.value)">
-                        <option value="">-- பட்டியலிலிருந்து பள்ளியின் பெயரைத் தேர்ந்தெடுக்கவும் --</option>
+                        <option value="">-- பட்டியலிலிருந்து பள்ளி / அலுவலகத்தைத் தேர்ந்தெடுக்கவும் --</option>
                       </select>
                     </div>
-                    <div style="margin-bottom: 6px;">
-                      <label style="display:block; font-size:0.73rem; font-weight:800; color:#1e3a8a; margin-bottom:2px;">🇮🇳 பள்ளியின் பெயர் (தமிழில்) <span class="required">*</span></label>
-                      <input type="text" id="judgeInstTa" class="form-control" placeholder="எ.கா: அரசு மேல்நிலைப்பள்ளி, சிவகங்கை" style="padding: 5px 8px; font-size: 0.84rem; font-weight: 700;" oninput="autoTranslateJudgeField('inst', 'ta')" required>
+
+                    <!-- INLINE QUICK-ADD BOX FOR UNLISTED SCHOOL / COLLEGE / OFFICE -->
+                    <div id="customInstQuickAddBox" style="display: none; background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 8px; padding: 8px 10px; margin-bottom: 8px;">
+                      <div style="font-size: 0.76rem; font-weight: 900; color: #92400e; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+                        <span>➕ பட்டியலில் இல்லாத பள்ளி / கல்லூரி / அலுவலகம் சேர்க்க:</span>
+                        <button type="button" onclick="toggleCustomInstitutionAddBox(false)" style="background:none; border:none; color:#b91c1c; font-weight:900; cursor:pointer; font-size:0.82rem;">✕</button>
+                      </div>
+                      <div style="margin-bottom: 5px;">
+                        <select id="newCustomInstTypeSel" class="form-control" style="padding: 4px 7px; font-size: 0.78rem; font-weight: 700; background: #ffffff;">
+                          <option value="பள்ளி (School)">🏫 பட்டியலில் இல்லாத பள்ளி (Unlisted School)</option>
+                          <option value="அலுவலகம் (Office)">🏢 கல்வி அலுவலகம் (CEO / DEO / BEO / DIET Office)</option>
+                          <option value="கல்லூரி (College)">🎓 கல்லூரி / பல்கலைக்கழகம் (College / University)</option>
+                        </select>
+                      </div>
+                      <div style="margin-bottom: 5px;">
+                        <input type="text" id="newCustomInstTaInp" class="form-control" placeholder="பள்ளி / அலுவலகப் பெயர் & ஊர் (தமிழில்) *" style="padding: 5px 8px; font-size: 0.8rem; font-weight: 700;" oninput="autoTranslateCustomInstModal('ta')">
+                      </div>
+                      <div style="margin-bottom: 6px;">
+                        <input type="text" id="newCustomInstEnInp" class="form-control" placeholder="School / Office Name & Place (In English) *" style="padding: 5px 8px; font-size: 0.8rem; font-weight: 700;" oninput="autoTranslateCustomInstModal('en')">
+                      </div>
+                      <div style="display: flex; gap: 6px;">
+                        <button type="button" class="btn-sm" style="background: #d97706; color: #ffffff; padding: 5px 10px; font-size: 0.76rem; font-weight: 800; flex: 1; justify-content: center;" onclick="handleSaveCustomInstitution()">
+                          💾 பட்டியலில் சேர்த்துத் தேர்ந்தெடு (Add & Select)
+                        </button>
+                      </div>
                     </div>
-                    <div>
-                      <label style="display:block; font-size:0.73rem; font-weight:800; color:#334155; margin-bottom:2px;">🔤 School Name (In English) <span class="required">*</span></label>
-                      <input type="text" id="judgeInstEn" class="form-control" placeholder="e.g. Govt. Hr. Sec. School, Sivagangai" style="padding: 5px 8px; font-size: 0.84rem; font-weight: 700;" oninput="autoTranslateJudgeField('inst', 'en')" required>
+
+                    <div style="margin-bottom: 6px;">
+                      <label style="display:block; font-size:0.73rem; font-weight:800; color:#1e3a8a; margin-bottom:2px;">🇮🇳 பள்ளி / அலுவலகத்தின் பெயர் (தமிழில்) <span class="required">*</span></label>
+                      <input type="text" id="judgeInstTa" class="form-control" placeholder="எ.கா: அரசு மேல்நிலைப்பள்ளி / முதன்மைக்கல்வி அலுவலகம், சிவகங்கை" style="padding: 5px 8px; font-size: 0.84rem; font-weight: 700;" oninput="autoTranslateJudgeField('inst', 'ta')" required>
+                    </div>
+                    <div style="margin-bottom: 5px;">
+                      <label style="display:block; font-size:0.73rem; font-weight:800; color:#334155; margin-bottom:2px;">🔤 School / Office Name (In English) <span class="required">*</span></label>
+                      <input type="text" id="judgeInstEn" class="form-control" placeholder="e.g. Govt. Hr. Sec. School / Chief Educational Office, Sivagangai" style="padding: 5px 8px; font-size: 0.84rem; font-weight: 700;" oninput="autoTranslateJudgeField('inst', 'en')" required>
+                    </div>
+                    <div style="text-align: right;">
+                      <button type="button" onclick="saveCurrentJudgeInstToCustomList()" style="background: #f0fdf4; border: 1px solid #86efac; color: #166534; border-radius: 5px; padding: 2px 8px; font-size: 0.72rem; font-weight: 800; cursor: pointer; font-family: inherit;" title="மேலே உள்ள பள்ளி / அலுவலகப் பெயர் பட்டியலில் இல்லையெனில் நிரந்தரமாகப் பட்டியலில் சேர்க்கும்">
+                        📌 இப்பெயரைத் தேர்வுப் பட்டியலில் நிரந்தரமாகச் சேர்
+                      </button>
                     </div>
                   </td>
 
@@ -2435,6 +2485,188 @@
             </thead>
             <tbody id="admJudgesTableBody">
               <tr><td colspan="8" style="text-align:center; padding:18px; color:#64748b;">இன்னும் நடுவர்கள் விவரம் பதிவு செய்யப்படவில்லை.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- ADMIN SUB-TAB 6: STUDENT ATTENDANCE REGISTER & WINNERS REPORTS      -->
+    <!-- =================================================================== -->
+    <div id="admSubTabReports" style="display: none;">
+      <!-- SECTION A: STUDENT & GUIDE TEACHER ATTENDANCE REGISTER REPORT -->
+      <div class="admin-panel-box" style="border: 2px solid #0f766e; background: linear-gradient(135deg, #f0fdfa 0%, #f8fafc 100%); margin-bottom: 18px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+          <div>
+            <h3 style="color: #115e59; font-size: 1.12rem; margin: 0; display: flex; align-items: center; gap: 8px;">
+              📋 1. மாணவர் மற்றும் வழிகாட்டி ஆசிரியர் வருகைப்பதிவேடு அறிக்கை (Student & Guide Teacher Attendance Register)
+            </h3>
+            <p style="font-size: 0.85rem; color: #334155; margin: 4px 0 0 0;">
+              மாவட்ட அறிவியல் கண்காட்சியில் பங்கேற்கும் மாணவர்கள் மற்றும் வழிகாட்டி ஆசிரியர்களின் வருகையைப் பதிவு செய்யவும், கையொப்பக் கட்டங்களுடன் கூடிய <strong>அதிகாரப்பூர்வ வருகைப்பதிவேடு அறிக்கையை (Official A4 PDF & Excel)</strong> பதிவிறக்கம் செய்யவும் இங்கே வசதி செய்யப்பட்டுள்ளது.
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn-sm" style="background: #0f766e; color: #ffffff; padding: 9px 16px; font-size: 0.88rem; font-weight: 800; box-shadow: 0 4px 12px rgba(15,118,110,0.28);" onclick="downloadAttendanceReportPdf()">
+              🖨️ வருகைப்பதிவேடு அறிக்கை PDF பதிவிறக்கம் (Attendance Report PDF)
+            </button>
+            <button type="button" class="btn-sm" style="background: #15803d; color: #ffffff; padding: 9px 14px; font-size: 0.85rem; font-weight: 800;" onclick="exportAttendanceRegisterCsv()">
+              📊 வருகைப்பதிவேடு Excel / CSV
+            </button>
+          </div>
+        </div>
+
+        <!-- Attendance Summary Pills & Filters -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; background: #ffffff; border: 1.5px solid #99f6e4; border-radius: 10px; padding: 12px 14px; margin-bottom: 14px;">
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+            <div>
+              <label style="display:block; font-size:0.74rem; font-weight:800; color:#0f766e; margin-bottom:2px;">📂 போட்டிப் பிரிவு (Category):</label>
+              <select id="attRepCatFilter" class="form-control" style="padding: 5px 10px; font-size: 0.83rem; font-weight: 700;" onchange="renderAdminAttendanceRegisterTable()">
+                <option value="ALL">அனைத்துப் பிரிவுகள் (All Categories)</option>
+                <option value="Individual">👤 பிரிவு 1: தனிநபர் வகை (Individual)</option>
+                <option value="Group">👥 பிரிவு 2: குழு வகை (Group)</option>
+                <option value="Teacher">👨‍🏫 பிரிவு 3: ஆசிரியர் வகை (Teacher)</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-size:0.74rem; font-weight:800; color:#0f766e; margin-bottom:2px;">🔬 பாடப்பிரிவு (Discipline):</label>
+              <select id="attRepDiscFilter" class="form-control" style="padding: 5px 10px; font-size: 0.83rem; font-weight: 700;" onchange="renderAdminAttendanceRegisterTable()">
+                <option value="ALL">அனைத்துப் பாடப்பிரிவுகள் (All Disciplines)</option>
+                <option value="Physics">இயற்பியல் (Physics)</option>
+                <option value="Chemistry">வேதியியல் (Chemistry)</option>
+                <option value="Mathematics">கணிதம் (Mathematics)</option>
+                <option value="Environmental Science">சுற்றுச்சூழல் அறிவியல் (Environmental Science)</option>
+                <option value="Engineering">பொறியியல் (Engineering)</option>
+                <option value="Bioscience / Biochemistry">உயிரியல் / உயிர் வேதியியல் (Bioscience)</option>
+                <option value="Earth & Space Science">பூமி மற்றும் விண்வெளி (Earth & Space)</option>
+                <option value="Computer Science">கணினி அறிவியல் (Computer Science)</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-size:0.74rem; font-weight:800; color:#0f766e; margin-bottom:2px;">✅ வருகை நிலை (Status):</label>
+              <select id="attRepStatusFilter" class="form-control" style="padding: 5px 10px; font-size: 0.83rem; font-weight: 700;" onchange="renderAdminAttendanceRegisterTable()">
+                <option value="ALL">அனைத்தும் (All Registered)</option>
+                <option value="PRESENT">✅ வருகை புரிந்தவர்கள் மட்டும் (Present Only)</option>
+                <option value="ABSENT">❌ வருகை இல்லாதவர்கள் (Absent Only)</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-size:0.74rem; font-weight:800; color:#0f766e; margin-bottom:2px;">🔍 தேடுக (Search):</label>
+              <input type="text" id="attRepSearchInp" class="form-control" placeholder="பள்ளி, மாணவர், பதிவு எண்..." style="padding: 5px 10px; font-size: 0.83rem; width: 195px;" oninput="renderAdminAttendanceRegisterTable()">
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <span id="attRepSummaryBadge" style="background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; padding: 6px 12px; border-radius: 8px; font-size: 0.82rem; font-weight: 800;">
+              மொத்தப் படைப்புகள்: 0 | மாணவர்கள்: 0
+            </span>
+            <button type="button" class="btn-sm" style="background: #0284c7; color: #ffffff; padding: 6px 12px; font-size: 0.78rem; font-weight: 800;" onclick="markAllAttendanceStatus('PRESENT')">
+              ✅ அனைவரும் 'வருகை' எனக் குறி
+            </button>
+          </div>
+        </div>
+
+        <div class="admin-table-wrap" style="max-height: 480px; overflow-y: auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 48px; text-align: center;">வ.எண்</th>
+                <th style="width: 105px;">பதிவு எண் & U.NO</th>
+                <th>பள்ளியின் பெயர் & வட்டாரம் (School & Block)</th>
+                <th>போட்டிப் பிரிவு & பாடப்பிரிவு</th>
+                <th>மாணவர் / பங்கேற்பாளர் பெயர் & வகுப்பு (Students & Class)</th>
+                <th>வழிகாட்டி ஆசிரியர் & கைபேசி</th>
+                <th>அறிவியல் படைப்பின் தலைப்பு (Exhibit Title)</th>
+                <th style="width: 155px; text-align: center;">வருகைப் பதிவு (Attendance Status)</th>
+              </tr>
+            </thead>
+            <tbody id="admAttendanceTableBody">
+              <tr><td colspan="8" style="text-align:center; padding:18px; color:#64748b;">வருகைப்பதிவேடு விவரங்கள் ஏற்றப்படுகின்றன...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION B: WINNERS DETAILS OFFICIAL REPORT -->
+      <div class="admin-panel-box" style="border: 2px solid #d97706; background: linear-gradient(135deg, #fffbeb 0%, #ffffff 100%);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+          <div>
+            <h3 style="color: #92400e; font-size: 1.12rem; margin: 0; display: flex; align-items: center; gap: 8px;">
+              🏆 2. மாவட்ட அளவில் வெற்றி பெற்றவர்களின் விவர அறிக்கை (District Winners Details Report)
+            </h3>
+            <p style="font-size: 0.85rem; color: #334155; margin: 4px 0 0 0;">
+              போட்டிப் பிரிவு மற்றும் பாடப்பிரிவு வாரியாக வெற்றி பெற்ற மாணவர்கள், வழிகாட்டி ஆசிரியர்கள் மற்றும் பள்ளிகளின் முழு விவரங்களை <strong>அதிகாரப்பூர்வ அறிக்கையாக (Official Winners Report A4 PDF & Excel)</strong> பதிவிறக்கம் செய்யலாம்.
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn-sm" style="background: #d97706; color: #ffffff; padding: 9px 16px; font-size: 0.88rem; font-weight: 800; box-shadow: 0 4px 12px rgba(217,119,6,0.28);" onclick="downloadWinnersReportPdf()">
+              🖨️ வெற்றி பெற்றவர்கள் விவர அறிக்கை PDF (Winners Report PDF)
+            </button>
+            <button type="button" class="btn-sm" style="background: #15803d; color: #ffffff; padding: 9px 14px; font-size: 0.85rem; font-weight: 800;" onclick="exportWinnersReportFilteredCsv()">
+              📊 வெற்றியாளர் அறிக்கை Excel / CSV
+            </button>
+          </div>
+        </div>
+
+        <!-- Winners Report Filters -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; background: #ffffff; border: 1.5px solid #fcd34d; border-radius: 10px; padding: 12px 14px; margin-bottom: 14px;">
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+            <div>
+              <label style="display:block; font-size:0.74rem; font-weight:800; color:#92400e; margin-bottom:2px;">📂 போட்டிப் பிரிவு (Category):</label>
+              <select id="winRepCatFilter" class="form-control" style="padding: 5px 10px; font-size: 0.83rem; font-weight: 700;" onchange="renderAdminWinnersReportPreviewTable()">
+                <option value="ALL">அனைத்துப் பிரிவுகள் (All Categories)</option>
+                <option value="Individual">👤 பிரிவு 1: தனிநபர் வகை (Individual)</option>
+                <option value="Group">👥 பிரிவு 2: குழு வகை (Group)</option>
+                <option value="Teacher">👨‍🏫 பிரிவு 3: ஆசிரியர் வகை (Teacher)</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-size:0.74rem; font-weight:800; color:#92400e; margin-bottom:2px;">🏅 பரிசு நிலை (Prize Filter):</label>
+              <select id="winRepRankFilter" class="form-control" style="padding: 5px 10px; font-size: 0.83rem; font-weight: 700;" onchange="renderAdminWinnersReportPreviewTable()">
+                <option value="PRIZE_WINNERS">🏆 பரிசு பெற்ற வெற்றியாளர்கள் மட்டும் (1st, 2nd, 3rd & Special)</option>
+                <option value="முதலிடம்">🥇 முதலிடம் மட்டும் (மாநிலப் போட்டிக்குத் தேர்வு)</option>
+                <option value="இரண்டாமிடம்">🥈 இரண்டாமிடம் மட்டும் (2nd Place)</option>
+                <option value="மூன்றாமிடம்">🥉 மூன்றாமிடம் மட்டும் (3rd Place)</option>
+                <option value="சிறப்பிடம்">🌟 சிறப்பிடம் மட்டும் (Special Prize)</option>
+                <option value="ALL">அனைத்தும் - பங்கேற்பாளர்கள் உட்பட (All)</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-size:0.74rem; font-weight:800; color:#92400e; margin-bottom:2px;">🔬 பாடப்பிரிவு (Discipline):</label>
+              <select id="winRepDiscFilter" class="form-control" style="padding: 5px 10px; font-size: 0.83rem; font-weight: 700;" onchange="renderAdminWinnersReportPreviewTable()">
+                <option value="ALL">அனைத்துப் பாடப்பிரிவுகள் (All Disciplines)</option>
+                <option value="Physics">இயற்பியல் (Physics)</option>
+                <option value="Chemistry">வேதியியல் (Chemistry)</option>
+                <option value="Mathematics">கணிதம் (Mathematics)</option>
+                <option value="Environmental Science">சுற்றுச்சூழல் அறிவியல் (Environmental Science)</option>
+                <option value="Engineering">பொறியியல் (Engineering)</option>
+                <option value="Bioscience / Biochemistry">உயிரியல் / உயிர் வேதியியல் (Bioscience)</option>
+                <option value="Earth & Space Science">பூமி மற்றும் விண்வெளி (Earth & Space)</option>
+                <option value="Computer Science">கணினி அறிவியல் (Computer Science)</option>
+              </select>
+            </div>
+          </div>
+          <span id="winRepSummaryBadge" style="background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; padding: 6px 12px; border-radius: 8px; font-size: 0.82rem; font-weight: 800;">
+            வெற்றியாளர்கள் எண்ணிக்கை: 0
+          </span>
+        </div>
+
+        <div class="admin-table-wrap" style="max-height: 480px; overflow-y: auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 48px; text-align: center;">வ.எண்</th>
+                <th>போட்டிப் பிரிவு & பாடப்பிரிவு</th>
+                <th>பரிசு நிலை / இடம் (Prize / Rank)</th>
+                <th>பதிவு எண் & U.NO</th>
+                <th>பள்ளியின் பெயர் & வட்டாரம் (School Name)</th>
+                <th>வெற்றி பெற்ற மாணவர்(கள்) & வகுப்பு</th>
+                <th>வழிகாட்டி / பங்கேற்பாளர் ஆசிரியர் & கைபேசி</th>
+                <th>அறிவியல் படைப்பின் தலைப்பு (Exhibit Title)</th>
+              </tr>
+            </thead>
+            <tbody id="admWinnersReportTableBody">
+              <tr><td colspan="8" style="text-align:center; padding:18px; color:#64748b;">வெற்றியாளர்கள் அறிக்கை விவரங்கள் ஏற்றப்படுகின்றன...</td></tr>
             </tbody>
           </table>
         </div>
@@ -7787,23 +8019,27 @@ document.getElementById("regStep1").style.display = "none";
     const tApps = document.getElementById("admSubTabApps");
     const tWin = document.getElementById("admSubTabWinners");
     const tJudges = document.getElementById("admSubTabJudges");
+    const tRep = document.getElementById("admSubTabReports");
     const tPass = document.getElementById("admSubTabPasswords");
     const tNotif = document.getElementById("admSubTabNotifications");
     const bApps = document.getElementById("admTabBtnApps");
     const bWin = document.getElementById("admTabBtnWinners");
     const bJudges = document.getElementById("admTabBtnJudges");
+    const bRep = document.getElementById("admTabBtnReports");
     const bPass = document.getElementById("admTabBtnPasswords");
     const bNotif = document.getElementById("admTabBtnNotifications");
 
     if (tApps) tApps.style.display = (tabName === "apps") ? "block" : "none";
     if (tWin) tWin.style.display = (tabName === "winners") ? "block" : "none";
     if (tJudges) tJudges.style.display = (tabName === "judges") ? "block" : "none";
+    if (tRep) tRep.style.display = (tabName === "reports") ? "block" : "none";
     if (tPass) tPass.style.display = (tabName === "passwords") ? "block" : "none";
     if (tNotif) tNotif.style.display = (tabName === "notifications") ? "block" : "none";
 
     if (bApps) bApps.classList.toggle("active", tabName === "apps");
     if (bWin) bWin.classList.toggle("active", tabName === "winners");
     if (bJudges) bJudges.classList.toggle("active", tabName === "judges");
+    if (bRep) bRep.classList.toggle("active", tabName === "reports");
     if (bPass) bPass.classList.toggle("active", tabName === "passwords");
     if (bNotif) bNotif.classList.toggle("active", tabName === "notifications");
 
@@ -7813,6 +8049,9 @@ document.getElementById("regStep1").style.display = "none";
     } else if (tabName === "judges") {
       loadJudgesListIntoMemory();
       renderAdminJudgesTable();
+    } else if (tabName === "reports") {
+      renderAdminAttendanceRegisterTable();
+      renderAdminWinnersReportPreviewTable();
     } else if (tabName === "passwords") {
       renderAdminSchoolsTable();
     } else if (tabName === "notifications") {
@@ -8855,6 +9094,7 @@ ${n.message}
     setTxt("admStatNotifications", adminNotificationsList.length);
     try { renderAdminNotificationsTable(); } catch (e) {}
     try { renderAdminJudgesTable(); } catch (e) {}
+    try { renderAdminAttendanceRegisterTable(); renderAdminWinnersReportPreviewTable(); } catch (e) {}
 
     // Render Discipline breakdown pills
     const discContainer = document.getElementById("admDisciplineBreakdown");
@@ -11218,28 +11458,221 @@ ${n.message}
     return adminJudgesList;
   }
 
+  // =========================================================================
+  // UNLISTED SCHOOLS / COLLEGES / EDUCATIONAL OFFICES DIRECTORY MANAGEMENT
+  // =========================================================================
+  const DEFAULT_CUSTOM_INSTITUTIONS = [
+    { uNo: "OFF-01", nameTa: "முதன்மைக்கல்வி அலுவலகம், சிவகங்கை", nameEn: "Chief Educational Office, Sivagangai", block: "அலுவலகம் (Office)" },
+    { uNo: "OFF-02", nameTa: "மாவட்டக் கல்வி அலுவலகம் (இடைநிலை), சிவகங்கை", nameEn: "District Educational Office (Secondary), Sivagangai", block: "அலுவலகம் (Office)" },
+    { uNo: "OFF-03", nameTa: "மாவட்டக் கல்வி அலுவலகம் (இடைநிலை), தேவகோட்டை", nameEn: "District Educational Office (Secondary), Devakottai", block: "அலுவலகம் (Office)" },
+    { uNo: "OFF-04", nameTa: "மாவட்டக் கல்வி அலுவலகம் (தொடக்கக் கல்வி), சிவகங்கை", nameEn: "District Educational Office (Elementary), Sivagangai", block: "அலுவலகம் (Office)" },
+    { uNo: "OFF-05", nameTa: "மாவட்டக் கல்வி அலுவலகம் (தனியார் பள்ளிகள்), சிவகங்கை", nameEn: "District Educational Office (Private Schools), Sivagangai", block: "அலுவலகம் (Office)" },
+    { uNo: "OFF-06", nameTa: "மாவட்ட ஆசிரியர் கல்வி மற்றும் பயிற்சி நிறுவனம் (DIET), காளையார்கோவில்", nameEn: "DIET, Kalayarkoil, Sivagangai", block: "அலுவலகம் (Office)" },
+    { uNo: "OFF-07", nameTa: "வட்டாரக் கல்வி அலுவலகம், சிவகங்கை", nameEn: "Block Educational Office, Sivagangai", block: "அலுவலகம் (Office)" },
+    { uNo: "COL-01", nameTa: "மன்னர் துரைசிங்கம் அரசு கலைக்கல்லூரி, சிவகங்கை", nameEn: "Raja Doraisingam Government Arts College, Sivagangai", block: "கல்லூரி (College)" },
+    { uNo: "COL-02", nameTa: "அரசு மகளிர் கலைக்கல்லூரி, சிவகங்கை", nameEn: "Government Arts College for Women, Sivagangai", block: "கல்லூரி (College)" },
+    { uNo: "COL-03", nameTa: "அழகப்பா அரசு கலைக்கல்லூரி, காரைக்குடி", nameEn: "Alagappa Government Arts College, Karaikudi", block: "கல்லூரி (College)" },
+    { uNo: "COL-04", nameTa: "அழகப்பா செட்டியார் அரசு பொறியியல் மற்றும் தொழில்நுட்பக் கல்லூரி, காரைக்குடி", nameEn: "ACGCET, Karaikudi", block: "கல்லூரி (College)" },
+    { uNo: "COL-05", nameTa: "அழகப்பா பல்கலைக்கழகம், காரைக்குடி", nameEn: "Alagappa University, Karaikudi", block: "கல்லூரி (College)" },
+    { uNo: "COL-06", nameTa: "ஆறுமுகம்பிள்ளை சீதையம்மாள் கல்லூரி, திருப்பத்தூர்", nameEn: "Arumugam Pillai Seethai Ammal College, Tiruppattur", block: "கல்லூரி (College)" },
+    { uNo: "COL-07", nameTa: "இராமசாமி தமிழ்க் கல்லூரி, காரைக்குடி", nameEn: "Ramasamy Tamil College, Karaikudi", block: "கல்லூரி (College)" },
+    { uNo: "COL-08", nameTa: "ஆனந்தா கல்லூரி, தேவகோட்டை", nameEn: "Ananda College, Devakottai", block: "கல்லூரி (College)" }
+  ];
+
+  function getCustomInstitutionsList() {
+    let userAdded = [];
+    try {
+      const raw = localStorage.getItem("SISF_CUSTOM_INSTITUTIONS") || sessionStorage.getItem("SISF_CUSTOM_INSTITUTIONS");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) userAdded = parsed;
+      } else if (window.name && window.name.startsWith("{")) {
+        const wn = JSON.parse(window.name);
+        if (wn && Array.isArray(wn.customInstitutions)) userAdded = wn.customInstitutions;
+      }
+    } catch (e) {}
+    const map = {};
+    DEFAULT_CUSTOM_INSTITUTIONS.forEach(item => { map[item.uNo] = item; });
+    userAdded.forEach(item => {
+      if (item && item.uNo) map[item.uNo] = item;
+    });
+    return Object.values(map);
+  }
+
+  function saveCustomInstitutionItem(newItem) {
+    if (!newItem || (!newItem.nameTa && !newItem.nameEn)) return null;
+    let userAdded = [];
+    try {
+      const raw = localStorage.getItem("SISF_CUSTOM_INSTITUTIONS") || sessionStorage.getItem("SISF_CUSTOM_INSTITUTIONS");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) userAdded = parsed;
+      }
+    } catch (e) {}
+
+    const allExisting = [...DEFAULT_CUSTOM_INSTITUTIONS, ...(typeof MASTER_SCHOOLS !== "undefined" ? MASTER_SCHOOLS : []), ...userAdded];
+    const cleanTa = String(newItem.nameTa || "").trim();
+    const cleanEn = String(newItem.nameEn || cleanTa).trim();
+    const dup = allExisting.find(s =>
+      (cleanTa && String(s.nameTa || "").trim().toLowerCase() === cleanTa.toLowerCase()) ||
+      (cleanEn && String(s.nameEn || "").trim().toLowerCase() === cleanEn.toLowerCase())
+    );
+    if (dup) return dup;
+
+    const uNoCode = newItem.uNo || ("CUST-" + String(userAdded.length + 1).padStart(2, "0"));
+    const record = {
+      uNo: uNoCode,
+      udiseNo: uNoCode,
+      nameTa: cleanTa || cleanEn,
+      nameEn: cleanEn || cleanTa,
+      block: newItem.block || "புதிய பள்ளி / அலுவலகம் (Custom)"
+    };
+    userAdded.unshift(record);
+    try { localStorage.setItem("SISF_CUSTOM_INSTITUTIONS", JSON.stringify(userAdded)); } catch (e) {}
+    try { sessionStorage.setItem("SISF_CUSTOM_INSTITUTIONS", JSON.stringify(userAdded)); } catch (e) {}
+    try {
+      let wn = {};
+      if (window.name && window.name.startsWith("{")) wn = JSON.parse(window.name);
+      wn.customInstitutions = userAdded;
+      window.name = JSON.stringify(wn);
+    } catch (e) {}
+    return record;
+  }
+
+  function getAllCombinedInstitutionsForJudge() {
+    const customList = getCustomInstitutionsList();
+    const masterList = (typeof MASTER_SCHOOLS !== "undefined" && Array.isArray(MASTER_SCHOOLS)) ? MASTER_SCHOOLS : [];
+    return [...customList, ...masterList];
+  }
+
+  function toggleCustomInstitutionAddBox(forceState) {
+    const box = document.getElementById("customInstQuickAddBox");
+    if (!box) return;
+    const show = (forceState !== undefined) ? forceState : (box.style.display === "none");
+    box.style.display = show ? "block" : "none";
+    if (show) {
+      const taInp = document.getElementById("newCustomInstTaInp");
+      if (taInp) taInp.focus();
+    }
+  }
+
+  let customInstModalTransTimer = null;
+  function autoTranslateCustomInstModal(sourceLang) {
+    const taEl = document.getElementById("newCustomInstTaInp");
+    const enEl = document.getElementById("newCustomInstEnInp");
+    if (!taEl || !enEl) return;
+    if (customInstModalTransTimer) clearTimeout(customInstModalTransTimer);
+    customInstModalTransTimer = setTimeout(async () => {
+      if (sourceLang === "ta" && taEl.value.trim() && typeof translateTextViaApi === "function") {
+        const tr = await translateTextViaApi(taEl.value.trim(), "ta", "en");
+        if (tr) enEl.value = tr;
+      } else if (sourceLang === "en" && enEl.value.trim() && !taEl.value.trim() && typeof translateTextViaApi === "function") {
+        const tr = await translateTextViaApi(enEl.value.trim(), "en", "ta");
+        if (tr) taEl.value = tr;
+      }
+    }, 600);
+  }
+
+  function handleSaveCustomInstitution() {
+    const typeVal = document.getElementById("newCustomInstTypeSel")?.value || "பள்ளி (School)";
+    const taVal = (document.getElementById("newCustomInstTaInp")?.value || "").trim();
+    const enVal = (document.getElementById("newCustomInstEnInp")?.value || "").trim();
+    if (!taVal && !enVal) {
+      showSisfToast("⚠️ பள்ளி அல்லது அலுவலகத்தின் பெயரை உள்ளிடவும்.");
+      return;
+    }
+    const saved = saveCustomInstitutionItem({
+      nameTa: taVal || enVal,
+      nameEn: enVal || taVal,
+      block: typeVal
+    });
+    if (saved) {
+      const blkSel = document.getElementById("judgeBlockFilterSel");
+      if (blkSel) blkSel.value = "ALL";
+      populateJudgeSchoolsDropdown();
+      const sel = document.getElementById("judgeSchoolSelectDropdown");
+      if (sel) sel.value = saved.uNo;
+      const unoInp = document.getElementById("judgeSchoolUno");
+      if (unoInp) unoInp.value = saved.uNo;
+      const instTaEl = document.getElementById("judgeInstTa");
+      const instEnEl = document.getElementById("judgeInstEn");
+      if (instTaEl) instTaEl.value = saved.nameTa;
+      if (instEnEl) instEnEl.value = saved.nameEn;
+
+      const mTa = document.getElementById("newCustomInstTaInp"); if (mTa) mTa.value = "";
+      const mEn = document.getElementById("newCustomInstEnInp"); if (mEn) mEn.value = "";
+      toggleCustomInstitutionAddBox(false);
+      showSisfToast(`✅ "${saved.nameTa}" பட்டியலில் நிரந்தரமாகச் சேர்க்கப்பட்டுத் தேர்ந்தெடுக்கப்பட்டது!`);
+    }
+  }
+
+  function saveCurrentJudgeInstToCustomList() {
+    const taVal = (document.getElementById("judgeInstTa")?.value || "").trim();
+    const enVal = (document.getElementById("judgeInstEn")?.value || "").trim();
+    if (!taVal && !enVal) {
+      toggleCustomInstitutionAddBox(true);
+      showSisfToast("💡 புதிய பள்ளி / அலுவலகத்தின் பெயரை உள்ளிட்டுச் சேமிக்கவும்.");
+      return;
+    }
+    const saved = saveCustomInstitutionItem({
+      nameTa: taVal || enVal,
+      nameEn: enVal || taVal,
+      block: "புதிய பள்ளி / அலுவலகம் (Custom)"
+    });
+    if (saved) {
+      populateJudgeSchoolsDropdown();
+      const sel = document.getElementById("judgeSchoolSelectDropdown");
+      if (sel) sel.value = saved.uNo;
+      const unoInp = document.getElementById("judgeSchoolUno");
+      if (unoInp) unoInp.value = saved.uNo;
+      showSisfToast(`✅ "${saved.nameTa}" தேர்வுப் பட்டியலில் நிரந்தரமாகச் சேர்க்கப்பட்டது!`);
+    }
+  }
+
   function populateJudgeSchoolsDropdown() {
     const sel = document.getElementById("judgeSchoolSelectDropdown");
-    if (!sel || typeof MASTER_SCHOOLS === "undefined") return;
+    if (!sel) return;
     const blkFilter = document.getElementById("judgeBlockFilterSel")?.value || "ALL";
     const prevVal = sel.value;
 
-    const list = MASTER_SCHOOLS.filter(s => {
-      if (blkFilter === "ALL") return true;
-      return String(s.block || "").toLowerCase() === blkFilter.toLowerCase();
-    });
+    const customList = getCustomInstitutionsList();
+    const masterList = (typeof MASTER_SCHOOLS !== "undefined" && Array.isArray(MASTER_SCHOOLS)) ? MASTER_SCHOOLS : [];
 
-    sel.innerHTML = `<option value="">-- பட்டியலிலிருந்து பள்ளியின் பெயரைத் தேர்ந்தெடுக்கவும் (${list.length} பள்ளிகள்) --</option>` +
-      list.map(s => `<option value="${s.uNo}">U.NO: ${s.uNo} | ${s.nameTa || s.nameEn} (${s.nameEn || ""})</option>`).join("");
+    let htmlOpts = `<option value="">-- பட்டியலிலிருந்து பள்ளி / அலுவலகத்தைத் தேர்ந்தெடுக்கவும் --</option>`;
+    htmlOpts += `<option value="__ADD_NEW_INST__" style="font-weight:900; color:#b45309; background:#fef3c7;">➕ பட்டியலில் இல்லாத புதிய பள்ளி / அலுவலகம் சேர்க்க (Add New School / Office)...</option>`;
 
-    if (prevVal && list.some(s => s.uNo === prevVal)) {
+    if (blkFilter === "ALL" || blkFilter === "CUSTOM_OFFICES") {
+      htmlOpts += `<optgroup label="🏢 கல்வி அலுவலகங்கள், கல்லூரிகள் & புதிதாகச் சேர்க்கப்பட்டவை (${customList.length})">` +
+        customList.map(c => `<option value="${c.uNo}">[${c.uNo}] ${c.nameTa} (${c.nameEn})</option>`).join("") +
+        `</optgroup>`;
+    }
+
+    if (blkFilter !== "CUSTOM_OFFICES") {
+      const filteredMaster = masterList.filter(s => {
+        if (blkFilter === "ALL") return true;
+        return String(s.block || "").toLowerCase() === blkFilter.toLowerCase();
+      });
+      htmlOpts += `<optgroup label="🏫 சிவகங்கை மாவட்டப் பள்ளிகள் (${filteredMaster.length} பள்ளிகள்)">` +
+        filteredMaster.map(s => `<option value="${s.uNo}">U.NO: ${s.uNo} | ${s.nameTa || s.nameEn} (${s.nameEn || ""})</option>`).join("") +
+        `</optgroup>`;
+    }
+
+    sel.innerHTML = htmlOpts;
+    if (prevVal && prevVal !== "__ADD_NEW_INST__") {
       sel.value = prevVal;
     }
   }
 
   function onJudgeSchoolDropdownSelect(uNoVal) {
-    if (!uNoVal || typeof MASTER_SCHOOLS === "undefined") return;
-    const found = MASTER_SCHOOLS.find(s => s.uNo === String(uNoVal).trim());
+    if (!uNoVal) return;
+    if (uNoVal === "__ADD_NEW_INST__") {
+      toggleCustomInstitutionAddBox(true);
+      const sel = document.getElementById("judgeSchoolSelectDropdown");
+      if (sel) sel.value = "";
+      return;
+    }
+    const allInst = getAllCombinedInstitutionsForJudge();
+    const found = allInst.find(s => s.uNo === String(uNoVal).trim());
     if (!found) return;
     const unoInp = document.getElementById("judgeSchoolUno");
     if (unoInp) unoInp.value = found.uNo;
@@ -11340,9 +11773,8 @@ ${n.message}
       showSisfToast("⚠️ பள்ளியின் U.NO அல்லது UDISE எண்ணை உள்ளிடவும் அல்லது கீழே உள்ள பட்டியலில் பள்ளியைத் தேர்ந்தெடுக்கவும்.");
       return;
     }
-    const found = (typeof MASTER_SCHOOLS !== "undefined")
-      ? MASTER_SCHOOLS.find(s => s.uNo === q || s.udiseNo === q)
-      : null;
+    const allInst = getAllCombinedInstitutionsForJudge();
+    const found = allInst.find(s => String(s.uNo).toLowerCase() === q.toLowerCase() || String(s.udiseNo || "").toLowerCase() === q.toLowerCase());
     if (!found) {
       showSisfToast("⚠️ இந்த U.NO / UDISE எண்ணிற்குப் பள்ளி விவரம் கிடைக்கவில்லை. நேரடியாகத் தட்டச்சு செய்யலாம்.");
       return;
@@ -11367,8 +11799,9 @@ ${n.message}
     extraJudgeRowCounter++;
     const rIdx = extraJudgeRowCounter;
 
-    const schoolOptionsHtml = `<option value="">-- பள்ளியைத் தேர்ந்தெடுக்கவும் (${MASTER_SCHOOLS.length} பள்ளிகள்) --</option>` +
-      MASTER_SCHOOLS.map(s => `<option value="${s.uNo}">U.NO: ${s.uNo} | ${s.nameTa || s.nameEn}</option>`).join("");
+    const allInst = getAllCombinedInstitutionsForJudge();
+    const schoolOptionsHtml = `<option value="">-- பள்ளி / அலுவலகத்தைத் தேர்ந்தெடுக்கவும் (${allInst.length}) --</option>` +
+      allInst.map(s => `<option value="${s.uNo}">${s.uNo} | ${s.nameTa || s.nameEn}</option>`).join("");
 
     const tr = document.createElement("tr");
     tr.className = "judge-extra-batch-row";
@@ -11465,8 +11898,9 @@ ${n.message}
 
   function onBatchJudgeSchoolSelect(selEl) {
     const tr = selEl.closest("tr");
-    if (!tr || typeof MASTER_SCHOOLS === "undefined") return;
-    const found = MASTER_SCHOOLS.find(s => s.uNo === selEl.value);
+    if (!tr) return;
+    const allInst = getAllCombinedInstitutionsForJudge();
+    const found = allInst.find(s => s.uNo === selEl.value);
     if (!found) return;
     const taInp = tr.querySelector(".jbatch-inst-ta");
     const enInp = tr.querySelector(".jbatch-inst-en");
@@ -11614,9 +12048,13 @@ ${n.message}
     const desigTa = (document.getElementById("judgeDesigTaInp")?.value || presetTa || "முதுகலை ஆசிரியர்").trim();
     const desigEn = (document.getElementById("judgeDesigEnInp")?.value || presetEn || "P.G. Assistant").trim();
 
-    const schoolUno = (document.getElementById("judgeSchoolUno")?.value || document.getElementById("judgeSchoolSelectDropdown")?.value || "").trim().replace(/^0+/, "");
+    let schoolUno = (document.getElementById("judgeSchoolUno")?.value || document.getElementById("judgeSchoolSelectDropdown")?.value || "").trim().replace(/^0+/, "");
     const instTa = (document.getElementById("judgeInstTa")?.value || "").trim();
     const instEn = (document.getElementById("judgeInstEn")?.value || "").trim() || instTa;
+    if (instTa) {
+      const savedCustom = saveCustomInstitutionItem({ uNo: schoolUno || undefined, nameTa: instTa, nameEn: instEn });
+      if (savedCustom && !schoolUno) schoolUno = savedCustom.uNo;
+    }
     const discipline = document.getElementById("judgeDiscipline")?.value || "Physics";
     const evalCategory = document.getElementById("judgeEvalCategory")?.value || "ALL";
     const mobile = (document.getElementById("judgeMobile")?.value || "").trim();
@@ -12294,6 +12732,867 @@ ${n.message}
     a.click();
     document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(url), 8000);
+  }
+
+  // =========================================================================
+  // STUDENT ATTENDANCE REGISTER & WINNERS OFFICIAL REPORT ENGINE (PDF & CSV)
+  // =========================================================================
+  function getAttendanceStatusMap() {
+    if (window.__sisfAttendanceMap) return window.__sisfAttendanceMap;
+    let map = {};
+    try {
+      const raw = localStorage.getItem("SISF_ATTENDANCE_MAP") || sessionStorage.getItem("SISF_ATTENDANCE_MAP");
+      if (raw) map = JSON.parse(raw) || {};
+    } catch (e) {}
+    window.__sisfAttendanceMap = map;
+    return map;
+  }
+
+  function saveAttendanceStatusMap(mapObj) {
+    const safe = mapObj || {};
+    window.__sisfAttendanceMap = safe;
+    try { localStorage.setItem("SISF_ATTENDANCE_MAP", JSON.stringify(safe)); } catch (e) {}
+    try { sessionStorage.setItem("SISF_ATTENDANCE_MAP", JSON.stringify(safe)); } catch (e) {}
+  }
+
+  function getAppAttendanceKey(app) {
+    if (!app) return "";
+    if (app.regNo && app.regNo !== "-") return String(app.regNo).trim();
+    return String(app.uNo || app.udiseNo || "") + "_" + String(app.categoryOfEntry || "Individual");
+  }
+
+  function toggleStudentAttendanceStatus(appKey, newStatus) {
+    if (!appKey) return;
+    const map = getAttendanceStatusMap();
+    map[appKey] = newStatus;
+    saveAttendanceStatusMap(map);
+    renderAdminAttendanceRegisterTable();
+  }
+
+  function markAllAttendanceStatus(statusVal) {
+    const list = getFilteredAttendanceApplications();
+    if (list.length === 0) {
+      showSisfToast("⚠️ வருகை குறிக்க விண்ணப்பங்கள் ஏதுமில்லை.");
+      return;
+    }
+    const map = getAttendanceStatusMap();
+    list.forEach(a => {
+      const k = getAppAttendanceKey(a);
+      if (k) map[k] = statusVal || "PRESENT";
+    });
+    saveAttendanceStatusMap(map);
+    renderAdminAttendanceRegisterTable();
+    showSisfToast(`✅ ${list.length} படைப்புகளின் பங்கேற்பாளர்களும் 'வருகை (Present)' எனப் பதிவு செய்யப்பட்டனர்!`);
+  }
+
+  function getFilteredAttendanceApplications() {
+    const catFilter = document.getElementById("attRepCatFilter")?.value || "ALL";
+    const discFilter = document.getElementById("attRepDiscFilter")?.value || "ALL";
+    const statusFilter = document.getElementById("attRepStatusFilter")?.value || "ALL";
+    const q = (document.getElementById("attRepSearchInp")?.value || "").trim().toLowerCase();
+    const attMap = getAttendanceStatusMap();
+
+    return (adminAllApps || []).filter(a => {
+      if (catFilter !== "ALL" && a.categoryOfEntry !== catFilter) return false;
+      if (discFilter !== "ALL" && a.exhibitDiscipline !== discFilter) return false;
+      const k = getAppAttendanceKey(a);
+      const st = attMap[k] || "PRESENT";
+      if (statusFilter === "PRESENT" && st !== "PRESENT") return false;
+      if (statusFilter === "ABSENT" && st !== "ABSENT") return false;
+      if (!q) return true;
+      const mSchool = (typeof MASTER_SCHOOLS !== "undefined")
+        ? MASTER_SCHOOLS.find(s => s.udiseNo === a.udiseNo || s.uNo === String(a.uNo || "").replace(/^0+/, ""))
+        : null;
+      const sName = (mSchool ? (mSchool.nameTa + " " + mSchool.nameEn + " " + mSchool.block) : a.schoolAddress) || "";
+      const hay = `${a.regNo} ${a.uNo} ${a.udiseNo} ${sName} ${a.student1Name} ${a.student2Name} ${a.guideTeacherName} ${a.exhibitTitle}`.toLowerCase();
+      return hay.includes(q);
+    });
+  }
+
+  function renderAdminAttendanceRegisterTable() {
+    const tbody = document.getElementById("admAttendanceTableBody");
+    if (!tbody) return;
+    const filtered = getFilteredAttendanceApplications();
+    const attMap = getAttendanceStatusMap();
+
+    let totalStudents = 0;
+    let presentCount = 0;
+    filtered.forEach(a => {
+      if (a.categoryOfEntry === "Individual") totalStudents += 1;
+      else if (a.categoryOfEntry === "Group") totalStudents += (a.student2Name && a.student2Name !== "-" ? 2 : 1);
+      const st = attMap[getAppAttendanceKey(a)] || "PRESENT";
+      if (st === "PRESENT") presentCount++;
+    });
+
+    const badge = document.getElementById("attRepSummaryBadge");
+    if (badge) {
+      badge.innerHTML = `மொத்தப் படைப்புகள்: <strong>${filtered.length}</strong> &nbsp;|&nbsp; மாணவர்கள்: <strong>${totalStudents}</strong> &nbsp;|&nbsp; வருகை: <strong style="color:#15803d;">${presentCount}</strong>`;
+    }
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:22px; color:#64748b; font-weight:600;">தேர்ந்தெடுக்கப்பட்டப் பிரிவில் விண்ணப்பங்கள் ஏதும் இல்லை.</td></tr>`;
+      return;
+    }
+
+    const catLabelShort = {
+      "Individual": "👤 தனிநபர் (Individual)",
+      "Group": "👥 குழு (Group)",
+      "Teacher": "👨‍🏫 ஆசிரியர் (Teacher)"
+    };
+    const discTaShort = {
+      "Physics": "இயற்பியல் (Physics)",
+      "Chemistry": "வேதியியல் (Chemistry)",
+      "Mathematics": "கணிதம் (Mathematics)",
+      "Environmental Science": "சுற்றுச்சூழல் (Env. Sci)",
+      "Engineering": "பொறியியல் (Engineering)",
+      "Bioscience / Biochemistry": "உயிரியல் (Bioscience)",
+      "Earth & Space Science": "விண்வெளி (Earth & Space)",
+      "Computer Science": "கணினி அறிவியல் (Comp. Sci)"
+    };
+
+    tbody.innerHTML = filtered.map((a, idx) => {
+      const mSchool = (typeof MASTER_SCHOOLS !== "undefined")
+        ? MASTER_SCHOOLS.find(s => s.udiseNo === a.udiseNo || s.uNo === String(a.uNo || "").replace(/^0+/, ""))
+        : null;
+      const sNameTa = (mSchool ? mSchool.nameTa : a.schoolAddress) || "-";
+      const sBlock = (mSchool ? mSchool.block : "") || "-";
+      const k = getAppAttendanceKey(a);
+      const curStatus = attMap[k] || "PRESENT";
+
+      let studentsHtml = "";
+      if (a.categoryOfEntry === "Individual") {
+        studentsHtml = `<div style="font-weight:800; color:#1e3a8a;">1. ${a.student1Name || "-"} <span style="color:#b91c1c;">(${a.student1Class || "-"})</span></div>`;
+      } else if (a.categoryOfEntry === "Group") {
+        studentsHtml = `
+          <div style="font-weight:800; color:#1e3a8a;">1. ${a.student1Name || "-"} <span style="color:#b91c1c;">(${a.student1Class || "-"})</span></div>
+          <div style="font-weight:800; color:#1e3a8a; margin-top:2px;">2. ${a.student2Name || "-"} <span style="color:#b91c1c;">(${a.student2Class || "-"})</span></div>
+        `;
+      } else {
+        studentsHtml = `<div style="font-weight:800; color:#0f766e;">👨‍🏫 ஆசிரியர் படைப்பு: ${a.guideTeacherName || "-"}</div>`;
+      }
+
+      return `
+        <tr>
+          <td style="text-align:center; font-weight:800;">${idx + 1}</td>
+          <td>
+            <div style="font-weight:800; color:#b91c1c;">${a.regNo || "-"}</div>
+            <div style="font-size:0.78rem; color:#1e3a8a; font-weight:700;">U.NO: ${a.uNo || "-"}</div>
+          </td>
+          <td>
+            <div style="font-weight:800; color:#0f172a;">${sNameTa}</div>
+            <div style="font-size:0.76rem; color:#64748b;">📍 ${sBlock} | UDISE: ${a.udiseNo || "-"}</div>
+          </td>
+          <td>
+            <div style="font-weight:800; color:#1e40af; font-size:0.82rem;">${catLabelShort[a.categoryOfEntry] || a.categoryOfEntry}</div>
+            <div style="font-size:0.78rem; color:#047857; font-weight:700; margin-top:2px;">🔬 ${discTaShort[a.exhibitDiscipline] || a.exhibitDiscipline || "-"}</div>
+          </td>
+          <td>${studentsHtml}</td>
+          <td>
+            <div style="font-weight:700; color:#1e293b;">${a.guideTeacherName || "-"}</div>
+            <div style="font-size:0.78rem; color:#475569;">📞 ${a.guideTeacherMobile || "-"}</div>
+          </td>
+          <td style="font-weight:700; color:#9a3412;">${a.exhibitTitle || "-"}</td>
+          <td style="text-align:center;">
+            <div style="display:flex; gap:4px; justify-content:center;">
+              <button type="button" onclick="toggleStudentAttendanceStatus('${k}', 'PRESENT')" style="padding:4px 8px; border-radius:6px; font-size:0.75rem; font-weight:800; cursor:pointer; font-family:inherit; border:1.5px solid ${curStatus === 'PRESENT' ? '#15803d' : '#cbd5e1'}; background:${curStatus === 'PRESENT' ? '#dcfce7' : '#f8fafc'}; color:${curStatus === 'PRESENT' ? '#166534' : '#64748b'};">
+                ✅ வருகை
+              </button>
+              <button type="button" onclick="toggleStudentAttendanceStatus('${k}', 'ABSENT')" style="padding:4px 8px; border-radius:6px; font-size:0.75rem; font-weight:800; cursor:pointer; font-family:inherit; border:1.5px solid ${curStatus === 'ABSENT' ? '#dc2626' : '#cbd5e1'}; background:${curStatus === 'ABSENT' ? '#fef2f2' : '#f8fafc'}; color:${curStatus === 'ABSENT' ? '#991b1b' : '#64748b'};">
+                ❌ இல்லை
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function exportAttendanceRegisterCsv() {
+    const list = getFilteredAttendanceApplications();
+    if (list.length === 0) {
+      showSisfToast("⚠️ பதிவிறக்கம் செய்ய வருகைப்பதிவேடு விவரங்கள் ஏதுமில்லை.");
+      return;
+    }
+    const attMap = getAttendanceStatusMap();
+    const headers = ["வ.எண் (S.No)", "பதிவு எண் (Reg.No)", "U.NO", "UDISE", "பள்ளியின் பெயர் (School Name)", "வட்டாரம் (Block)", "போட்டிப் பிரிவு (Category)", "பாடப்பிரிவு (Discipline)", "மாணவர் 1 பெயர் (Student 1)", "வகுப்பு 1 (Class 1)", "மாணவர் 2 பெயர் (Student 2)", "வகுப்பு 2 (Class 2)", "வழிகாட்டி ஆசிரியர் (Guide Teacher)", "கைபேசி எண் (Mobile)", "படைப்பின் தலைப்பு (Exhibit Title)", "வருகை நிலை (Attendance Status)", "கையொப்பம் (Signature)"];
+    const esc = (v) => `"${String(v || "").replace(/"/g, '""')}"`;
+    const rows = list.map((a, idx) => {
+      const mSchool = (typeof MASTER_SCHOOLS !== "undefined")
+        ? MASTER_SCHOOLS.find(s => s.udiseNo === a.udiseNo || s.uNo === String(a.uNo || "").replace(/^0+/, ""))
+        : null;
+      const sNameTa = (mSchool ? mSchool.nameTa : a.schoolAddress) || "-";
+      const sBlock = (mSchool ? mSchool.block : "") || "-";
+      const st = (attMap[getAppAttendanceKey(a)] || "PRESENT") === "PRESENT" ? "வருகை (Present)" : "வருகை இல்லை (Absent)";
+      return [
+        idx + 1, a.regNo, a.uNo, a.udiseNo, sNameTa, sBlock, a.categoryOfEntry, a.exhibitDiscipline,
+        a.student1Name || "-", a.student1Class || "-", a.student2Name || "-", a.student2Class || "-",
+        a.guideTeacherName || "-", a.guideTeacherMobile || "-", a.exhibitTitle || "-", st, ""
+      ].map(esc).join(",");
+    });
+    const csvContent = "\uFEFF" + [headers.map(esc).join(","), ...rows].join("\r\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "SISF_2026_Student_Attendance_Register_Sivagangai.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  }
+
+  function getFilteredWinnersForReport() {
+    loadWinnersListIntoMemory();
+    const catFilter = document.getElementById("winRepCatFilter")?.value || "ALL";
+    const rankFilter = document.getElementById("winRepRankFilter")?.value || "PRIZE_WINNERS";
+    const discFilter = document.getElementById("winRepDiscFilter")?.value || "ALL";
+
+    const rankOrderWeight = (rStr) => {
+      const s = String(rStr || "");
+      if (s.includes("முதலிடம்") || s.includes("1st")) return 1;
+      if (s.includes("இரண்டாம்") || s.includes("2nd")) return 2;
+      if (s.includes("மூன்றாம்") || s.includes("3rd")) return 3;
+      if (s.includes("சிறப்ப") || s.includes("Special")) return 4;
+      return 5;
+    };
+
+    return (adminWinnersList || []).filter(w => {
+      if (catFilter !== "ALL" && w.category !== catFilter) return false;
+      if (discFilter !== "ALL" && w.discipline !== discFilter) return false;
+      const r = String(w.prizeRank || "");
+      if (rankFilter === "PRIZE_WINNERS") {
+        if (r.includes("பங்கேற்பாளர்") || r.includes("Participant")) return false;
+      } else if (rankFilter !== "ALL") {
+        if (!r.includes(rankFilter)) return false;
+      }
+      return true;
+    }).sort((a, b) => {
+      const catOrd = { "Individual": 1, "Group": 2, "Teacher": 3 };
+      const cDiff = (catOrd[a.category] || 9) - (catOrd[b.category] || 9);
+      if (cDiff !== 0) return cDiff;
+      return rankOrderWeight(a.prizeRank) - rankOrderWeight(b.prizeRank);
+    });
+  }
+
+  function renderAdminWinnersReportPreviewTable() {
+    const tbody = document.getElementById("admWinnersReportTableBody");
+    if (!tbody) return;
+    const list = getFilteredWinnersForReport();
+
+    const badge = document.getElementById("winRepSummaryBadge");
+    if (badge) {
+      badge.innerHTML = `தேர்ந்தெடுக்கப்பட்ட வெற்றியாளர்கள் எண்ணிக்கை: <strong>${list.length}</strong>`;
+    }
+
+    if (list.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:22px; color:#64748b; font-weight:600;">தேர்ந்தெடுக்கப்பட்டப் பிரிவில் வெற்றியாளர்கள் விவரம் ஏதுமில்லை. (அனைத்துப் பங்கேற்பாளர்களையும் காண 'அனைத்தும்' என்பதைத் தேர்வு செய்க).</td></tr>`;
+      return;
+    }
+
+    const catLabelShort = {
+      "Individual": "👤 பிரிவு 1: தனிநபர் (Individual)",
+      "Group": "👥 பிரிவு 2: குழு (Group)",
+      "Teacher": "👨‍🏫 பிரிவு 3: ஆசிரியர் (Teacher)"
+    };
+    const discTaShort = {
+      "Physics": "இயற்பியல் (Physics)",
+      "Chemistry": "வேதியியல் (Chemistry)",
+      "Mathematics": "கணிதம் (Mathematics)",
+      "Environmental Science": "சுற்றுச்சூழல் (Env. Sci)",
+      "Engineering": "பொறியியல் (Engineering)",
+      "Bioscience / Biochemistry": "உயிரியல் (Bioscience)",
+      "Earth & Space Science": "விண்வெளி (Earth & Space)",
+      "Computer Science": "கணினி அறிவியல் (Comp. Sci)"
+    };
+
+    tbody.innerHTML = list.map((w, idx) => {
+      const mSchool = (typeof MASTER_SCHOOLS !== "undefined")
+        ? MASTER_SCHOOLS.find(s => s.uNo === String(w.uNo || "").replace(/^0+/, "") || s.udiseNo === w.udiseNo)
+        : null;
+      const sNameTa = (mSchool ? mSchool.nameTa : w.schoolName) || "-";
+      const sBlock = (mSchool ? mSchool.block : "") || "";
+      const studStr = w.category === "Teacher"
+        ? `<span style="color:#0f766e; font-weight:800;">ஆசிரியர் பிரிவு</span>`
+        : `<div style="font-weight:800; color:#1e3a8a;">${w.student1 || "-"}${w.student2 && w.student2 !== "-" ? "<br>" + w.student2 : ""}</div>`;
+
+      return `
+        <tr>
+          <td style="text-align:center; font-weight:800;">${idx + 1}</td>
+          <td>
+            <div style="font-weight:800; color:#1e40af; font-size:0.82rem;">${catLabelShort[w.category] || w.category}</div>
+            <div style="font-size:0.78rem; color:#047857; font-weight:700; margin-top:2px;">🔬 ${discTaShort[w.discipline] || w.discipline || "-"}</div>
+          </td>
+          <td><span style="background:#fef3c7; color:#92400e; border:1px solid #f59e0b; padding:3px 9px; border-radius:6px; font-weight:800; font-size:0.8rem; display:inline-block;">${w.prizeRank || "-"}</span></td>
+          <td>
+            <div style="font-weight:800; color:#b91c1c;">${w.regNo || "-"}</div>
+            <div style="font-size:0.78rem; color:#1e3a8a; font-weight:700;">U.NO: ${w.uNo || "-"}</div>
+          </td>
+          <td>
+            <div style="font-weight:800; color:#0f172a;">${sNameTa}</div>
+            ${sBlock ? `<div style="font-size:0.75rem; color:#64748b;">📍 ${sBlock}</div>` : ""}
+          </td>
+          <td>${studStr}</td>
+          <td style="font-weight:700; color:#1e293b;">${w.teacher || "-"}</td>
+          <td style="font-weight:800; color:#9a3412;">${w.exhibitTitle || "-"}</td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function exportWinnersReportFilteredCsv() {
+    let list = getFilteredWinnersForReport();
+    if (list.length === 0 && adminWinnersList.length > 0) {
+      list = adminWinnersList;
+    }
+    if (list.length === 0) {
+      showSisfToast("⚠️ பதிவிறக்கம் செய்ய வெற்றியாளர்கள் விவரம் ஏதுமில்லை.");
+      return;
+    }
+    const headers = ["வ.எண் (S.No)", "போட்டிப் பிரிவு (Category)", "பாடப்பிரிவு (Discipline)", "பரிசு நிலை (Prize / Rank)", "பதிவு எண் (Reg.No)", "U.NO", "பள்ளியின் பெயர் (School Name)", "மாணவர் 1 (Student 1)", "மாணவர் 2 (Student 2)", "வழிகாட்டி / பங்கேற்பாளர் ஆசிரியர் (Teacher & Mobile)", "அறிவியல் படைப்பின் தலைப்பு (Exhibit Title)"];
+    const esc = (v) => `"${String(v || "").replace(/"/g, '""')}"`;
+    const rows = list.map((w, idx) => [
+      idx + 1, w.category, w.discipline, w.prizeRank, w.regNo, w.uNo, w.schoolName, w.student1 || "-", w.student2 || "-", w.teacher || "-", w.exhibitTitle || "-"
+    ].map(esc).join(","));
+    const csvContent = "\uFEFF" + [headers.map(esc).join(","), ...rows].join("\r\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "SISF_2026_Winners_Official_Report_Sivagangai.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  }
+
+  // Helper: Pack an array of <canvas> elements into a multi-page A4 PDF binary and trigger download
+  function buildMultiPagePdfFromCanvasesAndDownload(canvases, fileName, isLandscape) {
+    if (!canvases || canvases.length === 0) return;
+    const widthPt = isLandscape ? 841.89 : 595.28;
+    const heightPt = isLandscape ? 595.28 : 841.89;
+    const enc = new TextEncoder();
+
+    const pageImgBytes = canvases.map(cvs => {
+      const dataUrl = cvs.toDataURL("image/jpeg", 0.95);
+      const b64 = dataUrl.split(",")[1];
+      const bin = atob(b64);
+      const arr = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      return { bytes: arr, w: cvs.width, h: cvs.height };
+    });
+
+    // Object numbering:
+    // 1: Catalog
+    // 2: Pages
+    // For page p (0..N-1):
+    //   pageObjId = 3 + p * 3
+    //   contentObjId = 4 + p * 3
+    //   imageObjId = 5 + p * 3
+    const numPages = pageImgBytes.length;
+    const totalObjs = 2 + numPages * 3;
+    const kidsRefs = [];
+    for (let p = 0; p < numPages; p++) {
+      kidsRefs.push(`${3 + p * 3} 0 R`);
+    }
+
+    const chunks = [];
+    const offsets = new Array(totalObjs + 1).fill(0);
+    let currentOffset = 0;
+
+    const pushStr = (s) => {
+      const b = enc.encode(s);
+      chunks.push(b);
+      currentOffset += b.length;
+    };
+    const pushBytes = (b) => {
+      chunks.push(b);
+      currentOffset += b.length;
+    };
+
+    pushStr("%PDF-1.4\n");
+
+    offsets[1] = currentOffset;
+    pushStr("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
+
+    offsets[2] = currentOffset;
+    pushStr(`2 0 obj\n<< /Type /Pages /Kids [${kidsRefs.join(" ")}] /Count ${numPages} >>\nendobj\n`);
+
+    for (let p = 0; p < numPages; p++) {
+      const pObj = 3 + p * 3;
+      const cObj = 4 + p * 3;
+      const iObj = 5 + p * 3;
+      const imgInfo = pageImgBytes[p];
+
+      offsets[pObj] = currentOffset;
+      pushStr(`${pObj} 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${widthPt} ${heightPt}] /Resources << /XObject << /Im${p + 1} ${iObj} 0 R >> >> /Contents ${cObj} 0 R >>\nendobj\n`);
+
+      const streamStr = `q\n${widthPt} 0 0 ${heightPt} 0 0 cm\n/Im${p + 1} Do\nQ\n`;
+      offsets[cObj] = currentOffset;
+      pushStr(`${cObj} 0 obj\n<< /Length ${streamStr.length} >>\nstream\n${streamStr}endstream\nendobj\n`);
+
+      offsets[iObj] = currentOffset;
+      pushStr(`${iObj} 0 obj\n<< /Type /XObject /Subtype /Image /Width ${imgInfo.w} /Height ${imgInfo.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${imgInfo.bytes.length} >>\nstream\n`);
+      pushBytes(imgInfo.bytes);
+      pushStr("\nendstream\nendobj\n");
+    }
+
+    const xrefOffset = currentOffset;
+    const pad10 = (n) => String(n).padStart(10, "0");
+    let xrefStr = `xref\n0 ${totalObjs + 1}\n0000000000 65535 f \n`;
+    for (let i = 1; i <= totalObjs; i++) {
+      xrefStr += `${pad10(offsets[i])} 00000 n \n`;
+    }
+    pushStr(xrefStr);
+    pushStr(`trailer\n<< /Size ${totalObjs + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`);
+
+    const pdfBuffer = new Uint8Array(currentOffset);
+    let pos = 0;
+    chunks.forEach(c => {
+      pdfBuffer.set(c, pos);
+      pos += c.length;
+    });
+
+    const blob = new Blob([pdfBuffer], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 8000);
+  }
+
+  // Generate High-Resolution A4 Landscape Official Student & Guide Teacher Attendance Register PDF
+  function downloadAttendanceReportPdf() {
+    let list = getFilteredAttendanceApplications();
+    if (list.length === 0 && adminAllApps && adminAllApps.length > 0) {
+      list = adminAllApps;
+    }
+    if (!list || list.length === 0) {
+      showSisfToast("⚠️ வருகைப்பதிவேடு அறிக்கை உருவாக்கப் பதிவு செய்யப்பட்ட விண்ணப்பங்கள் ஏதுமில்லை.");
+      return;
+    }
+
+    const attMap = getAttendanceStatusMap();
+    const ROWS_PER_PAGE = 9;
+    const totalPages = Math.max(1, Math.ceil(list.length / ROWS_PER_PAGE));
+    const canvases = [];
+
+    let totalStudents = 0;
+    list.forEach(a => {
+      if (a.categoryOfEntry === "Individual") totalStudents += 1;
+      else if (a.categoryOfEntry === "Group") totalStudents += (a.student2Name && a.student2Name !== "-" ? 2 : 1);
+    });
+
+    const catMapTa = { "Individual": "தனிநபர் (Ind)", "Group": "குழு (Group)", "Teacher": "ஆசிரியர் (Tch)" };
+    const discMapTa = {
+      "Physics": "இயற்பியல்",
+      "Chemistry": "வேதியியல்",
+      "Mathematics": "கணிதம்",
+      "Environmental Science": "சுற்றுச்சூழல்",
+      "Engineering": "பொறியியல்",
+      "Bioscience / Biochemistry": "உயிரியல்",
+      "Earth & Space Science": "விண்வெளி",
+      "Computer Science": "கணினி அறிவியல்"
+    };
+
+    for (let p = 0; p < totalPages; p++) {
+      const cvs = document.createElement("canvas");
+      cvs.width = 1754;  // A4 Landscape @ 150 DPI
+      cvs.height = 1240;
+      const ctx = cvs.getContext("2d");
+
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, cvs.width, cvs.height);
+
+      // Outer border
+      ctx.strokeStyle = "#0f172a";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(28, 28, cvs.width - 56, cvs.height - 56);
+
+      // Header Banner
+      if (typeof sisfTnLogoImg !== "undefined" && sisfTnLogoImg && sisfTnLogoImg.complete && sisfTnLogoImg.naturalWidth > 0) {
+        ctx.drawImage(sisfTnLogoImg, 48, 42, 95, 102);
+      }
+
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "900 24px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("பள்ளிக்கல்வித்துறை – சிவகங்கை மாவட்டம் (DEPARTMENT OF SCHOOL EDUCATION – SIVAGANGAI)", 877, 66);
+
+      ctx.fillStyle = "#1e3a8a";
+      ctx.font = "900 22px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("மாவட்ட அளவிலான தென்னிந்திய அறிவியல் கண்காட்சி (SISF 2026) – மாணவர் & வழிகாட்டி ஆசிரியர் வருகைப்பதிவேடு", 877, 98);
+
+      ctx.fillStyle = "#047857";
+      ctx.font = "bold 16px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText(`இடம்: மன்னர் மேல்நிலைப்பள்ளி, சிவகங்கை  |  நாள்: 03.11.2026 (10.00 AM)  |  மொத்தப் படைப்புகள்: ${list.length}  |  மாணவர்கள்: ${totalStudents}  |  பக்கம்: ${p + 1} / ${totalPages}`, 877, 128);
+
+      // Table Header at y = 148
+      const cols = [
+        { x: 42, w: 58, titleTa: "வ.எண்", titleEn: "S.No" },
+        { x: 100, w: 125, titleTa: "பதிவு எண் & U.NO", titleEn: "Reg.No & U.NO" },
+        { x: 225, w: 325, titleTa: "பள்ளியின் பெயர் & வட்டாரம்", titleEn: "School Name & Block" },
+        { x: 550, w: 170, titleTa: "பிரிவு & துறை", titleEn: "Category & Subject" },
+        { x: 720, w: 310, titleTa: "மாணவர் பெயர் & வகுப்பு", titleEn: "Student Name(s) & Class" },
+        { x: 1030, w: 245, titleTa: "வழிகாட்டி ஆசிரியர் & கைபேசி", titleEn: "Guide Teacher & Mobile" },
+        { x: 1275, w: 265, titleTa: "படைப்பின் தலைப்பு", titleEn: "Exhibit Title" },
+        { x: 1540, w: 172, titleTa: "வருகை / கையொப்பம்", titleEn: "Attendance / Sign" }
+      ];
+
+      const hdrY = 146;
+      const hdrH = 52;
+      ctx.fillStyle = "#1e3a8a";
+      ctx.fillRect(42, hdrY, 1670, hdrH);
+
+      ctx.textAlign = "center";
+      cols.forEach(c => {
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.lineWidth = 1.2;
+        ctx.strokeRect(c.x, hdrY, c.w, hdrH);
+        ctx.fillStyle = "#fde047";
+        ctx.font = "bold 14.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        ctx.fillText(c.titleTa, c.x + c.w / 2, hdrY + 22, c.w - 8);
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 12px sans-serif";
+        ctx.fillText(c.titleEn, c.x + c.w / 2, hdrY + 41, c.w - 8);
+      });
+
+      const pageRows = list.slice(p * ROWS_PER_PAGE, (p + 1) * ROWS_PER_PAGE);
+      const rowH = 98;
+      let curY = hdrY + hdrH;
+
+      pageRows.forEach((a, rIdx) => {
+        const globalIdx = p * ROWS_PER_PAGE + rIdx + 1;
+        ctx.fillStyle = rIdx % 2 === 0 ? "#ffffff" : "#f8fafc";
+        ctx.fillRect(42, curY, 1670, rowH);
+
+        cols.forEach(c => {
+          ctx.strokeStyle = "#94a3b8";
+          ctx.lineWidth = 1.2;
+          ctx.strokeRect(c.x, curY, c.w, rowH);
+        });
+
+        const mSchool = (typeof MASTER_SCHOOLS !== "undefined")
+          ? MASTER_SCHOOLS.find(s => s.udiseNo === a.udiseNo || s.uNo === String(a.uNo || "").replace(/^0+/, ""))
+          : null;
+        const sNameTa = ((mSchool ? mSchool.nameTa : a.schoolAddress) || "-").split(" / ")[0];
+        const sBlock = (mSchool ? mSchool.block : "") || "";
+
+        // Col 0: S.No
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 16px sans-serif";
+        ctx.fillText(String(globalIdx), cols[0].x + cols[0].w / 2, curY + 52);
+
+        // Col 1: Reg.No & U.NO
+        ctx.fillStyle = "#b91c1c";
+        ctx.font = "bold 15px sans-serif";
+        ctx.fillText(String(a.regNo || "-"), cols[1].x + cols[1].w / 2, curY + 38, cols[1].w - 8);
+        ctx.fillStyle = "#1e3a8a";
+        ctx.font = "bold 14px sans-serif";
+        ctx.fillText("U.NO: " + String(a.uNo || "-"), cols[1].x + cols[1].w / 2, curY + 64, cols[1].w - 8);
+
+        // Col 2: School Name & Block
+        ctx.textAlign = "left";
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 14.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        const schLines = getWrappedLines(ctx, sNameTa, cols[2].w - 14);
+        schLines.slice(0, 2).forEach((ln, li) => {
+          ctx.fillText(ln, cols[2].x + 7, curY + 28 + li * 22, cols[2].w - 14);
+        });
+        ctx.fillStyle = "#475569";
+        ctx.font = "bold 12.5px sans-serif";
+        ctx.fillText(`${sBlock} | UDISE: ${a.udiseNo || "-"}`, cols[2].x + 7, curY + 78, cols[2].w - 14);
+
+        // Col 3: Category & Discipline
+        ctx.fillStyle = "#1e40af";
+        ctx.font = "bold 14px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        ctx.fillText(catMapTa[a.categoryOfEntry] || a.categoryOfEntry || "-", cols[3].x + 7, curY + 36, cols[3].w - 14);
+        ctx.fillStyle = "#047857";
+        ctx.font = "bold 13.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        ctx.fillText(discMapTa[a.exhibitDiscipline] || a.exhibitDiscipline || "-", cols[3].x + 7, curY + 64, cols[3].w - 14);
+
+        // Col 4: Student(s) & Class
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 14px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        if (a.categoryOfEntry === "Individual") {
+          ctx.fillText("1) " + String(a.student1Name || "-").split(" / ")[0], cols[4].x + 7, curY + 36, cols[4].w - 14);
+          ctx.fillStyle = "#b91c1c";
+          ctx.fillText("   வகுப்பு: " + String(a.student1Class || "-").split(" / ")[0], cols[4].x + 7, curY + 62, cols[4].w - 14);
+        } else if (a.categoryOfEntry === "Group") {
+          ctx.fillText(`1) ${String(a.student1Name || "-").split(" / ")[0]} (${String(a.student1Class || "-").split(" ")[0]})`, cols[4].x + 7, curY + 34, cols[4].w - 14);
+          ctx.fillText(`2) ${String(a.student2Name || "-").split(" / ")[0]} (${String(a.student2Class || "-").split(" ")[0]})`, cols[4].x + 7, curY + 64, cols[4].w - 14);
+        } else {
+          ctx.fillStyle = "#0f766e";
+          ctx.fillText("ஆசிரியர் பிரிவுப் படைப்பு", cols[4].x + 7, curY + 50, cols[4].w - 14);
+        }
+
+        // Col 5: Guide Teacher & Mobile
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 14px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        ctx.fillText(String(a.guideTeacherName || "-").split(" / ")[0], cols[5].x + 7, curY + 38, cols[5].w - 14);
+        ctx.fillStyle = "#334155";
+        ctx.font = "bold 13.5px sans-serif";
+        ctx.fillText("📞 " + String(a.guideTeacherMobile || "-"), cols[5].x + 7, curY + 64, cols[5].w - 14);
+
+        // Col 6: Exhibit Title
+        ctx.fillStyle = "#7c2d12";
+        ctx.font = "bold 13.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        const tLines = getWrappedLines(ctx, String(a.exhibitTitle || "-"), cols[6].w - 14);
+        tLines.slice(0, 3).forEach((ln, li) => {
+          ctx.fillText(ln, cols[6].x + 7, curY + 28 + li * 22, cols[6].w - 14);
+        });
+
+        // Col 7: Attendance / Signature Box
+        const st = attMap[getAppAttendanceKey(a)] || "PRESENT";
+        ctx.textAlign = "center";
+        ctx.fillStyle = st === "PRESENT" ? "#166534" : "#991b1b";
+        ctx.font = "bold 12.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        ctx.fillText(st === "PRESENT" ? "✓ வருகை (Present)" : "✗ வருகை இல்லை", cols[7].x + cols[7].w / 2, curY + 24, cols[7].w - 10);
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(cols[7].x + 14, curY + 76);
+        ctx.lineTo(cols[7].x + cols[7].w - 14, curY + 76);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#64748b";
+        ctx.font = "11px sans-serif";
+        ctx.fillText("கையொப்பம் / Sign", cols[7].x + cols[7].w / 2, curY + 90);
+
+        curY += rowH;
+      });
+
+      // Footer Signature Bar at bottom of page
+      const footY = 1148;
+      ctx.textAlign = "left";
+      ctx.fillStyle = "#1e293b";
+      ctx.font = "bold 15px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("கண்காட்சி ஒருங்கிணைப்பாளர் கையொப்பம் (Coordinator Signature)", 65, footY);
+
+      ctx.textAlign = "center";
+      ctx.fillText("நடுவர் குழுத் தலைவர் கையொப்பம் (Chief Adjudicator)", 877, footY);
+
+      ctx.textAlign = "right";
+      ctx.fillStyle = "#1e3a8a";
+      ctx.font = "900 16px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("முதன்மைக்கல்வி அலுவலர், சிவகங்கை (Chief Educational Officer)", 1690, footY);
+
+      canvases.push(cvs);
+    }
+
+    buildMultiPagePdfFromCanvasesAndDownload(canvases, "SISF_2026_Student_Attendance_Register_Report.pdf", true);
+    showSisfToast("✅ மாணவர் வருகைப்பதிவேடு அறிக்கை (A4 PDF) வெற்றிகரமாகப் பதிவிறக்கம் செய்யப்பட்டது!");
+  }
+
+  // Generate High-Resolution A4 Landscape Official Winners Details Report PDF
+  function downloadWinnersReportPdf() {
+    let list = getFilteredWinnersForReport();
+    if (list.length === 0 && adminWinnersList && adminWinnersList.length > 0) {
+      list = adminWinnersList;
+    }
+    if (!list || list.length === 0) {
+      showSisfToast("⚠️ வெற்றியாளர்கள் அறிக்கை உருவாக்கப் பதிவு செய்யப்பட்ட வெற்றியாளர்கள் ஏதுமில்லை.");
+      return;
+    }
+
+    const ROWS_PER_PAGE = 9;
+    const totalPages = Math.max(1, Math.ceil(list.length / ROWS_PER_PAGE));
+    const canvases = [];
+
+    const catMapTa = { "Individual": "பிரிவு 1: தனிநபர் (Ind)", "Group": "பிரிவு 2: குழு (Group)", "Teacher": "பிரிவு 3: ஆசிரியர் (Tch)" };
+    const discMapTa = {
+      "Physics": "இயற்பியல்",
+      "Chemistry": "வேதியியல்",
+      "Mathematics": "கணிதம்",
+      "Environmental Science": "சுற்றுச்சூழல்",
+      "Engineering": "பொறியியல்",
+      "Bioscience / Biochemistry": "உயிரியல்",
+      "Earth & Space Science": "விண்வெளி",
+      "Computer Science": "கணினி அறிவியல்"
+    };
+
+    for (let p = 0; p < totalPages; p++) {
+      const cvs = document.createElement("canvas");
+      cvs.width = 1754;
+      cvs.height = 1240;
+      const ctx = cvs.getContext("2d");
+
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, cvs.width, cvs.height);
+
+      ctx.strokeStyle = "#92400e";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(28, 28, cvs.width - 56, cvs.height - 56);
+
+      if (typeof sisfTnLogoImg !== "undefined" && sisfTnLogoImg && sisfTnLogoImg.complete && sisfTnLogoImg.naturalWidth > 0) {
+        ctx.drawImage(sisfTnLogoImg, 48, 42, 95, 102);
+      }
+
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "900 24px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("பள்ளிக்கல்வித்துறை – சிவகங்கை மாவட்டம் (DEPARTMENT OF SCHOOL EDUCATION – SIVAGANGAI)", 877, 66);
+
+      ctx.fillStyle = "#991b1b";
+      ctx.font = "900 22px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("மாவட்ட அளவிலான தென்னிந்திய அறிவியல் கண்காட்சி (SISF 2026) – வெற்றி பெற்றவர்களின் விவர அறிக்கை (WINNERS REPORT)", 877, 98);
+
+      ctx.fillStyle = "#1e3a8a";
+      ctx.font = "bold 16px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText(`இடம்: மன்னர் மேல்நிலைப்பள்ளி, சிவகங்கை  |  நாள்: 03.11.2026  |  மொத்த வெற்றியாளர்கள் / பதிவுகள்: ${list.length}  |  பக்கம்: ${p + 1} / ${totalPages}`, 877, 128);
+
+      const cols = [
+        { x: 42, w: 58, titleTa: "வ.எண்", titleEn: "S.No" },
+        { x: 100, w: 180, titleTa: "போட்டிப் பிரிவு & துறை", titleEn: "Category & Subject" },
+        { x: 280, w: 205, titleTa: "பரிசு நிலை / இடம்", titleEn: "Prize / Rank" },
+        { x: 485, w: 120, titleTa: "பதிவு எண் & U.NO", titleEn: "Reg.No & U.NO" },
+        { x: 605, w: 320, titleTa: "பள்ளியின் பெயர் & வட்டாரம்", titleEn: "School Name & Block" },
+        { x: 925, w: 285, titleTa: "வெற்றி பெற்ற மாணவர்(கள்)", titleEn: "Winner Student(s) & Class" },
+        { x: 1210, w: 235, titleTa: "வழிகாட்டி ஆசிரியர் & கைபேசி", titleEn: "Guide Teacher & Mobile" },
+        { x: 1445, w: 267, titleTa: "படைப்பின் தலைப்பு", titleEn: "Exhibit Title" }
+      ];
+
+      const hdrY = 146;
+      const hdrH = 52;
+      ctx.fillStyle = "#92400e";
+      ctx.fillRect(42, hdrY, 1670, hdrH);
+
+      ctx.textAlign = "center";
+      cols.forEach(c => {
+        ctx.strokeStyle = "#fde68a";
+        ctx.lineWidth = 1.2;
+        ctx.strokeRect(c.x, hdrY, c.w, hdrH);
+        ctx.fillStyle = "#fde047";
+        ctx.font = "bold 14.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        ctx.fillText(c.titleTa, c.x + c.w / 2, hdrY + 22, c.w - 8);
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 12px sans-serif";
+        ctx.fillText(c.titleEn, c.x + c.w / 2, hdrY + 41, c.w - 8);
+      });
+
+      const pageRows = list.slice(p * ROWS_PER_PAGE, (p + 1) * ROWS_PER_PAGE);
+      const rowH = 98;
+      let curY = hdrY + hdrH;
+
+      pageRows.forEach((w, rIdx) => {
+        const globalIdx = p * ROWS_PER_PAGE + rIdx + 1;
+        ctx.fillStyle = rIdx % 2 === 0 ? "#ffffff" : "#fffbeb";
+        ctx.fillRect(42, curY, 1670, rowH);
+
+        cols.forEach(c => {
+          ctx.strokeStyle = "#cbd5e1";
+          ctx.lineWidth = 1.2;
+          ctx.strokeRect(c.x, curY, c.w, rowH);
+        });
+
+        const mSchool = (typeof MASTER_SCHOOLS !== "undefined")
+          ? MASTER_SCHOOLS.find(s => s.uNo === String(w.uNo || "").replace(/^0+/, "") || s.udiseNo === w.udiseNo)
+          : null;
+        const sNameTa = ((mSchool ? mSchool.nameTa : w.schoolName) || "-").split(" / ")[0];
+        const sBlock = (mSchool ? mSchool.block : "") || "";
+
+        // Col 0: S.No
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 16px sans-serif";
+        ctx.fillText(String(globalIdx), cols[0].x + cols[0].w / 2, curY + 52);
+
+        // Col 1: Category & Subject
+        ctx.textAlign = "left";
+        ctx.fillStyle = "#1e3a8a";
+        ctx.font = "bold 14px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        ctx.fillText(catMapTa[w.category] || w.category || "-", cols[1].x + 7, curY + 38, cols[1].w - 14);
+        ctx.fillStyle = "#047857";
+        ctx.font = "bold 13.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        ctx.fillText(discMapTa[w.discipline] || w.discipline || "-", cols[1].x + 7, curY + 64, cols[1].w - 14);
+
+        // Col 2: Prize / Rank
+        ctx.fillStyle = "#b91c1c";
+        ctx.font = "bold 14px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        const rLines = getWrappedLines(ctx, String(w.prizeRank || "-"), cols[2].w - 14);
+        rLines.slice(0, 2).forEach((ln, li) => {
+          ctx.fillText(ln, cols[2].x + 7, curY + 38 + li * 22, cols[2].w - 14);
+        });
+
+        // Col 3: Reg.No & U.NO
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 14.5px sans-serif";
+        ctx.fillText(String(w.regNo || "-"), cols[3].x + cols[3].w / 2, curY + 38, cols[3].w - 8);
+        ctx.fillStyle = "#1e3a8a";
+        ctx.font = "bold 14px sans-serif";
+        ctx.fillText("U.NO: " + String(w.uNo || "-"), cols[3].x + cols[3].w / 2, curY + 64, cols[3].w - 8);
+
+        // Col 4: School Name & Block
+        ctx.textAlign = "left";
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 14px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        const schLines = getWrappedLines(ctx, sNameTa, cols[4].w - 14);
+        schLines.slice(0, 2).forEach((ln, li) => {
+          ctx.fillText(ln, cols[4].x + 7, curY + 32 + li * 22, cols[4].w - 14);
+        });
+        if (sBlock) {
+          ctx.fillStyle = "#475569";
+          ctx.font = "bold 12.5px sans-serif";
+          ctx.fillText("வட்டாரம்: " + sBlock, cols[4].x + 7, curY + 78, cols[4].w - 14);
+        }
+
+        // Col 5: Winner Student(s)
+        ctx.fillStyle = "#1e3a8a";
+        ctx.font = "bold 14px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        if (w.category === "Teacher") {
+          ctx.fillStyle = "#0f766e";
+          ctx.fillText("ஆசிரியர் பிரிவு (Teacher Category)", cols[5].x + 7, curY + 50, cols[5].w - 14);
+        } else {
+          ctx.fillText("1) " + String(w.student1 || "-"), cols[5].x + 7, curY + 36, cols[5].w - 14);
+          if (w.student2 && w.student2 !== "-") {
+            ctx.fillText("2) " + String(w.student2), cols[5].x + 7, curY + 64, cols[5].w - 14);
+          }
+        }
+
+        // Col 6: Guide Teacher & Mobile
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 14px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        const tParts = String(w.teacher || "-").split(" - ");
+        ctx.fillText(tParts[0] || "-", cols[6].x + 7, curY + 38, cols[6].w - 14);
+        if (tParts[1]) {
+          ctx.fillStyle = "#334155";
+          ctx.font = "bold 13.5px sans-serif";
+          ctx.fillText("📞 " + tParts[1], cols[6].x + 7, curY + 64, cols[6].w - 14);
+        }
+
+        // Col 7: Exhibit Title
+        ctx.fillStyle = "#7c2d12";
+        ctx.font = "bold 13.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+        const tLines = getWrappedLines(ctx, String(w.exhibitTitle || "-"), cols[7].w - 14);
+        tLines.slice(0, 3).forEach((ln, li) => {
+          ctx.fillText(ln, cols[7].x + 7, curY + 28 + li * 22, cols[7].w - 14);
+        });
+
+        curY += rowH;
+      });
+
+      // Footer Signature + CEO Signature
+      const footY = 1152;
+      ctx.textAlign = "left";
+      ctx.fillStyle = "#1e293b";
+      ctx.font = "bold 15px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("கண்காட்சி ஒருங்கிணைப்பாளர் (Science Fair Coordinator)", 65, footY);
+
+      drawNaturalCeoSignature(ctx, 1480, 1118);
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#1e3a8a";
+      ctx.font = "900 16px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("முதன்மைக்கல்வி அலுவலர், சிவகங்கை (Chief Educational Officer, Sivagangai)", 1465, footY);
+
+      canvases.push(cvs);
+    }
+
+    buildMultiPagePdfFromCanvasesAndDownload(canvases, "SISF_2026_Winners_Details_Official_Report.pdf", true);
+    showSisfToast("✅ வெற்றி பெற்றவர்களின் விவர அறிக்கை (A4 PDF) வெற்றிகரமாகப் பதிவிறக்கம் செய்யப்பட்டது!");
   }
 
   window.onload = function() {
