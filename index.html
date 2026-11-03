@@ -984,7 +984,7 @@
   <!-- District Level Exhibition Venue & Date Announcement Banner (Top) -->
   <div class="venue-banner-top" id="topVenueBanner">
     <span class="venue-pulse-pill">🏛️ மாவட்ட அளவிலான கண்காட்சி சிவகங்கை மன்னர் மேல்நிலைப்பள்ளியில் 03.11.2026 முற்பகல் 10.00 மணிக்கு நடைபெறும்</span>
-    <span class="venue-subtext" id="topVenueSubtext">📍 Venue: Mannar Higher Secondary School, Sivagangai &nbsp;|&nbsp; 📅 03.11.2026 – 10.00 AM</span>
+    <span class="venue-subtext" id="topVenueSubtext">📍 Venue: Mannar Higher Secondary School, Sivagangai &nbsp;|&nbsp; 📅 03.11.2026 – 10.00 AM &nbsp;|&nbsp; <strong id="topLiveDeadlineText" style="color:#fde047; text-decoration:underline;">⏰ போட்டிகள் பதிவு கடைசி தேதி: 30.11.2026</strong></span>
   </div>
 
   <!-- VIEW 1: AUTH VIEW (LOGIN / REGISTRATION) -->
@@ -1005,6 +1005,10 @@
           </div>
           <div style="font-size: 0.96rem; font-weight: 800; color: #1e293b; line-height: 1.5;">
             மாவட்ட அளவிலான கண்காட்சி <span style="color: #047857; text-decoration: underline;">சிவகங்கை மன்னர் மேல்நிலைப்பள்ளியில்</span> <span style="color: #b91c1c;">03.11.2026 முற்பகல் 10.00 மணிக்கு</span> நடைபெறும்.
+          </div>
+          <div style="margin-top: 6px; padding-top: 6px; border-top: 1px dashed #6ee7b7; font-size: 0.88rem; font-weight: 800; color: #991b1b; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
+            <span>⏰ போட்டிகள் பதிவு செய்வதற்கான கடைசி தேதி: <strong id="authDeadlineDateText" style="background:#fef2f2; border:1px solid #fecaca; padding:1px 8px; border-radius:6px; color:#dc2626;">30.11.2026</strong></span>
+            <span id="authDeadlineStatusBadge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; padding:1px 8px; border-radius:999px; font-size:0.76rem; font-weight:800;">🟢 பதிவு நடைபெறுகிறது</span>
           </div>
         </div>
         <!-- Dynamic Admin Broadcast Notifications on Login Screen -->
@@ -1261,6 +1265,7 @@
         <span class="venue-meta-pill">📍 <strong>இடம் (Venue):</strong> சிவகங்கை மன்னர் மேல்நிலைப்பள்ளி (Mannar Hr. Sec. School, Sivagangai)</span>
         <span class="venue-meta-pill">📅 <strong>நாள் (Date):</strong> 03.11.2026</span>
         <span class="venue-meta-pill">🕙 <strong>நேரம் (Time):</strong> முற்பகல் 10.00 மணி (10.00 AM)</span>
+        <span class="venue-meta-pill" style="background:#fff1f2; border-color:#fda4af; color:#9f1239;">⏰ <strong>பதிவு கடைசி தேதி (Last Date):</strong> <strong id="dashDeadlineDateText">30.11.2026</strong></span>
       </div>
     </div>
 
@@ -1630,6 +1635,59 @@
       </div>
     </div>
 
+    <!-- ADMIN REGISTRATION DEADLINE CONTROL PANEL -->
+    <div class="admin-panel-box" id="admDeadlineControlPanel" style="border: 2px solid #0284c7; background: linear-gradient(135deg, #f0f9ff 0%, #fffbeb 100%); margin-bottom: 16px; padding: 14px 18px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <span style="font-size: 1.35rem;">⏰</span>
+          <div>
+            <div style="font-size: 1rem; font-weight: 900; color: #1e3a8a; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span>போட்டிகள் பதிவு செய்வதற்கான கடைசி தேதி மேலாண்மை (Registration Deadline Control)</span>
+              <span id="admDeadlineLiveBadge" style="background: #dcfce7; color: #166534; border: 1.5px solid #86efac; padding: 2px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 800;">
+                🟢 பதிவு நடைபெறுகிறது (Open)
+              </span>
+            </div>
+            <div style="font-size: 0.84rem; color: #334155; margin-top: 2px;">
+              தற்போதைய கடைசி தேதி: <strong id="admCurrentDeadlineText" style="color: #b91c1c; font-size: 0.95rem; background: #fef2f2; padding: 1px 8px; border-radius: 6px; border: 1px solid #fecaca;">30.11.2026</strong>
+              &nbsp;|&nbsp; <span style="color:#475569;">நிர்வாகி இங்கே தேதியை மாற்றினால் அனைத்துப் பள்ளிகளின் முகப்பிலும் உடனடியாகப் புதுப்பிக்கப்படும்.</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap;">
+          <div>
+            <label style="display:block; font-size:0.76rem; font-weight:800; color:#1e3a8a; margin-bottom:3px;">📅 புதிய கடைசி தேதி (Last Date):</label>
+            <input type="date" id="admDeadlineDateInp" class="form-control" value="2026-11-30" style="padding: 6px 10px; font-weight: 800; color: #0f172a; font-size: 0.88rem; width: 165px; border: 1.5px solid #0284c7;">
+          </div>
+          <div>
+            <label style="display:block; font-size:0.76rem; font-weight:800; color:#1e3a8a; margin-bottom:3px;">⚙️ பதிவு நிலை (Registration Status):</label>
+            <select id="admDeadlineModeSel" class="form-control" style="padding: 6px 10px; font-weight: 800; font-size: 0.85rem; width: 230px; border: 1.5px solid #0284c7;">
+              <option value="AUTO">தானியங்கி (கடைசி தேதி வரை அனுமதி)</option>
+              <option value="FORCE_OPEN">🟢 எப்போதும் திறந்த நிலை (Always Open)</option>
+              <option value="FORCE_CLOSED">🔒 உடனடியாகப் பதிவை நிறுத்து (Closed)</option>
+            </select>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <label style="font-size: 0.75rem; font-weight: 700; color: #334155; display: flex; align-items: center; gap: 5px; cursor: pointer;">
+              <input type="checkbox" id="admDeadlineBroadcastChk" checked style="width:14px; height:14px; accent-color:#0284c7;">
+              🔔 பள்ளிகளுக்கு அறிவிப்பாகவும் அனுப்புக
+            </label>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="btn-sm" style="background: #0284c7; color: #ffffff; padding: 7px 14px; font-weight: 800; font-size: 0.85rem;" onclick="handleAdminUpdateDeadline()">
+                💾 கடைசி தேதி மாற்றிச் சேமி
+              </button>
+              <button type="button" class="btn-sm" style="background: #475569; color: #ffffff; padding: 7px 10px; font-weight: 700; font-size: 0.8rem;" onclick="setAdminQuickDeadline('2026-11-30')" title="30.11.2026 என அமைக்க">
+                30.11.2026
+              </button>
+              <button type="button" class="btn-sm" style="background: #0d9488; color: #ffffff; padding: 7px 10px; font-weight: 700; font-size: 0.8rem;" onclick="extendAdminDeadlineDays(7)" title="தற்போதைய தேதியிலிருந்து 7 நாட்கள் நீட்டிக்க">
+                +7 நாட்கள்
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- 1. CATEGORY-WISE SUMMARY COUNTERS -->
     <div class="admin-stat-grid">
       <div class="admin-stat-card" style="border-top: 4px solid #0284c7; cursor: pointer;" onclick="openAdminRegisteredSchoolsView()" title="பதிவு செய்த பள்ளிகளின் விவரங்களைக் காண இங்கே கிளிக் செய்க">
@@ -1656,6 +1714,10 @@
         <div class="admin-stat-num" id="admStatWinners" style="color: #d97706;">0</div>
         <div class="admin-stat-label">🏆 வெற்றி பெற்றவர்கள்<br><span style="font-size:0.75rem; color:#64748b;">District Winners Recorded</span></div>
       </div>
+      <div class="admin-stat-card" style="border-top: 4px solid #4f46e5; cursor: pointer;" onclick="switchAdminSubTab('judges')" title="நடுவர்கள் விவரம் பதிவிட மற்றும் சான்றிதழ் வழங்க இங்கே கிளிக் செய்க">
+        <div class="admin-stat-num" id="admStatJudges" style="color: #4f46e5;">0</div>
+        <div class="admin-stat-label">⚖️ நடுவர்கள் & சான்றிதழ்<br><span style="font-size:0.75rem; color:#4f46e5; font-weight:700;">Judges & Certificates</span></div>
+      </div>
       <div class="admin-stat-card" style="border-top: 4px solid #e11d48; cursor: pointer;" onclick="switchAdminSubTab('notifications')" title="பள்ளிகளுக்கு அறிவிப்பு அனுப்ப இங்கே கிளிக் செய்க">
         <div class="admin-stat-num" id="admStatNotifications" style="color: #e11d48;">1</div>
         <div class="admin-stat-label">🔔 பள்ளி அறிவிப்புகள்<br><span style="font-size:0.75rem; color:#e11d48; font-weight:700;">Send Notifications (அனுப்புக)</span></div>
@@ -1669,6 +1731,9 @@
       </button>
       <button type="button" class="admin-nav-btn" id="admTabBtnWinners" onclick="switchAdminSubTab('winners')">
         🏆 வெற்றி பெற்றவர்கள் பதிவு & பட்டியல் (Winners Entry)
+      </button>
+      <button type="button" class="admin-nav-btn" id="admTabBtnJudges" onclick="switchAdminSubTab('judges')">
+        ⚖️ நடுவர்கள் விவரம் & சான்றிதழ் (Judges & Certificates)
       </button>
       <button type="button" class="admin-nav-btn" id="admTabBtnPasswords" onclick="switchAdminSubTab('passwords')">
         🏫 பதிவு செய்த பள்ளிகள் & கடவுச்சொல் (Registered Schools & Passwords)
@@ -2134,6 +2199,159 @@
             </thead>
             <tbody id="admNotificationsTableBody">
               <tr><td colspan="6" style="text-align:center; padding:18px; color:#64748b;">அறிவிப்புகள் ஏற்றப்படுகின்றன...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- ADMIN SUB-TAB 5: JUDGES REGISTRATION & CERTIFICATE GENERATION       -->
+    <!-- =================================================================== -->
+    <div id="admSubTabJudges" style="display: none;">
+      <div class="admin-panel-box" style="border: 2px solid #4f46e5; background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+          <h3 style="color: #312e81; font-size: 1.12rem; margin: 0; display: flex; align-items: center; gap: 8px;">
+            ⚖️ மாவட்ட அறிவியல் கண்காட்சி நடுவர்கள் விவரம் பதிவு & பாராட்டுச் சான்றிதழ் வழங்கல் (Judges Entry & Certificate Generator)
+          </h3>
+          <span style="background: #e0e7ff; color: #3730a3; border: 1px solid #a5b4fc; padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 800;">
+            📜 இருமொழி / தமிழ் / ஆங்கிலம் A4 Portrait சான்றிதழ்
+          </span>
+        </div>
+        <p style="font-size: 0.88rem; color: #334155; margin-bottom: 14px;">
+          அறிவியல் கண்காட்சியில் படைப்புகளை மதிப்பீடு செய்த <strong>நடுவர்களின் (Judges / Adjudicators)</strong> விவரங்களை இங்கே பதிவு செய்து, அவர்களுக்கு முதன்மைக்கல்வி அலுவலரின் கையொப்பமிட்ட <strong>நடுவர் பாராட்டுச் சான்றிதழை (PDF)</strong> உடனடியாகப் பதிவிறக்கம் செய்து வழங்கலாம்.
+        </p>
+
+        <form onsubmit="handleAdminSaveJudgeSubmit(event)">
+          <input type="hidden" id="judgeEditId" value="">
+
+          <div class="grid-3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 12px;">
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">1. முன்னொட்டு & நடுவர் பெயர் (தமிழில்) <span class="required">*</span></label>
+              <div style="display: flex; gap: 6px;">
+                <select id="judgePrefix" class="form-control" style="width: 115px; flex-shrink: 0; font-weight: 700;">
+                  <option value="திரு.|Mr.">திரு. (Mr.)</option>
+                  <option value="திருமதி.|Mrs.">திருமதி. (Mrs.)</option>
+                  <option value="செல்வி.|Ms.">செல்வி. (Ms.)</option>
+                  <option value="முனைவர்|Dr.">முனைவர் (Dr.)</option>
+                  <option value="பேராசிரியர்|Prof.">பேரா. (Prof.)</option>
+                </select>
+                <input type="text" id="judgeNameTa" class="form-control" placeholder="எ.கா: இராமநாதன் க" oninput="autoTranslateJudgeField('name', 'ta')" required>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">2. நடுவர் பெயர் (ஆங்கிலத்தில் / In English) <span class="required">*</span></label>
+              <input type="text" id="judgeNameEn" class="form-control" placeholder="e.g. Ramanathan K" oninput="autoTranslateJudgeField('name', 'en')" required>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">3. பதவி / பணிநிலை (Designation) <span class="required">*</span></label>
+              <select id="judgeDesignation" class="form-control" required>
+                <option value="முதுகலை ஆசிரியர்|P.G. Assistant">முதுகலை ஆசிரியர் (P.G. Assistant)</option>
+                <option value="பட்டதாரி ஆசிரியர்|B.T. Assistant">பட்டதாரி ஆசிரியர் (B.T. Assistant)</option>
+                <option value="உதவிப் பேராசிரியர்|Assistant Professor">உதவிப் பேராசிரியர் (Assistant Professor)</option>
+                <option value="இணைப் பேராசிரியர்|Associate Professor">இணைப் பேராசிரியர் (Associate Professor)</option>
+                <option value="பேராசிரியர்|Professor">பேராசிரியர் (Professor)</option>
+                <option value="தலைமையாசிரியர்|Headmaster">தலைமையாசிரியர் (Headmaster)</option>
+                <option value="பள்ளித் துணை ஆய்வாளர்|Deputy Inspector of Schools">பள்ளித் துணை ஆய்வாளர் (Deputy Inspector of Schools)</option>
+                <option value="மாவட்டக் கல்வி அலுவலர்|District Educational Officer">மாவட்டக் கல்வி அலுவலர் (District Educational Officer)</option>
+                <option value="அறிவியல் வல்லுநர்|Science Expert">அறிவியல் வல்லுநர் (Science Expert)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid-3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 12px;">
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">4. பள்ளி U.NO / UDISE (பள்ளி ஆசிரியர் எனில் நிரப்ப):</label>
+              <div style="display: flex; gap: 6px;">
+                <input type="text" id="judgeSchoolUno" class="form-control" placeholder="எ.கா: 501 (அல்லது காலி)">
+                <button type="button" class="btn-sm" style="background: #4f46e5; white-space: nowrap;" onclick="lookupSchoolForJudgeForm()">🔍 பள்ளி நிரப்பு</button>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">5. பணிபுரியும் பள்ளி / கல்லூரி & ஊர் (தமிழில்) <span class="required">*</span></label>
+              <input type="text" id="judgeInstTa" class="form-control" placeholder="எ.கா: அரசு மேல்நிலைப்பள்ளி, சிவகங்கை" oninput="autoTranslateJudgeField('inst', 'ta')" required>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">6. Institution / School & Place (ஆங்கிலத்தில்) <span class="required">*</span></label>
+              <input type="text" id="judgeInstEn" class="form-control" placeholder="e.g. Govt. Hr. Sec. School, Sivagangai" oninput="autoTranslateJudgeField('inst', 'en')" required>
+            </div>
+          </div>
+
+          <div class="grid-3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 14px;">
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">7. நடுவராகப் பணியாற்றிய பாடப்பிரிவு (Discipline) <span class="required">*</span></label>
+              <select id="judgeDiscipline" class="form-control" required>
+                <option value="Physics">இயற்பியல் (Physics)</option>
+                <option value="Chemistry">வேதியியல் (Chemistry)</option>
+                <option value="Mathematics">கணிதம் (Mathematics)</option>
+                <option value="Environmental Science">சுற்றுச்சூழல் அறிவியல் (Environmental Science)</option>
+                <option value="Engineering">பொறியியல் (Engineering)</option>
+                <option value="Bioscience / Biochemistry">உயிரியல் / உயிர் வேதியியல் (Bioscience / Biochemistry)</option>
+                <option value="Earth & Space Science">பூமி மற்றும் விண்வெளி அறிவியல் (Earth & Space Science)</option>
+                <option value="Computer Science">கணினி அறிவியல் (Computer Science)</option>
+                <option value="All Disciplines">அனைத்துப் பாடப்பிரிவுகள் (All Disciplines)</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">8. மதிப்பீடு செய்த போட்டிப் பிரிவு (Category) <span class="required">*</span></label>
+              <select id="judgeEvalCategory" class="form-control" required>
+                <option value="ALL">அனைத்துப் பிரிவுகள் (தனிநபர், குழு & ஆசிரியர்)</option>
+                <option value="Individual">பிரிவு 1: தனிநபர் வகை (Individual)</option>
+                <option value="Group">பிரிவு 2: குழு வகை (Group)</option>
+                <option value="Teacher">பிரிவு 3: ஆசிரியர் வகை (Teacher)</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">9. கைபேசி எண் (Mobile No) & பணி நாள்:</label>
+              <div style="display: flex; gap: 6px;">
+                <input type="tel" id="judgeMobile" class="form-control" placeholder="10 இலக்க கைபேசி" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
+                <input type="text" id="judgeEventDate" class="form-control" value="03.11.2026" placeholder="03.11.2026" style="width: 115px; flex-shrink: 0; font-weight: 700;">
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button type="submit" id="btnSaveJudgeSubmit" class="btn-sm" style="background: #4f46e5; color: white; padding: 10px 22px; font-size: 0.95rem; font-weight: 800;">
+              ⚖️ நடுவர் விவரத்தைச் சேமிக்க (Save Judge)
+            </button>
+            <button type="button" class="btn-sm" style="background: #64748b; padding: 10px 16px; font-size: 0.9rem;" onclick="resetJudgeForm()">
+              மீட்டமை (Clear)
+            </button>
+            <span id="judgeSaveMsg" style="font-weight: 800; font-size: 0.9rem; color: #15803d;"></span>
+          </div>
+        </form>
+      </div>
+
+      <!-- Registered Judges List & Certificate Download Table -->
+      <div class="admin-panel-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+          <h3 style="color: #1e3a8a; font-size: 1.05rem; margin: 0;">
+            ⚖️ பதிவு செய்யப்பட்ட நடுவர்கள் பட்டியல் & சான்றிதழ் வழங்கல் (Judges List & Certificate Download)
+          </h3>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+            <input type="text" id="admJudgeSearchInp" class="form-control" placeholder="🔍 நடுவர் பெயர், பள்ளி/கல்லூரி, துறை தேடுக..." style="width: 250px; padding: 6px 12px; font-size: 0.86rem;" oninput="renderAdminJudgesTable()">
+            <button type="button" class="btn-sm" style="background: #15803d; padding: 7px 14px; font-weight: 700;" onclick="exportJudgesCsv()">
+              📊 நடுவர்கள் பட்டியல் Excel / CSV பதிவிறக்கம்
+            </button>
+          </div>
+        </div>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>வ.எண்</th>
+                <th>நடுவர் எண் (ID)</th>
+                <th>நடுவர் பெயர் & பதவி (Name & Designation)</th>
+                <th>பணிபுரியும் பள்ளி / கல்லூரி & ஊர் (Institution)</th>
+                <th>பாடப்பிரிவு & போட்டிப் பிரிவு</th>
+                <th>கைபேசி & நாள்</th>
+                <th>📜 நடுவர் சான்றிதழ் பதிவிறக்கம் (Download Certificate PDF)</th>
+                <th>செயல்கள்</th>
+              </tr>
+            </thead>
+            <tbody id="admJudgesTableBody">
+              <tr><td colspan="8" style="text-align:center; padding:18px; color:#64748b;">இன்னும் நடுவர்கள் விவரம் பதிவு செய்யப்படவில்லை.</td></tr>
             </tbody>
           </table>
         </div>
@@ -3149,10 +3367,241 @@
     }
   }
 
-  // Deadline restriction removed as requested by user
-  const REGISTRATION_DEADLINE_TS = new Date("2099-12-31T23:59:59+05:30").getTime();
+  // =========================================================================
+  // DYNAMIC REGISTRATION DEADLINE MANAGEMENT (Default: 30.11.2026)
+  // =========================================================================
+  const DEFAULT_REGISTRATION_DEADLINE_CFG = {
+    dateIso: "2026-11-30",
+    dateDisplay: "30.11.2026",
+    statusMode: "AUTO", // "AUTO" | "FORCE_OPEN" | "FORCE_CLOSED"
+    updatedAt: "01.11.2026"
+  };
+
+  function formatIsoDateToDdMmYyyy(isoStr) {
+    const s = String(isoStr || "").trim();
+    const m = s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (m) return `${m[3]}.${m[2]}.${m[1]}`;
+    const m2 = s.match(/^(\d{2})[.\-/](\d{2})[.\-/](\d{4})$/);
+    if (m2) return `${m2[1]}.${m2[2]}.${m2[3]}`;
+    return "30.11.2026";
+  }
+
+  function formatDdMmYyyyToIso(dispStr) {
+    const s = String(dispStr || "").trim();
+    const m = s.match(/^(\d{2})[.\-/](\d{2})[.\-/](\d{4})$/);
+    if (m) return `${m[3]}-${m[2]}-${m[1]}`;
+    const m2 = s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (m2) return s;
+    return "2026-11-30";
+  }
+
+  function getRegistrationDeadlineConfig() {
+    if (window.__sisfDeadlineCfg && window.__sisfDeadlineCfg.dateIso) {
+      return window.__sisfDeadlineCfg;
+    }
+    let loaded = null;
+    try {
+      const raw = localStorage.getItem("SISF_REGISTRATION_DEADLINE_CFG") || sessionStorage.getItem("SISF_REGISTRATION_DEADLINE_CFG");
+      if (raw) loaded = JSON.parse(raw);
+    } catch (e) {}
+    if (!loaded) {
+      try {
+        if (window.name && window.name.startsWith("{")) {
+          const wn = JSON.parse(window.name);
+          if (wn && wn.deadlineCfg) loaded = wn.deadlineCfg;
+        }
+      } catch (e) {}
+    }
+    const cfg = Object.assign({}, DEFAULT_REGISTRATION_DEADLINE_CFG, loaded || {});
+    cfg.dateIso = formatDdMmYyyyToIso(cfg.dateIso || cfg.dateDisplay || "2026-11-30");
+    cfg.dateDisplay = formatIsoDateToDdMmYyyy(cfg.dateIso);
+    if (!["AUTO", "FORCE_OPEN", "FORCE_CLOSED"].includes(cfg.statusMode)) {
+      cfg.statusMode = "AUTO";
+    }
+    window.__sisfDeadlineCfg = cfg;
+    return cfg;
+  }
+
+  function saveRegistrationDeadlineConfig(cfgObj) {
+    const cfg = Object.assign({}, DEFAULT_REGISTRATION_DEADLINE_CFG, cfgObj || {});
+    cfg.dateIso = formatDdMmYyyyToIso(cfg.dateIso || cfg.dateDisplay || "2026-11-30");
+    cfg.dateDisplay = formatIsoDateToDdMmYyyy(cfg.dateIso);
+    window.__sisfDeadlineCfg = cfg;
+    try { localStorage.setItem("SISF_REGISTRATION_DEADLINE_CFG", JSON.stringify(cfg)); } catch (e) {}
+    try { sessionStorage.setItem("SISF_REGISTRATION_DEADLINE_CFG", JSON.stringify(cfg)); } catch (e) {}
+    try {
+      let wn = {};
+      if (window.name && window.name.startsWith("{")) wn = JSON.parse(window.name);
+      wn.deadlineCfg = cfg;
+      window.name = JSON.stringify(wn);
+    } catch (e) {}
+    return cfg;
+  }
+
+  function getRegistrationDeadlineDisplay() {
+    return getRegistrationDeadlineConfig().dateDisplay || "30.11.2026";
+  }
+
   function isRegistrationDeadlinePassed() {
-    return false;
+    const cfg = getRegistrationDeadlineConfig();
+    if (cfg.statusMode === "FORCE_OPEN") return false;
+    if (cfg.statusMode === "FORCE_CLOSED") return true;
+    const endTs = new Date((cfg.dateIso || "2026-11-30") + "T23:59:59+05:30").getTime();
+    if (isNaN(endTs)) return false;
+    return Date.now() > endTs;
+  }
+
+  function refreshDeadlineBannersAndInputs() {
+    const cfg = getRegistrationDeadlineConfig();
+    const isClosed = isRegistrationDeadlinePassed();
+    const disp = cfg.dateDisplay || "30.11.2026";
+
+    const topEl = document.getElementById("topLiveDeadlineText");
+    if (topEl) {
+      topEl.innerHTML = isClosed
+        ? `🔒 போட்டிகள் பதிவு கடைசி தேதி (${disp}) முடிவடைந்தது`
+        : `⏰ போட்டிகள் பதிவு கடைசி தேதி: ${disp}`;
+    }
+
+    const authDateEl = document.getElementById("authDeadlineDateText");
+    if (authDateEl) authDateEl.innerText = disp;
+
+    const authBadgeEl = document.getElementById("authDeadlineStatusBadge");
+    if (authBadgeEl) {
+      if (isClosed) {
+        authBadgeEl.style.background = "#fef2f2";
+        authBadgeEl.style.color = "#991b1b";
+        authBadgeEl.style.borderColor = "#fecaca";
+        authBadgeEl.innerText = "🔒 பதிவு முடிவடைந்தது (Closed)";
+      } else {
+        authBadgeEl.style.background = "#dcfce7";
+        authBadgeEl.style.color = "#166534";
+        authBadgeEl.style.borderColor = "#86efac";
+        authBadgeEl.innerText = "🟢 பதிவு நடைபெறுகிறது (Open)";
+      }
+    }
+
+    const dashDateEl = document.getElementById("dashDeadlineDateText");
+    if (dashDateEl) dashDateEl.innerText = disp + (isClosed ? " (முடிவடைந்தது)" : "");
+
+    const admCurTxt = document.getElementById("admCurrentDeadlineText");
+    if (admCurTxt) admCurTxt.innerText = disp;
+
+    const admInp = document.getElementById("admDeadlineDateInp");
+    if (admInp && admInp.value !== cfg.dateIso) admInp.value = cfg.dateIso;
+
+    const admMode = document.getElementById("admDeadlineModeSel");
+    if (admMode && admMode.value !== cfg.statusMode) admMode.value = cfg.statusMode;
+
+    const admBadge = document.getElementById("admDeadlineLiveBadge");
+    if (admBadge) {
+      if (isClosed) {
+        admBadge.style.background = "#fef2f2";
+        admBadge.style.color = "#991b1b";
+        admBadge.style.borderColor = "#fca5a5";
+        admBadge.innerText = `🔒 விண்ணப்பப் பதிவு நிறுத்தப்பட்டுள்ளது (Closed - ${disp})`;
+      } else {
+        admBadge.style.background = "#dcfce7";
+        admBadge.style.color = "#166534";
+        admBadge.style.borderColor = "#86efac";
+        admBadge.innerText = `🟢 விண்ணப்பப் பதிவு நடைபெறுகிறது (Open till ${disp})`;
+      }
+    }
+  }
+
+  function setAdminQuickDeadline(isoDateStr) {
+    const inp = document.getElementById("admDeadlineDateInp");
+    if (inp) inp.value = isoDateStr;
+    const modeSel = document.getElementById("admDeadlineModeSel");
+    if (modeSel && modeSel.value === "FORCE_CLOSED") modeSel.value = "AUTO";
+    handleAdminUpdateDeadline();
+  }
+
+  function extendAdminDeadlineDays(daysToAdd) {
+    const cfg = getRegistrationDeadlineConfig();
+    const baseDate = new Date((cfg.dateIso || "2026-11-30") + "T12:00:00+05:30");
+    if (isNaN(baseDate.getTime())) return;
+    baseDate.setDate(baseDate.getDate() + Number(daysToAdd || 7));
+    const yyyy = baseDate.getFullYear();
+    const mm = String(baseDate.getMonth() + 1).padStart(2, "0");
+    const dd = String(baseDate.getDate()).padStart(2, "0");
+    setAdminQuickDeadline(`${yyyy}-${mm}-${dd}`);
+  }
+
+  function handleAdminUpdateDeadline() {
+    const inp = document.getElementById("admDeadlineDateInp");
+    const modeSel = document.getElementById("admDeadlineModeSel");
+    const broadcastChk = document.getElementById("admDeadlineBroadcastChk");
+
+    const rawIso = (inp && inp.value) ? inp.value.trim() : "2026-11-30";
+    if (!rawIso) {
+      showSisfToast("⚠️ தயவுசெய்து கடைசி தேதியைத் தேர்வு செய்யவும்.");
+      return;
+    }
+    const mode = (modeSel && modeSel.value) ? modeSel.value : "AUTO";
+    const disp = formatIsoDateToDdMmYyyy(rawIso);
+    const nowStr = new Date().toLocaleString("en-IN", { dateStyle: "short", timeStyle: "short" });
+
+    const savedCfg = saveRegistrationDeadlineConfig({
+      dateIso: rawIso,
+      dateDisplay: disp,
+      statusMode: mode,
+      updatedAt: nowStr
+    });
+
+    refreshDeadlineBannersAndInputs();
+    try { renderDashboardUI(); } catch (e) {}
+
+    // Optionally broadcast deadline update as an official notification to all schools
+    if (broadcastChk && broadcastChk.checked) {
+      try {
+        loadNotificationsIntoMemory();
+        const isClosedNow = isRegistrationDeadlinePassed();
+        const notifId = "NOTIF_DEADLINE_UPDATE_2026";
+        const notifObj = {
+          id: notifId,
+          timestamp: nowStr,
+          targetType: "ALL",
+          targetValue: "ALL",
+          targetLabel: "🌐 அனைத்துப் பள்ளிகளுக்கும் (All Schools)",
+          priority: "IMPORTANT",
+          title: isClosedNow
+            ? `🔒 போட்டிகள் பதிவு செய்வதற்கான கால அவகாசம் (${disp}) நிறைவடைந்தது`
+            : `⏰ போட்டிகள் பதிவு செய்வதற்கான கடைசி தேதி: ${disp} (நிர்வாகி அறிவிப்பு)`,
+          message: isClosedNow
+            ? `தென்னிந்திய அறிவியல் கண்காட்சி (SISF 2026) போட்டிகள் பதிவு செய்வதற்கான கடைசி தேதி (${disp}) நிறைவடைந்துவிட்டது. ஏற்கனவே பதிவு செய்த பள்ளிகள் தங்களின் PDF விண்ணப்பப் படிவம் மற்றும் சான்றிதழ்களைப் பதிவிறக்கம் செய்து கொள்ளலாம்.`
+            : `மாவட்ட அளவிலான தென்னிந்திய அறிவியல் கண்காட்சி (SISF 2026) போட்டிகளுக்குப் பள்ளிகள் இணைய வழியில் பதிவு செய்வதற்கான கடைசி தேதி ${disp} என நிர்ணயிக்கப்பட்டுள்ளது. அனைத்துப் பள்ளிகளும் ${disp}-க்குள் தங்களின் விண்ணப்பங்களைப் பதிவு செய்யுமாறு கேட்டுக்கொள்ளப்படுகிறார்கள்.`,
+          sender: "மாவட்ட அறிவியல் கண்காட்சி நிர்வாகி, சிவகங்கை"
+        };
+        const existingIdx = adminNotificationsList.findIndex(n => n && n.id === notifId);
+        if (existingIdx !== -1) {
+          adminNotificationsList[existingIdx] = notifObj;
+        } else {
+          adminNotificationsList.unshift(notifObj);
+        }
+        saveNotificationsToAllStores(adminNotificationsList);
+        renderSchoolNotificationsUI();
+        renderAdminNotificationsTable();
+      } catch (e) {}
+    }
+
+    // Sync deadline setting to Google Sheet backend if configured
+    try {
+      const payload = {
+        action: "admin_update_deadline",
+        dateIso: savedCfg.dateIso,
+        dateDisplay: savedCfg.dateDisplay,
+        statusMode: savedCfg.statusMode,
+        updatedAt: savedCfg.updatedAt
+      };
+      if (scriptUrl && scriptUrl.startsWith("http")) {
+        const qParams = new URLSearchParams(payload).toString();
+        fetchJsonp(scriptUrl + "?" + qParams, 4500).catch(() => {});
+      }
+      sendToScriptReliably(payload).catch(() => {});
+    } catch (e) {}
+
+    showSisfToast(`✅ போட்டிகள் பதிவு செய்வதற்கான கடைசி தேதி ${disp} என வெற்றிகரமாக மாற்றப்பட்டுச் சேமிக்கப்பட்டது!`);
   }
 
   // 5-Layer Persistent Session Helper (Survives F5 Refresh even on file:/// and strict browsers!)
@@ -4334,10 +4783,11 @@ document.getElementById("regStep1").style.display = "none";
         ${winnerBannerHtml}
       `;
 
+      const curDeadlineDisp = getRegistrationDeadlineDisplay();
       if (isRegistrationDeadlinePassed()) {
         actions.innerHTML = `
           <div style="font-size:0.78rem; color:#991b1b; background:#fef2f2; border:1px solid #fecaca; border-radius:6px; padding:5px 8px; margin-bottom:8px; text-align:center; font-weight:700;">
-            🔒 திருத்தம் செய்யும் கடைசி நாள் (30.10.2026) முடிவடைந்தது
+            🔒 திருத்தம் செய்யும் கடைசி நாள் (${curDeadlineDisp}) முடிவடைந்தது
           </div>
           <div style="display:flex;">
             <button type="button" class="btn-pdf" style="width:100%; font-weight:800;" onclick="printAppDirectly('${catKey}')">📥 படிவம் PDF (Registration PDF)</button>
@@ -4354,12 +4804,13 @@ document.getElementById("regStep1").style.display = "none";
         `;
       }
     } else {
+      const curDeadlineDisp = getRegistrationDeadlineDisplay();
       card.classList.remove("submitted");
       badge.className = "cat-status-badge status-empty";
       if (isRegistrationDeadlinePassed()) {
         badge.innerText = "🔒 காலம் முடிவடைந்தது";
-        details.innerHTML = '<p style="color: #991b1b; font-weight: 600;">விண்ணப்பிக்கும் கடைசி நாள் (30.10.2026) முடிவடைந்துவிட்டது. புதிய பதிவு செய்ய இயலாது.</p>';
-        actions.innerHTML = `<button type="button" class="btn-apply" style="background:#94a3b8; cursor:not-allowed;" disabled>🔒 விண்ணப்பிக்க கடைசி நாள் (30.10.2026) முடிந்தது</button>`;
+        details.innerHTML = `<p style="color: #991b1b; font-weight: 600;">விண்ணப்பிக்கும் கடைசி நாள் (${curDeadlineDisp}) முடிவடைந்துவிட்டது. புதிய பதிவு செய்ய இயலாது.</p>`;
+        actions.innerHTML = `<button type="button" class="btn-apply" style="background:#94a3b8; cursor:not-allowed;" disabled>🔒 விண்ணப்பிக்க கடைசி நாள் (${curDeadlineDisp}) முடிந்தது</button>`;
       } else {
         badge.innerText = "பதிவு செய்யப்படவில்லை";
         details.innerHTML = '<p style="color: #718096; font-style: italic;">இந்த பிரிவில் இன்னும் விண்ணப்பம் சமர்ப்பிக்கப்படவில்லை.</p>';
@@ -5242,7 +5693,7 @@ document.getElementById("regStep1").style.display = "none";
 
   function openApplicationForm(catKey, isEdit) {
     if (isRegistrationDeadlinePassed()) {
-      alert("⏰ விண்ணப்பிக்கும் மற்றும் திருத்தம் செய்யும் கடைசி நாள் (30.10.2026) முடிவடைந்துவிட்டது.\n\nஏற்கனவே சமர்ப்பிக்கப்பட்ட விண்ணப்பத்தின் PDF படிவத்தை மட்டும் பதிவிறக்கம் செய்து கொள்ளலாம்.");
+      alert(`⏰ விண்ணப்பிக்கும் மற்றும் திருத்தம் செய்யும் கடைசி நாள் (${getRegistrationDeadlineDisplay()}) முடிவடைந்துவிட்டது.\n\nஏற்கனவே சமர்ப்பிக்கப்பட்ட விண்ணப்பத்தின் PDF படிவத்தை மட்டும் பதிவிறக்கம் செய்து கொள்ளலாம்.`);
       return;
     }
     if (!loggedInSchool) {
@@ -5554,7 +6005,7 @@ document.getElementById("regStep1").style.display = "none";
   async function handleApplicationSubmit(event) {
     event.preventDefault();
     if (isRegistrationDeadlinePassed()) {
-      alert("⏰ விண்ணப்பிக்கும் மற்றும் திருத்தம் செய்யும் கடைசி நாள் (30.10.2026) முடிவடைந்துவிட்டது. இனி மாற்றங்கள் செய்ய இயலாது.");
+      alert(`⏰ விண்ணப்பிக்கும் மற்றும் திருத்தம் செய்யும் கடைசி நாள் (${getRegistrationDeadlineDisplay()}) முடிவடைந்துவிட்டது. இனி மாற்றங்கள் செய்ய இயலாது.`);
       switchView("dashboard");
       return;
     }
@@ -7252,26 +7703,33 @@ document.getElementById("regStep1").style.display = "none";
   function switchAdminSubTab(tabName) {
     const tApps = document.getElementById("admSubTabApps");
     const tWin = document.getElementById("admSubTabWinners");
+    const tJudges = document.getElementById("admSubTabJudges");
     const tPass = document.getElementById("admSubTabPasswords");
     const tNotif = document.getElementById("admSubTabNotifications");
     const bApps = document.getElementById("admTabBtnApps");
     const bWin = document.getElementById("admTabBtnWinners");
+    const bJudges = document.getElementById("admTabBtnJudges");
     const bPass = document.getElementById("admTabBtnPasswords");
     const bNotif = document.getElementById("admTabBtnNotifications");
 
     if (tApps) tApps.style.display = (tabName === "apps") ? "block" : "none";
     if (tWin) tWin.style.display = (tabName === "winners") ? "block" : "none";
+    if (tJudges) tJudges.style.display = (tabName === "judges") ? "block" : "none";
     if (tPass) tPass.style.display = (tabName === "passwords") ? "block" : "none";
     if (tNotif) tNotif.style.display = (tabName === "notifications") ? "block" : "none";
 
     if (bApps) bApps.classList.toggle("active", tabName === "apps");
     if (bWin) bWin.classList.toggle("active", tabName === "winners");
+    if (bJudges) bJudges.classList.toggle("active", tabName === "judges");
     if (bPass) bPass.classList.toggle("active", tabName === "passwords");
     if (bNotif) bNotif.classList.toggle("active", tabName === "notifications");
 
     if (tabName === "winners") {
       populateSubmittedAppsDropdownForWinner();
       renderAdminWinnersTable();
+    } else if (tabName === "judges") {
+      loadJudgesListIntoMemory();
+      renderAdminJudgesTable();
     } else if (tabName === "passwords") {
       renderAdminSchoolsTable();
     } else if (tabName === "notifications") {
@@ -7495,10 +7953,11 @@ document.getElementById("regStep1").style.display = "none";
       titleEl.value = "கண்காட்சிக்கு வரும்போது விண்ணப்பப் படிவத்தை இரண்டு பிரதிகளில் சமர்ப்பித்தல்";
       msgEl.value = "மாவட்ட அளவிலான அறிவியல் கண்காட்சியில் (03.11.2026 முற்பகல் 10.00 மணி, சிவகங்கை மன்னர் மேல்நிலைப்பள்ளி) கலந்து கொள்ள வரும்போது, இணையதளத்தில் பதிவிறக்கம் செய்யப்பட்டப் பதிவுப் படிவத்தினை (2-Page PDF) இரண்டு பிரதிகளில் தலைமையாசிரியரின் முத்திரை மற்றும் கையொப்பத்துடன் பெற்றுக் கட்டாயம் சமர்ப்பிக்க வேண்டும்.";
     } else if (presetKey === "REG_REMINDER") {
+      const dlDisp = getRegistrationDeadlineDisplay();
       if (prioEl) prioEl.value = "REMINDER";
       if (targetEl) { targetEl.value = "NOT_APPLIED"; onNotifTargetTypeChange(); }
-      titleEl.value = "அறிவியல் கண்காட்சிப் படைப்புகளின் விண்ணப்பங்களை உடனடியாகப் பதிவு செய்தல்";
-      msgEl.value = "தென்னிந்திய அறிவியல் கண்காட்சி (SISF 2026) மாவட்ட அளவிலான போட்டிக்கான தங்களின் பள்ளி விண்ணப்பங்களை (தனிநபர் / குழு / ஆசிரியர் பிரிவு) உடனடியாகப் பள்ளி முகப்பில் உள்நுழைந்து சமர்ப்பித்து PDF படிவத்தைப் பதிவிறக்கம் செய்து கொள்ளுமாறு கேட்டுக்கொள்ளப்படுகிறது.";
+      titleEl.value = `அறிவியல் கண்காட்சிப் போட்டிகள் பதிவு செய்ய கடைசி தேதி: ${dlDisp}`;
+      msgEl.value = `தென்னிந்திய அறிவியல் கண்காட்சி (SISF 2026) மாவட்ட அளவிலான போட்டிக்கான தங்களின் பள்ளி விண்ணப்பங்களை (தனிநபர் / குழு / ஆசிரியர் பிரிவு) கடைசி தேதியான ${dlDisp}-க்குள் பள்ளி முகப்பில் உள்நுழைந்து சமர்ப்பித்து PDF படிவத்தைப் பதிவிறக்கம் செய்து கொள்ளுமாறு கேட்டுக்கொள்ளப்படுகிறது.`;
     } else if (presetKey === "CERT_READY") {
       if (prioEl) prioEl.value = "INFO";
       if (targetEl) { targetEl.value = "APPLIED"; onNotifTargetTypeChange(); }
@@ -8301,14 +8760,18 @@ ${n.message}
 
     const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.innerText = v; };
     loadNotificationsIntoMemory();
+    loadJudgesListIntoMemory();
+    refreshDeadlineBannersAndInputs();
     setTxt("admStatSchools", totalSchools);
     setTxt("admStatTotalApps", totalApps);
     setTxt("admStatInd", indCount);
     setTxt("admStatGrp", grpCount);
     setTxt("admStatTch", tchCount);
     setTxt("admStatWinners", totalWinners);
+    setTxt("admStatJudges", adminJudgesList.length);
     setTxt("admStatNotifications", adminNotificationsList.length);
     try { renderAdminNotificationsTable(); } catch (e) {}
+    try { renderAdminJudgesTable(); } catch (e) {}
 
     // Render Discipline breakdown pills
     const discContainer = document.getElementById("admDisciplineBreakdown");
@@ -10595,7 +11058,856 @@ ${n.message}
     setTimeout(() => URL.revokeObjectURL(url), 8000);
   }
 
+  // =========================================================================
+  // JUDGES (நடுவர்கள்) MANAGEMENT & HIGH-RESOLUTION A4 PORTRAIT CERTIFICATE PDF
+  // =========================================================================
+  let adminJudgesList = [];
+  const judgeTransTimers = {};
+
+  function getDeletedJudgesMap() {
+    let del = Object.assign({}, window.__sisfMemDelJudges || {});
+    try {
+      const s1 = JSON.parse(localStorage.getItem("SISF_DELETED_JUDGES") || "{}");
+      Object.assign(del, s1);
+    } catch (e) {}
+    try {
+      const s2 = JSON.parse(sessionStorage.getItem("SISF_DELETED_JUDGES") || "{}");
+      Object.assign(del, s2);
+    } catch (e) {}
+    window.__sisfMemDelJudges = del;
+    return del;
+  }
+
+  function markJudgeDeleted(id) {
+    if (!id) return;
+    const del = getDeletedJudgesMap();
+    del[id] = true;
+    window.__sisfMemDelJudges = del;
+    try { localStorage.setItem("SISF_DELETED_JUDGES", JSON.stringify(del)); } catch (e) {}
+    try { sessionStorage.setItem("SISF_DELETED_JUDGES", JSON.stringify(del)); } catch (e) {}
+  }
+
+  function unmarkJudgeDeleted(id) {
+    if (!id) return;
+    const del = getDeletedJudgesMap();
+    delete del[id];
+    window.__sisfMemDelJudges = del;
+    try { localStorage.setItem("SISF_DELETED_JUDGES", JSON.stringify(del)); } catch (e) {}
+    try { sessionStorage.setItem("SISF_DELETED_JUDGES", JSON.stringify(del)); } catch (e) {}
+  }
+
+  function saveJudgesListToAllStores(list) {
+    const del = getDeletedJudgesMap();
+    const clean = (Array.isArray(list) ? list : []).filter(j => j && j.id && !del[j.id]);
+    adminJudgesList = clean;
+    try { localStorage.setItem("SISF_JUDGES_LIST", JSON.stringify(clean)); } catch (e) {}
+    try { sessionStorage.setItem("SISF_JUDGES_LIST", JSON.stringify(clean)); } catch (e) {}
+    try {
+      let wn = {};
+      if (window.name && window.name.startsWith("{")) wn = JSON.parse(window.name);
+      wn.judgesList = clean;
+      window.name = JSON.stringify(wn);
+    } catch (e) {}
+    const statEl = document.getElementById("admStatJudges");
+    if (statEl) statEl.innerText = clean.length;
+  }
+
+  function loadJudgesListIntoMemory() {
+    const del = getDeletedJudgesMap();
+    let loaded = [];
+    try {
+      const raw = localStorage.getItem("SISF_JUDGES_LIST") || sessionStorage.getItem("SISF_JUDGES_LIST");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) loaded = parsed;
+      } else if (window.name && window.name.startsWith("{")) {
+        const wn = JSON.parse(window.name);
+        if (wn && Array.isArray(wn.judgesList)) loaded = wn.judgesList;
+      }
+    } catch (e) {}
+    const map = {};
+    loaded.forEach(j => {
+      if (j && j.id && !del[j.id]) map[j.id] = j;
+    });
+    adminJudgesList = Object.values(map);
+    const statEl = document.getElementById("admStatJudges");
+    if (statEl) statEl.innerText = adminJudgesList.length;
+    return adminJudgesList;
+  }
+
+  function autoTranslateJudgeField(fieldType, sourceLang) {
+    const taId = fieldType === "name" ? "judgeNameTa" : "judgeInstTa";
+    const enId = fieldType === "name" ? "judgeNameEn" : "judgeInstEn";
+    const taEl = document.getElementById(taId);
+    const enEl = document.getElementById(enId);
+    if (!taEl || !enEl) return;
+
+    const timerKey = fieldType + "_" + sourceLang;
+    if (judgeTransTimers[timerKey]) clearTimeout(judgeTransTimers[timerKey]);
+
+    judgeTransTimers[timerKey] = setTimeout(async () => {
+      if (sourceLang === "ta") {
+        let valTa = taEl.value.trim();
+        if (!valTa) return;
+        if (fieldType === "name" && typeof formatNameInitialLastTa === "function") {
+          valTa = formatNameInitialLastTa(valTa);
+          taEl.value = valTa;
+        }
+        if (fieldType === "name" && typeof transliterateTamilToEnglishName === "function") {
+          const tr = transliterateTamilToEnglishName(valTa);
+          if (tr) enEl.value = typeof formatNameInitialLastEn === "function" ? formatNameInitialLastEn(tr) : tr;
+        } else if (typeof translateTextViaApi === "function") {
+          const tr = await translateTextViaApi(valTa, "ta", "en");
+          if (tr) enEl.value = tr;
+        }
+      } else {
+        let valEn = enEl.value.trim();
+        if (!valEn) return;
+        if (fieldType === "name" && typeof formatNameInitialLastEn === "function") {
+          valEn = formatNameInitialLastEn(valEn);
+          enEl.value = valEn;
+        }
+        if (fieldType === "name" && typeof transliterateEnglishToTamilPhonetic === "function" && !taEl.value.trim()) {
+          const trTa = await transliterateEnglishToTamilPhonetic(valEn);
+          if (trTa) taEl.value = typeof formatNameInitialLastTa === "function" ? formatNameInitialLastTa(trTa) : trTa;
+        } else if (fieldType === "inst" && !taEl.value.trim() && typeof translateTextViaApi === "function") {
+          const trTa = await translateTextViaApi(valEn, "en", "ta");
+          if (trTa) taEl.value = trTa;
+        }
+      }
+    }, 650);
+  }
+
+  function lookupSchoolForJudgeForm() {
+    const q = (document.getElementById("judgeSchoolUno")?.value || "").trim().replace(/^0+/, "");
+    if (!q) {
+      showSisfToast("⚠️ பள்ளியின் U.NO அல்லது UDISE எண்ணை உள்ளிடவும்.");
+      return;
+    }
+    const found = (typeof MASTER_SCHOOLS !== "undefined")
+      ? MASTER_SCHOOLS.find(s => s.uNo === q || s.udiseNo === q)
+      : null;
+    if (!found) {
+      showSisfToast("⚠️ இந்த U.NO / UDISE எண்ணிற்குப் பள்ளி விவரம் கிடைக்கவில்லை. நேரடியாகத் தட்டச்சு செய்யலாம்.");
+      return;
+    }
+    const instTaEl = document.getElementById("judgeInstTa");
+    const instEnEl = document.getElementById("judgeInstEn");
+    if (instTaEl) instTaEl.value = found.nameTa || "";
+    if (instEnEl) instEnEl.value = cleanSchoolNameEnForCert(found.nameEn || "");
+    showSisfToast(`✅ ${found.nameTa} விவரம் நிரப்பப்பட்டது!`);
+  }
+
+  function resetJudgeForm() {
+    const setV = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+    setV("judgeEditId", "");
+    setV("judgePrefix", "திரு.|Mr.");
+    setV("judgeNameTa", "");
+    setV("judgeNameEn", "");
+    setV("judgeDesignation", "முதுகலை ஆசிரியர்|P.G. Assistant");
+    setV("judgeSchoolUno", "");
+    setV("judgeInstTa", "");
+    setV("judgeInstEn", "");
+    setV("judgeDiscipline", "Physics");
+    setV("judgeEvalCategory", "ALL");
+    setV("judgeMobile", "");
+    setV("judgeEventDate", "03.11.2026");
+    const btn = document.getElementById("btnSaveJudgeSubmit");
+    if (btn) btn.innerHTML = "⚖️ நடுவர் விவரத்தைச் சேமிக்க (Save Judge)";
+    const msg = document.getElementById("judgeSaveMsg");
+    if (msg) msg.innerText = "";
+  }
+
+  function handleAdminSaveJudgeSubmit(event) {
+    event.preventDefault();
+    loadJudgesListIntoMemory();
+
+    const editId = (document.getElementById("judgeEditId")?.value || "").trim();
+    const prefixRaw = document.getElementById("judgePrefix")?.value || "திரு.|Mr.";
+    const [prefixTa, prefixEn] = prefixRaw.split("|");
+
+    let nameTa = (document.getElementById("judgeNameTa")?.value || "").trim();
+    let nameEn = (document.getElementById("judgeNameEn")?.value || "").trim();
+    if (typeof formatNameInitialLastTa === "function" && nameTa) nameTa = formatNameInitialLastTa(nameTa);
+    if (typeof formatNameInitialLastEn === "function" && nameEn) nameEn = formatNameInitialLastEn(nameEn);
+    if (!nameEn && nameTa && typeof transliterateTamilToEnglishName === "function") {
+      nameEn = formatNameInitialLastEn(transliterateTamilToEnglishName(nameTa));
+    }
+    if (!nameTa && nameEn) nameTa = nameEn;
+
+    const desigRaw = document.getElementById("judgeDesignation")?.value || "முதுகலை ஆசிரியர்|P.G. Assistant";
+    const [desigTa, desigEn] = desigRaw.split("|");
+
+    const schoolUno = (document.getElementById("judgeSchoolUno")?.value || "").trim().replace(/^0+/, "");
+    const instTa = (document.getElementById("judgeInstTa")?.value || "").trim();
+    const instEn = (document.getElementById("judgeInstEn")?.value || "").trim() || instTa;
+    const discipline = document.getElementById("judgeDiscipline")?.value || "Physics";
+    const evalCategory = document.getElementById("judgeEvalCategory")?.value || "ALL";
+    const mobile = (document.getElementById("judgeMobile")?.value || "").trim();
+    const eventDate = (document.getElementById("judgeEventDate")?.value || "03.11.2026").trim();
+
+    let judgeId = editId;
+    if (!judgeId) {
+      const nextNum = adminJudgesList.length + 1;
+      judgeId = "SISF-JDG-" + String(nextNum).padStart(2, "0");
+      while (adminJudgesList.some(j => j.id === judgeId)) {
+        judgeId = "SISF-JDG-" + String(Math.floor(100 + Math.random() * 900));
+      }
+    }
+
+    unmarkJudgeDeleted(judgeId);
+
+    const judgeObj = {
+      id: judgeId,
+      prefixRaw: prefixRaw,
+      prefixTa: prefixTa || "திரு.",
+      prefixEn: prefixEn || "Mr.",
+      nameTa: nameTa,
+      nameEn: nameEn,
+      designationRaw: desigRaw,
+      designationTa: desigTa || "முதுகலை ஆசிரியர்",
+      designationEn: desigEn || "P.G. Assistant",
+      uNo: schoolUno,
+      instTa: instTa,
+      instEn: instEn,
+      discipline: discipline,
+      evalCategory: evalCategory,
+      mobile: mobile,
+      eventDate: eventDate || "03.11.2026",
+      timestamp: new Date().toLocaleString("en-IN", { dateStyle: "short", timeStyle: "short" })
+    };
+
+    const existingIdx = adminJudgesList.findIndex(j => j.id === judgeId);
+    if (existingIdx !== -1) {
+      adminJudgesList[existingIdx] = judgeObj;
+    } else {
+      adminJudgesList.push(judgeObj);
+    }
+
+    saveJudgesListToAllStores(adminJudgesList);
+    renderAdminJudgesTable();
+
+    // Sync to Google Sheet backend if configured
+    try {
+      const payload = Object.assign({ action: "admin_save_judge" }, judgeObj);
+      if (scriptUrl && scriptUrl.startsWith("http")) {
+        const qParams = new URLSearchParams(payload).toString();
+        fetchJsonp(scriptUrl + "?" + qParams, 4500).catch(() => {});
+      }
+      sendToScriptReliably(payload).catch(() => {});
+    } catch (e) {}
+
+    resetJudgeForm();
+    const msg = document.getElementById("judgeSaveMsg");
+    if (msg) {
+      msg.innerText = `✅ நடுவர் ${judgeObj.prefixTa} ${judgeObj.nameTa} (${judgeObj.id}) விவரம் சேமிக்கப்பட்டது!`;
+      setTimeout(() => { if (msg) msg.innerText = ""; }, 4500);
+    }
+    showSisfToast(`✅ நடுவர் ${judgeObj.prefixTa} ${judgeObj.nameTa} விவரம் வெற்றிகரமாகச் சேமிக்கப்பட்டது!`);
+  }
+
+  function editJudgeRecord(judgeId) {
+    loadJudgesListIntoMemory();
+    const j = adminJudgesList.find(item => item.id === judgeId);
+    if (!j) return;
+
+    const setV = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+    setV("judgeEditId", j.id);
+    setV("judgePrefix", j.prefixRaw || `${j.prefixTa || "திரு."}|${j.prefixEn || "Mr."}`);
+    setV("judgeNameTa", j.nameTa || "");
+    setV("judgeNameEn", j.nameEn || "");
+    setV("judgeDesignation", j.designationRaw || `${j.designationTa || "முதுகலை ஆசிரியர்"}|${j.designationEn || "P.G. Assistant"}`);
+    setV("judgeSchoolUno", j.uNo || "");
+    setV("judgeInstTa", j.instTa || "");
+    setV("judgeInstEn", j.instEn || "");
+    setV("judgeDiscipline", j.discipline || "Physics");
+    setV("judgeEvalCategory", j.evalCategory || "ALL");
+    setV("judgeMobile", j.mobile || "");
+    setV("judgeEventDate", j.eventDate || "03.11.2026");
+
+    const btn = document.getElementById("btnSaveJudgeSubmit");
+    if (btn) btn.innerHTML = `💾 நடுவர் விவரத்தைப் புதுப்பிக்க (${j.id})`;
+    const subTab = document.getElementById("admSubTabJudges");
+    if (subTab) subTab.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function adminPromptDeleteJudge(judgeId) {
+    loadJudgesListIntoMemory();
+    const j = adminJudgesList.find(item => item.id === judgeId);
+    if (!j) return;
+
+    const detailsHtml = `
+      <div><strong>📌 பதிவு வகை:</strong> நடுவர் விவரம் (Adjudicator / Judge Record)</div>
+      <div><strong>🆔 நடுவர் எண்:</strong> <span style="color:#4f46e5; font-weight:800;">${j.id}</span></div>
+      <div><strong>⚖️ நடுவர் பெயர்:</strong> ${j.prefixTa || ""} ${j.nameTa || "-"} / ${j.prefixEn || ""} ${j.nameEn || "-"}</div>
+      <div><strong>🎓 பதவி:</strong> ${j.designationTa || "-"} (${j.designationEn || "-"})</div>
+      <div><strong>🏫 பள்ளி / கல்லூரி:</strong> ${j.instTa || "-"}</div>
+      <div><strong>🔬 பாடப்பிரிவு:</strong> ${j.discipline || "-"}</div>
+    `;
+
+    openAdminDeleteConfirmModal(
+      "⚠️ நடுவர் பதிவை அழிக்க உறுதிப்படுத்தவும்",
+      detailsHtml,
+      function() {
+        markJudgeDeleted(judgeId);
+        adminJudgesList = adminJudgesList.filter(item => item.id !== judgeId);
+        saveJudgesListToAllStores(adminJudgesList);
+        renderAdminJudgesTable();
+        showSisfToast(`🗑️ நடுவர் பதிவு (${judgeId}) நீக்கப்பட்டது.`);
+      }
+    );
+  }
+
+  function renderAdminJudgesTable() {
+    const tbody = document.getElementById("admJudgesTableBody");
+    if (!tbody) return;
+    loadJudgesListIntoMemory();
+
+    const q = (document.getElementById("admJudgeSearchInp")?.value || "").trim().toLowerCase();
+    const filtered = adminJudgesList.filter(j => {
+      if (!q) return true;
+      const hay = `${j.id} ${j.nameTa} ${j.nameEn} ${j.designationTa} ${j.designationEn} ${j.instTa} ${j.instEn} ${j.discipline} ${j.mobile}`.toLowerCase();
+      return hay.includes(q);
+    });
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:22px; color:#64748b; font-weight:600;">நடுவர்கள் விவரம் ஏதும் பதிவு செய்யப்படவில்லை. மேலே உள்ள படிவத்தில் நடுவர் விவரங்களைப் உள்ளிட்டுச் சேமிக்கவும்.</td></tr>`;
+      return;
+    }
+
+    const discLabelMap = {
+      "Physics": "இயற்பியல் (Physics)",
+      "Chemistry": "வேதியியல் (Chemistry)",
+      "Mathematics": "கணிதம் (Mathematics)",
+      "Environmental Science": "சுற்றுச்சூழல் அறிவியல் (Env. Science)",
+      "Engineering": "பொறியியல் (Engineering)",
+      "Bioscience / Biochemistry": "உயிரியல் / உயிர் வேதியியல் (Bioscience)",
+      "Earth & Space Science": "பூமி & விண்வெளி (Earth & Space)",
+      "Computer Science": "கணினி அறிவியல் (Computer Science)",
+      "All Disciplines": "அனைத்துப் பாடப்பிரிவுகள் (All Disciplines)"
+    };
+
+    const catLabelMap = {
+      "ALL": "அனைத்துப் பிரிவுகள் (All Categories)",
+      "Individual": "பிரிவு 1: தனிநபர் (Individual)",
+      "Group": "பிரிவு 2: குழு (Group)",
+      "Teacher": "பிரிவு 3: ஆசிரியர் (Teacher)"
+    };
+
+    tbody.innerHTML = filtered.map((j, idx) => `
+      <tr>
+        <td style="font-weight:800; text-align:center;">${idx + 1}</td>
+        <td><span style="background:#eef2ff; color:#3730a3; border:1px solid #c7d2fe; padding:3px 8px; border-radius:6px; font-weight:800; font-size:0.8rem;">${j.id}</span></td>
+        <td>
+          <div style="font-weight:800; color:#1e3a8a; font-size:0.92rem;">${j.prefixTa || ""} ${j.nameTa || "-"}</div>
+          <div style="font-size:0.8rem; color:#475569; font-weight:600;">${j.prefixEn || ""} ${j.nameEn || "-"}</div>
+          <div style="margin-top:3px;"><span style="background:#f0fdf4; color:#166534; border:1px solid #bbf7d0; padding:1px 7px; border-radius:999px; font-size:0.74rem; font-weight:800;">🎓 ${j.designationTa || "-"}</span></div>
+        </td>
+        <td>
+          <div style="font-weight:700; color:#0f172a;">${j.instTa || "-"}</div>
+          <div style="font-size:0.78rem; color:#64748b;">${j.instEn || "-"}</div>
+        </td>
+        <td>
+          <div style="font-weight:800; color:#047857; font-size:0.84rem;">🔬 ${discLabelMap[j.discipline] || j.discipline || "-"}</div>
+          <div style="font-size:0.76rem; color:#475569; margin-top:2px;">📂 ${catLabelMap[j.evalCategory] || j.evalCategory || "-"}</div>
+        </td>
+        <td>
+          <div style="font-weight:700; color:#1e293b;">📞 ${j.mobile || "-"}</div>
+          <div style="font-size:0.76rem; color:#64748b;">📅 ${j.eventDate || "03.11.2026"}</div>
+        </td>
+        <td>
+          <div style="display:flex; gap:5px; flex-wrap:wrap;">
+            <button type="button" class="btn-sm" style="background:linear-gradient(135deg,#4f46e5,#3730a3); color:#fff; padding:5px 9px; font-size:0.76rem; font-weight:800;" onclick="downloadJudgeCertificateById('${j.id}', 'bilingual')" title="இருமொழி நடுவர் பாராட்டுச் சான்றிதழ் (Bilingual PDF)">
+              📜 இருமொழி (Bilingual)
+            </button>
+            <button type="button" class="btn-sm" style="background:#0f766e; color:#fff; padding:5px 8px; font-size:0.75rem; font-weight:800;" onclick="downloadJudgeCertificateById('${j.id}', 'ta')" title="தமிழ் நடுவர் பாராட்டுச் சான்றிதழ் (Tamil Only PDF)">
+              📜 தமிழ்
+            </button>
+            <button type="button" class="btn-sm" style="background:#1e40af; color:#fff; padding:5px 8px; font-size:0.75rem; font-weight:800;" onclick="downloadJudgeCertificateById('${j.id}', 'en')" title="English Judge Appreciation Certificate (English Only PDF)">
+              📜 EN
+            </button>
+          </div>
+        </td>
+        <td>
+          <div style="display:flex; gap:5px;">
+            <button type="button" class="btn-sm" style="background:#2b6cb0; padding:5px 9px; font-size:0.76rem;" onclick="editJudgeRecord('${j.id}')" title="திருத்து">✏️</button>
+            <button type="button" class="btn-sm" style="background:#dc2626; padding:5px 9px; font-size:0.76rem;" onclick="adminPromptDeleteJudge('${j.id}')" title="அழி">🗑️</button>
+          </div>
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  function exportJudgesCsv() {
+    loadJudgesListIntoMemory();
+    if (adminJudgesList.length === 0) {
+      showSisfToast("⚠️ பதிவிறக்கம் செய்ய நடுவர்கள் விவரம் ஏதுமில்லை.");
+      return;
+    }
+    const headers = ["S.No", "Judge ID", "Prefix (Ta)", "Judge Name (Ta)", "Prefix (En)", "Judge Name (En)", "Designation (Ta)", "Designation (En)", "Institution (Ta)", "Institution (En)", "Discipline", "Evaluated Category", "Mobile", "Event Date"];
+    const esc = (v) => `"${String(v || "").replace(/"/g, '""')}"`;
+    const rows = adminJudgesList.map((j, i) => [
+      i + 1, j.id, j.prefixTa, j.nameTa, j.prefixEn, j.nameEn, j.designationTa, j.designationEn, j.instTa, j.instEn, j.discipline, j.evalCategory, j.mobile, j.eventDate
+    ].map(esc).join(","));
+    const csvContent = "\uFEFF" + [headers.map(esc).join(","), ...rows].join("\r\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "SISF_2026_Judges_List_Sivagangai.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  }
+
+  function downloadJudgeCertificateById(judgeId, langMode) {
+    loadJudgesListIntoMemory();
+    const judgeRec = adminJudgesList.find(j => j.id === judgeId);
+    if (!judgeRec) {
+      showSisfToast("⚠️ நடுவர் விவரம் கிடைக்கவில்லை.");
+      return;
+    }
+    const mode = langMode || "bilingual";
+    if (sisfCertBgImg && !sisfCertBgImg.complete) {
+      let doneCalled = false;
+      const runNow = () => {
+        if (doneCalled) return;
+        doneCalled = true;
+        renderJudgeCertificateCanvasToPdf(judgeRec, mode);
+      };
+      sisfCertBgImg.onload = runNow;
+      sisfCertBgImg.onerror = runNow;
+      setTimeout(runNow, 400);
+      return;
+    }
+    renderJudgeCertificateCanvasToPdf(judgeRec, mode);
+  }
+
+  function formatJudgeInstitutionForCertTa(rawInstTa) {
+    let str = String(rawInstTa || "").split(" / ")[0].replace(/\s*\([^)]*\)/g, "").trim();
+    if (!str) return "அரசு மேல்நிலைப்பள்ளியில்";
+    if (str.includes("பள்ளி")) {
+      return formatSchoolAndTownForCert(str);
+    }
+    if (str.endsWith("கல்லூரி") || str.endsWith("பல்கலைக்கழகம்") || str.endsWith("நிறுவனம்") || str.endsWith("மையம்")) {
+      return str + "யில்";
+    }
+    return str;
+  }
+
+  function renderJudgeCertificateCanvasToPdf(judgeRec, langMode) {
+    const mode = langMode || "bilingual"; // 'bilingual', 'ta', or 'en'
+    const cvs = document.createElement("canvas");
+    const SCALE = 1.5;
+    const LOGICAL_W = 1448;
+    const LOGICAL_H = 2048;
+    cvs.width = Math.round(LOGICAL_W * SCALE);  // 2172
+    cvs.height = Math.round(LOGICAL_H * SCALE); // 3072
+    const ctx = cvs.getContext("2d");
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    ctx.scale(SCALE, SCALE);
+
+    // 1. Draw Certificate Background Template
+    if (sisfCertBgImg && sisfCertBgImg.complete && sisfCertBgImg.naturalWidth > 0) {
+      ctx.drawImage(sisfCertBgImg, 0, 0, LOGICAL_W, LOGICAL_H);
+    } else {
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, LOGICAL_W, LOGICAL_H);
+    }
+
+    const judgeId = judgeRec.id || "SISF-JDG-01";
+    const prefixTa = judgeRec.prefixTa || "திரு.";
+    const prefixEn = judgeRec.prefixEn || "Mr.";
+    const nameTa = judgeRec.nameTa || "-";
+    const nameEn = judgeRec.nameEn || nameTa;
+    const desigTa = judgeRec.designationTa || "முதுகலை ஆசிரியர்";
+    const desigEn = judgeRec.designationEn || "P.G. Assistant";
+    const rawInstTa = judgeRec.instTa || "அரசு மேல்நிலைப்பள்ளி, சிவகங்கை";
+    const formattedInstTa = formatJudgeInstitutionForCertTa(rawInstTa);
+    const instEn = cleanSchoolNameEnForCert(judgeRec.instEn || rawInstTa);
+    const eventDate = judgeRec.eventDate || "03.11.2026";
+
+    const discMapTa = {
+      "Physics": "இயற்பியல் பாடப்பிரிவில்",
+      "Chemistry": "வேதியியல் பாடப்பிரிவில்",
+      "Mathematics": "கணிதம் பாடப்பிரிவில்",
+      "Environmental Science": "சுற்றுச்சூழல் அறிவியல் பாடப்பிரிவில்",
+      "Engineering": "பொறியியல் பாடப்பிரிவில்",
+      "Bioscience / Biochemistry": "உயிரியல் / உயிர்வேதியியல் பாடப்பிரிவில்",
+      "Earth & Space Science": "பூமி & விண்வெளி அறிவியல் பாடப்பிரிவில்",
+      "Computer Science": "கணினி அறிவியல் பாடப்பிரிவில்",
+      "All Disciplines": "அனைத்துப் பாடப்பிரிவுகளிலும்"
+    };
+    const rawDisc = judgeRec.discipline || "Physics";
+    const discTaPhrase = discMapTa[rawDisc] || (rawDisc + " பாடப்பிரிவில்");
+    const discEnPhrase = rawDisc === "All Disciplines" ? "All Scientific Disciplines" : rawDisc;
+
+    // 2. Draw Portrait Header, Hero Banner & Subheader
+    const centerX = 724;
+    ctx.textAlign = "center";
+
+    ctx.fillStyle = "#0f172a";
+    ctx.font = "900 28px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+    ctx.fillText("பள்ளிக்கல்வித்துறை – சிவகங்கை மாவட்டம்", centerX, 264, 700);
+
+    ctx.fillStyle = "#0f766e";
+    ctx.font = "bold 18px sans-serif";
+    ctx.fillText("DEPARTMENT OF SCHOOL EDUCATION – SIVAGANGAI DISTRICT", centerX, 306, 700);
+
+    ctx.fillStyle = "#fde047";
+    ctx.font = "900 28.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+    ctx.fillText("மாவட்ட அளவிலான தென்னிந்திய அறிவியல் கண்காட்சி – 2026", centerX, 406, 990);
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 18.5px sans-serif";
+    ctx.fillText("DISTRICT LEVEL SOUTHERN INDIA SCIENCE FAIR (SISF 2026 – 2027)", centerX, 442, 990);
+
+    ctx.fillStyle = "#1e3a8a";
+    if (mode === "en") {
+      ctx.font = "900 19.5px sans-serif";
+      ctx.fillText(`✦ Venue : Mannar Hr. Sec. School, Sivagangai   |   Date : ${eventDate} ✦`, centerX, 510, 960);
+    } else if (mode === "ta") {
+      ctx.font = "900 20.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText(`✦ இடம் : மன்னர் மேல்நிலைப்பள்ளி, சிவகங்கை   |   நாள் : ${eventDate} ✦`, centerX, 511, 960);
+    } else {
+      ctx.font = "900 19.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("✦ இடம் : மன்னர் மேல்நிலைப்பள்ளி, சிவகங்கை  |  Venue : Mannar Hr. Sec. School, Sivagangai ✦", centerX, 511, 960);
+    }
+
+    // Gold-Pill Subheader for Judge Certificate
+    ctx.fillStyle = "#991b1b";
+    if (mode === "en") {
+      ctx.font = "900 23px sans-serif";
+      ctx.fillText("CERTIFICATE OF APPRECIATION  (ADJUDICATOR / JUDGE)", centerX, 577, 860);
+    } else if (mode === "ta") {
+      ctx.font = "900 26.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("நடுவர் பாராட்டுச் சான்றிதழ்", centerX, 578, 860);
+    } else {
+      ctx.font = "900 23.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("நடுவர் பாராட்டுச் சான்றிதழ்  |  CERTIFICATE OF APPRECIATION", centerX, 578, 860);
+    }
+
+    const maxLineW = 1020;
+
+    if (mode === "bilingual") {
+      const TA_REG = 22.5;
+      const TA_KEY = 23.5;
+      const taLines = [];
+
+      taLines.push([
+        { text: "சிவகங்கை மாவட்டம்,  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+        { text: formattedInstTa, size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
+      ]);
+
+      taLines.push([
+        { text: "பணியாற்றும்  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+        { text: desigTa, size: TA_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
+        { text: `  ${prefixTa}  `, size: TA_REG, color: "#1e293b", weight: "bold" },
+        { text: nameTa, size: TA_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
+        { text: "  அவர்கள்,", size: TA_REG, color: "#1e293b", weight: "bold" }
+      ]);
+
+      taLines.push([
+        { text: `${eventDate} அன்று சிவகங்கை மன்னர் மேல்நிலைப்பள்ளியில் நடைபெற்ற`, size: TA_REG, color: "#1e293b", weight: "bold" }
+      ]);
+
+      taLines.push([
+        { text: "மாவட்ட அளவிலான தென்னிந்திய அறிவியல் கண்காட்சியில்  ", size: TA_REG, color: "#1e293b", weight: "bold" },
+        { text: discTaPhrase, size: TA_KEY, color: "#047857", weight: "900", underline: true, underlineColor: "#6ee7b7" }
+      ]);
+
+      taLines.push([
+        { text: "நடுவராகப் (Adjudicator / Judge)", size: TA_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
+        { text: "  பணியாற்றி, மாணவர்களின் அறிவியல் படைப்புகளைச்", size: TA_REG, color: "#1e293b", weight: "bold" }
+      ]);
+
+      taLines.push([
+        { text: "சிறப்பாக மதிப்பீடு செய்தமைக்காகப் பாராட்டி நற்சான்றிதழ் வழங்கப்படுகிறது.", size: TA_REG, color: "#1e293b", weight: "bold" }
+      ]);
+
+      const taCount = taLines.length;
+      const taStep = 60;
+      const taTotalH = (taCount - 1) * taStep;
+      const taStartY = Math.round(848 - taTotalH / 2);
+      taLines.forEach((lineSegs, idx) => {
+        drawRichCenteredLineOnCert(ctx, lineSegs, centerX, taStartY + idx * taStep, maxLineW);
+      });
+
+      // Center Gold Divider
+      ctx.save();
+      ctx.strokeStyle = "#d97706";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(250, 1068);
+      ctx.lineTo(620, 1068);
+      ctx.moveTo(828, 1068);
+      ctx.lineTo(1198, 1068);
+      ctx.stroke();
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#b45309";
+      ctx.font = "bold 18px sans-serif";
+      ctx.fillText("✦   •   ❖   •   ✦", centerX, 1074);
+      ctx.restore();
+
+      const EN_REG = 22.5;
+      const EN_KEY = 24.5;
+      const enLines = [
+        [
+          { text: "This is to proudly certify that  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: `${prefixEn} ${nameEn}`, size: EN_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
+          { text: ",  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: desigEn, size: EN_KEY, color: "#0f766e", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" },
+          { text: ",", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ],
+        [
+          { text: "of  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: instEn, size: EN_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
+          { text: ",", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ],
+        [
+          { text: "has rendered commendable service as an  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: "ADJUDICATOR / JUDGE", size: EN_KEY, color: "#b91c1c", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fca5a5" }
+        ],
+        [
+          { text: "in the discipline of  ", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: discEnPhrase, size: EN_KEY, color: "#047857", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" },
+          { text: "  at the District Level", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ],
+        [
+          { text: `Southern India Science Fair (SISF 2026 – 2027) held on ${eventDate} at Mannar Hr. Sec. School, Sivagangai,`, size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ],
+        [
+          { text: "and is awarded this Certificate of Appreciation in recognition of their academic expertise.", size: EN_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ]
+      ];
+
+      const enCount = enLines.length;
+      const enStep = 62;
+      const enTotalH = (enCount - 1) * enStep;
+      const enStartY = Math.round(1322 - enTotalH / 2);
+      enLines.forEach((lineSegs, idx) => {
+        drawRichCenteredLineOnCert(ctx, lineSegs, centerX, enStartY + idx * enStep, maxLineW);
+      });
+
+    } else if (mode === "ta") {
+      const TA_FULL_REG = 24.5;
+      const TA_FULL_KEY = 26;
+      const taFullLines = [
+        [
+          { text: "சிவகங்கை மாவட்டம்,  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+          { text: formattedInstTa, size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" }
+        ],
+        [
+          { text: "பணியாற்றும்  ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+          { text: desigTa, size: TA_FULL_KEY, color: "#0f766e", weight: "900", underline: true, underlineColor: "#6ee7b7" },
+          { text: `  ${prefixTa}  `, size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+          { text: nameTa, size: TA_FULL_KEY, color: "#1e3a8a", weight: "900", underline: true, underlineColor: "#93c5fd" },
+          { text: "  அவர்கள்,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
+        ],
+        [
+          { text: `${eventDate} அன்று சிவகங்கை மன்னர் மேல்நிலைப்பள்ளியில் நடைபெற்ற`, size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
+        ],
+        [
+          { text: "மாவட்ட அளவிலான தென்னிந்திய அறிவியல் கண்காட்சியில்", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
+        ],
+        [
+          { text: discTaPhrase, size: TA_FULL_KEY, color: "#047857", weight: "900", underline: true, underlineColor: "#6ee7b7" },
+          { text: "   ", size: TA_FULL_REG, color: "#1e293b", weight: "bold" },
+          { text: "நடுவராகப் (Judge)", size: TA_FULL_KEY, color: "#b91c1c", weight: "900", underline: true, underlineColor: "#fca5a5" },
+          { text: "  பணியாற்றி,", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
+        ],
+        [
+          { text: "மாணவர்களின் அறிவியல் படைப்புகளைச் சிறப்பாக மதிப்பீடு செய்தமைக்காகப்", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
+        ],
+        [
+          { text: "பாராட்டி நற்சான்றிதழ் வழங்கப்படுகிறது.", size: TA_FULL_REG, color: "#1e293b", weight: "bold" }
+        ]
+      ];
+
+      const tfCount = taFullLines.length;
+      const tfStep = 98;
+      const tfTotalH = (tfCount - 1) * tfStep;
+      const tfStartY = Math.round(1088 - tfTotalH / 2);
+      taFullLines.forEach((lineSegs, idx) => {
+        drawRichCenteredLineOnCert(ctx, lineSegs, centerX, tfStartY + idx * tfStep, maxLineW);
+      });
+
+    } else {
+      const EN_FULL_REG = 25;
+      const EN_FULL_KEY = 27.5;
+      const enFullLines = [
+        [
+          { text: "This is to proudly certify that", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ],
+        [
+          { text: `${prefixEn} ${nameEn}`, size: EN_FULL_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
+          { text: ",   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: desigEn, size: EN_FULL_KEY, color: "#0f766e", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" }
+        ],
+        [
+          { text: "of   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: instEn, size: EN_FULL_KEY, color: "#1e3a8a", weight: "900", family: "sans-serif", underline: true, underlineColor: "#93c5fd" },
+          { text: ",", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ],
+        [
+          { text: "has rendered commendable and dedicated service as an", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ],
+        [
+          { text: "ADJUDICATOR / JUDGE", size: EN_FULL_KEY, color: "#b91c1c", weight: "900", family: "sans-serif", underline: true, underlineColor: "#fca5a5" },
+          { text: "   in   ", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" },
+          { text: discEnPhrase, size: EN_FULL_KEY, color: "#047857", weight: "900", family: "sans-serif", underline: true, underlineColor: "#6ee7b7" }
+        ],
+        [
+          { text: `at the District Level Southern India Science Fair (SISF 2026 – 2027) held on ${eventDate}`, size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ],
+        [
+          { text: "at Mannar Higher Secondary School, Sivagangai,", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ],
+        [
+          { text: "in appreciation of their impartial evaluation and contribution to scientific excellence.", size: EN_FULL_REG, color: "#1e293b", weight: "bold", family: "sans-serif" }
+        ]
+      ];
+
+      const efCount = enFullLines.length;
+      const efStep = 94;
+      const efTotalH = (efCount - 1) * efStep;
+      const efStartY = Math.round(1088 - efTotalH / 2);
+      enFullLines.forEach((lineSegs, idx) => {
+        drawRichCenteredLineOnCert(ctx, lineSegs, centerX, efStartY + idx * efStep, maxLineW);
+      });
+    }
+
+    // 4. Bottom Metadata & CEO Signature
+    ctx.textAlign = "left";
+    if (mode === "en") {
+      ctx.fillStyle = "#1e3a8a";
+      ctx.font = "900 21.5px sans-serif";
+      ctx.fillText(`Judge ID : ${judgeId}`, 205, 1656);
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "900 21.5px sans-serif";
+      ctx.fillText(`Date : ${eventDate}`, 205, 1698);
+      ctx.fillStyle = "#1e293b";
+      ctx.font = "bold 20.5px sans-serif";
+      ctx.fillText("Place : Sivagangai District", 205, 1740);
+    } else {
+      ctx.fillStyle = "#1e3a8a";
+      ctx.font = "900 22px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText(`நடுவர் எண் / Judge ID : ${judgeId}`, 205, 1656);
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "900 22px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText(`நாள் : ${eventDate}`, 205, 1698);
+      ctx.fillStyle = "#1e293b";
+      ctx.font = "bold 21px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("இடம் : சிவகங்கை மாவட்டம்", 205, 1740);
+    }
+
+    drawNaturalCeoSignature(ctx, 1055, 1636);
+
+    const ceoColor = "#1e3a8a";
+    ctx.textAlign = "center";
+    if (mode === "en") {
+      ctx.fillStyle = ceoColor;
+      ctx.font = "900 22.5px sans-serif";
+      ctx.fillText("Chief Educational Officer,", 1055, 1694);
+      ctx.fillStyle = ceoColor;
+      ctx.font = "900 22.5px sans-serif";
+      ctx.fillText("Sivagangai.", 1055, 1730);
+    } else if (mode === "ta") {
+      ctx.fillStyle = ceoColor;
+      ctx.font = "900 24.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("முதன்மைக்கல்வி அலுவலர்,", 1055, 1694);
+      ctx.fillStyle = ceoColor;
+      ctx.font = "900 24.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("சிவகங்கை.", 1055, 1732);
+    } else {
+      ctx.fillStyle = ceoColor;
+      ctx.font = "900 23.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("முதன்மைக்கல்வி அலுவலர்,", 1055, 1688);
+      ctx.fillStyle = ceoColor;
+      ctx.font = "900 23.5px 'Mukta Malar', 'Noto Sans Tamil', sans-serif";
+      ctx.fillText("சிவகங்கை.", 1055, 1722);
+      ctx.fillStyle = ceoColor;
+      ctx.font = "900 18px sans-serif";
+      ctx.fillText("Chief Educational Officer, Sivagangai", 1055, 1752);
+    }
+
+    // 5. Assemble Single-Page A4 Portrait PDF
+    const dataUrl = cvs.toDataURL("image/jpeg", 0.98);
+    const b64 = dataUrl.split(",")[1];
+    const binary = atob(b64);
+    const imgBytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      imgBytes[i] = binary.charCodeAt(i);
+    }
+
+    const wPt = 595.28;
+    const hPt = 841.89;
+
+    const pdfHeader = "%PDF-1.4\n";
+    const obj1 = "1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n";
+    const obj2 = "2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n";
+    const obj3 = `3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${wPt} ${hPt}] /Resources << /XObject << /Im1 5 0 R >> >> /Contents 4 0 R >>\nendobj\n`;
+    const streamContent = `q\n${wPt} 0 0 ${hPt} 0 0 cm\n/Im1 Do\nQ\n`;
+    const obj4 = `4 0 obj\n<< /Length ${streamContent.length} >>\nstream\n${streamContent}endstream\nendobj\n`;
+    const obj5Header = `5 0 obj\n<< /Type /XObject /Subtype /Image /Width ${cvs.width} /Height ${cvs.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${imgBytes.length} >>\nstream\n`;
+    const obj5Footer = "\nendstream\nendobj\n";
+
+    const enc = new TextEncoder();
+    const bHdr = enc.encode(pdfHeader);
+    const bO1 = enc.encode(obj1);
+    const bO2 = enc.encode(obj2);
+    const bO3 = enc.encode(obj3);
+    const bO4 = enc.encode(obj4);
+    const bO5H = enc.encode(obj5Header);
+    const bO5F = enc.encode(obj5Footer);
+
+    let offset = bHdr.length;
+    const off1 = offset; offset += bO1.length;
+    const off2 = offset; offset += bO2.length;
+    const off3 = offset; offset += bO3.length;
+    const off4 = offset; offset += bO4.length;
+    const off5 = offset; offset += bO5H.length + imgBytes.length + bO5F.length;
+
+    const pad10 = (n) => String(n).padStart(10, "0");
+    const xref = `xref\n0 6\n0000000000 65535 f \n${pad10(off1)} 00000 n \n${pad10(off2)} 00000 n \n${pad10(off3)} 00000 n \n${pad10(off4)} 00000 n \n${pad10(off5)} 00000 n \n`;
+    const trailer = `trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${offset}\n%%EOF`;
+
+    const bXref = enc.encode(xref);
+    const bTrl = enc.encode(trailer);
+
+    const totalLen = offset + bXref.length + bTrl.length;
+    const pdfBytes = new Uint8Array(totalLen);
+    let pos = 0;
+    const appendBytes = (arr) => { pdfBytes.set(arr, pos); pos += arr.length; };
+    appendBytes(bHdr);
+    appendBytes(bO1);
+    appendBytes(bO2);
+    appendBytes(bO3);
+    appendBytes(bO4);
+    appendBytes(bO5H);
+    appendBytes(imgBytes);
+    appendBytes(bO5F);
+    appendBytes(bXref);
+    appendBytes(bTrl);
+
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    const cleanId = String(judgeId || "Judge").replace(/[^a-zA-Z0-9_\-]/g, "_");
+    const langSuffix = mode === "en" ? "EN" : (mode === "ta" ? "TA" : "Bilingual");
+    a.download = `SISF_2026_Judge_Certificate_${langSuffix}_${cleanId}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 8000);
+  }
+
   window.onload = function() {
+    refreshDeadlineBannersAndInputs();
+    loadJudgesListIntoMemory();
     updateScriptStatusBadge();
     attachTanglishHandlers();
     ['regMobile', 'formTeacherMobile'].forEach(id => {
