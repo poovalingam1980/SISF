@@ -1623,6 +1623,9 @@
         </div>
       </div>
       <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+        <button type="button" class="btn-sm" style="background: #4f46e5; border: 1.5px solid #c7d2fe; padding: 8px 14px; font-weight: 800; font-size: 0.85rem;" onclick="switchAdminSubTab('judges')">
+          ⚖️ போட்டி நடுவர் பதிவு (Judges Table)
+        </button>
         <button type="button" class="btn-sm" style="background: #d97706; border: 1.5px solid #fde047; padding: 8px 14px; font-weight: 800; font-size: 0.85rem;" onclick="switchAdminSubTab('notifications')">
           🔔 பள்ளிகளுக்கு அறிவிப்பு அனுப்புக
         </button>
@@ -2210,126 +2213,206 @@
     <!-- =================================================================== -->
     <div id="admSubTabJudges" style="display: none;">
       <div class="admin-panel-box" style="border: 2px solid #4f46e5; background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%);">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
           <h3 style="color: #312e81; font-size: 1.12rem; margin: 0; display: flex; align-items: center; gap: 8px;">
-            ⚖️ மாவட்ட அறிவியல் கண்காட்சி நடுவர்கள் விவரம் பதிவு & பாராட்டுச் சான்றிதழ் வழங்கல் (Judges Entry & Certificate Generator)
+            ⚖️ போட்டி நடுவர் விவரங்களை அட்டவணை வடிவில் பதிவு செய்தல் & சான்றிதழ் வழங்கல் (Tabular Judges Entry & Certificate Panel)
           </h3>
-          <span style="background: #e0e7ff; color: #3730a3; border: 1px solid #a5b4fc; padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 800;">
-            📜 இருமொழி / தமிழ் / ஆங்கிலம் A4 Portrait சான்றிதழ்
-          </span>
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <button type="button" class="btn-sm" style="background: #0d9488; color: #ffffff; padding: 6px 12px; font-size: 0.82rem; font-weight: 800;" onclick="addJudgeQuickBatchRow()">
+              ➕ கூடுதல் நடுவர் வரிசை சேர்க்க (Add Table Row)
+            </button>
+            <span style="background: #e0e7ff; color: #3730a3; border: 1px solid #a5b4fc; padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 800;">
+              📜 இருமொழி / தமிழ் / ஆங்கிலம் A4 Portrait சான்றிதழ்
+            </span>
+          </div>
         </div>
-        <p style="font-size: 0.88rem; color: #334155; margin-bottom: 14px;">
-          அறிவியல் கண்காட்சியில் படைப்புகளை மதிப்பீடு செய்த <strong>நடுவர்களின் (Judges / Adjudicators)</strong> விவரங்களை இங்கே பதிவு செய்து, அவர்களுக்கு முதன்மைக்கல்வி அலுவலரின் கையொப்பமிட்ட <strong>நடுவர் பாராட்டுச் சான்றிதழை (PDF)</strong> உடனடியாகப் பதிவிறக்கம் செய்து வழங்கலாம்.
+        <p style="font-size: 0.86rem; color: #334155; margin-bottom: 12px;">
+          கீழ்க்காணும் <strong>அட்டவணை வடிவிலான படிவத்தில் (Tabular Entry Grid)</strong> போட்டி நடுவரின் பெயர் (தமிழ் & ஆங்கிலம்), பதவி (தமிழ் & ஆங்கிலம்), மற்றும் <strong>பள்ளியின் பெயரை பட்டியலிலிருந்து தேர்ந்தெடுத்து</strong> (அல்லது U.NO மூலம் நிரப்பி) சேமிக்கலாம்.
         </p>
 
         <form onsubmit="handleAdminSaveJudgeSubmit(event)">
           <input type="hidden" id="judgeEditId" value="">
 
-          <div class="grid-3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 12px;">
-            <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">1. முன்னொட்டு & நடுவர் பெயர் (தமிழில்) <span class="required">*</span></label>
-              <div style="display: flex; gap: 6px;">
-                <select id="judgePrefix" class="form-control" style="width: 115px; flex-shrink: 0; font-weight: 700;">
-                  <option value="திரு.|Mr.">திரு. (Mr.)</option>
-                  <option value="திருமதி.|Mrs.">திருமதி. (Mrs.)</option>
-                  <option value="செல்வி.|Ms.">செல்வி. (Ms.)</option>
-                  <option value="முனைவர்|Dr.">முனைவர் (Dr.)</option>
-                  <option value="பேராசிரியர்|Prof.">பேரா. (Prof.)</option>
-                </select>
-                <input type="text" id="judgeNameTa" class="form-control" placeholder="எ.கா: இராமநாதன் க" oninput="autoTranslateJudgeField('name', 'ta')" required>
-              </div>
-            </div>
-            <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">2. நடுவர் பெயர் (ஆங்கிலத்தில் / In English) <span class="required">*</span></label>
-              <input type="text" id="judgeNameEn" class="form-control" placeholder="e.g. Ramanathan K" oninput="autoTranslateJudgeField('name', 'en')" required>
-            </div>
-            <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">3. பதவி / பணிநிலை (Designation) <span class="required">*</span></label>
-              <select id="judgeDesignation" class="form-control" required>
-                <option value="முதுகலை ஆசிரியர்|P.G. Assistant">முதுகலை ஆசிரியர் (P.G. Assistant)</option>
-                <option value="பட்டதாரி ஆசிரியர்|B.T. Assistant">பட்டதாரி ஆசிரியர் (B.T. Assistant)</option>
-                <option value="உதவிப் பேராசிரியர்|Assistant Professor">உதவிப் பேராசிரியர் (Assistant Professor)</option>
-                <option value="இணைப் பேராசிரியர்|Associate Professor">இணைப் பேராசிரியர் (Associate Professor)</option>
-                <option value="பேராசிரியர்|Professor">பேராசிரியர் (Professor)</option>
-                <option value="தலைமையாசிரியர்|Headmaster">தலைமையாசிரியர் (Headmaster)</option>
-                <option value="பள்ளித் துணை ஆய்வாளர்|Deputy Inspector of Schools">பள்ளித் துணை ஆய்வாளர் (Deputy Inspector of Schools)</option>
-                <option value="மாவட்டக் கல்வி அலுவலர்|District Educational Officer">மாவட்டக் கல்வி அலுவலர் (District Educational Officer)</option>
-                <option value="அறிவியல் வல்லுநர்|Science Expert">அறிவியல் வல்லுநர் (Science Expert)</option>
-              </select>
-            </div>
+          <div class="admin-table-wrap" style="border: 2px solid #818cf8; border-radius: 10px; background: #ffffff; margin-bottom: 12px;">
+            <table class="admin-table" style="margin-bottom: 0;">
+              <thead>
+                <tr style="background: linear-gradient(135deg, #312e81 0%, #4338ca 100%); color: #ffffff;">
+                  <th style="width: 48px; text-align: center; color: #ffffff;">வ.எண்</th>
+                  <th style="min-width: 245px; color: #ffffff;">1. நடுவரின் பெயர் <span style="color:#fde047;">*</span><br><span style="font-size:0.74rem; font-weight:600; color:#e0e7ff;">(தமிழ் மற்றும் ஆங்கிலம்)</span></th>
+                  <th style="min-width: 235px; color: #ffffff;">2. பதவி / பணிநிலை <span style="color:#fde047;">*</span><br><span style="font-size:0.74rem; font-weight:600; color:#e0e7ff;">(தமிழ் மற்றும் ஆங்கிலம்)</span></th>
+                  <th style="min-width: 295px; color: #ffffff;">3. பள்ளியின் பெயரைத் தேர்ந்தெடுக்க <span style="color:#fde047;">*</span><br><span style="font-size:0.74rem; font-weight:600; color:#e0e7ff;">(பட்டியல் தேர்வு / தமிழ் & ஆங்கிலம்)</span></th>
+                  <th style="min-width: 205px; color: #ffffff;">4. பாடப்பிரிவு, போட்டிப் பிரிவு & கைபேசி</th>
+                  <th style="min-width: 145px; text-align: center; color: #ffffff;">5. சேமிப்பு<br><span style="font-size:0.74rem; font-weight:600; color:#e0e7ff;">(Action)</span></th>
+                </tr>
+              </thead>
+              <tbody id="judgeEntryTableBody">
+                <tr style="background: #f8fafc; vertical-align: top;">
+                  <td style="text-align: center; font-weight: 900; color: #4f46e5; padding-top: 14px; font-size: 0.95rem;">
+                    <span id="judgeEntryRowBadge">1</span>
+                  </td>
+
+                  <!-- COLUMN 1: JUDGE NAME (TAMIL & ENGLISH) -->
+                  <td style="padding: 10px;">
+                    <div style="margin-bottom: 8px;">
+                      <label style="display:block; font-size:0.74rem; font-weight:800; color:#1e3a8a; margin-bottom:3px;">🇮🇳 நடுவர் பெயர் (தமிழில்) <span class="required">*</span></label>
+                      <div style="display: flex; gap: 5px;">
+                        <select id="judgePrefix" class="form-control" style="width: 96px; flex-shrink: 0; padding: 6px 4px; font-size: 0.82rem; font-weight: 700;">
+                          <option value="திரு.|Mr.">திரு. (Mr.)</option>
+                          <option value="திருமதி.|Mrs.">திருமதி. (Mrs.)</option>
+                          <option value="செல்வி.|Ms.">செல்வி. (Ms.)</option>
+                          <option value="முனைவர்|Dr.">முனைவர் (Dr.)</option>
+                          <option value="பேராசிரியர்|Prof.">பேரா. (Prof.)</option>
+                        </select>
+                        <input type="text" id="judgeNameTa" class="form-control" placeholder="எ.கா: இராமநாதன் க" style="padding: 6px 9px; font-size: 0.86rem; font-weight: 700;" oninput="autoTranslateJudgeField('name', 'ta')" required>
+                      </div>
+                    </div>
+                    <div>
+                      <label style="display:block; font-size:0.74rem; font-weight:800; color:#334155; margin-bottom:3px;">🔤 Judge Name (In English) <span class="required">*</span></label>
+                      <input type="text" id="judgeNameEn" class="form-control" placeholder="e.g. Ramanathan K" style="padding: 6px 9px; font-size: 0.86rem; font-weight: 700;" oninput="autoTranslateJudgeField('name', 'en')" required>
+                    </div>
+                  </td>
+
+                  <!-- COLUMN 2: DESIGNATION (TAMIL & ENGLISH) -->
+                  <td style="padding: 10px;">
+                    <div style="margin-bottom: 6px;">
+                      <label style="display:block; font-size:0.74rem; font-weight:800; color:#4f46e5; margin-bottom:3px;">⚡ பதவியைத் தேர்ந்தெடுக்க (Select Designation):</label>
+                      <select id="judgeDesignation" class="form-control" style="padding: 5px 8px; font-size: 0.82rem; font-weight: 700; border-color: #a5b4fc; background: #eef2ff;" onchange="onJudgeDesignationPresetChange()">
+                        <option value="முதுகலை ஆசிரியர்|P.G. Assistant">முதுகலை ஆசிரியர் (P.G. Assistant)</option>
+                        <option value="பட்டதாரி ஆசிரியர்|B.T. Assistant">பட்டதாரி ஆசிரியர் (B.T. Assistant)</option>
+                        <option value="உதவிப் பேராசிரியர்|Assistant Professor">உதவிப் பேராசிரியர் (Assistant Professor)</option>
+                        <option value="இணைப் பேராசிரியர்|Associate Professor">இணைப் பேராசிரியர் (Associate Professor)</option>
+                        <option value="பேராசிரியர்|Professor">பேராசிரியர் (Professor)</option>
+                        <option value="தலைமையாசிரியர்|Headmaster">தலைமையாசிரியர் (Headmaster)</option>
+                        <option value="பள்ளித் துணை ஆய்வாளர்|Deputy Inspector of Schools">பள்ளித் துணை ஆய்வாளர் (Deputy Inspector of Schools)</option>
+                        <option value="மாவட்டக் கல்வி அலுவலர்|District Educational Officer">மாவட்டக் கல்வி அலுவலர் (District Educational Officer)</option>
+                        <option value="அறிவியல் வல்லுநர்|Science Expert">அறிவியல் வல்லுநர் (Science Expert)</option>
+                        <option value="CUSTOM">-- மற்றவை (கீழே நேரடியாக உள்ளிடவும்) --</option>
+                      </select>
+                    </div>
+                    <div style="margin-bottom: 6px;">
+                      <label style="display:block; font-size:0.73rem; font-weight:800; color:#1e3a8a; margin-bottom:2px;">🇮🇳 பதவி (தமிழில்) <span class="required">*</span></label>
+                      <input type="text" id="judgeDesigTaInp" class="form-control" value="முதுகலை ஆசிரியர்" placeholder="எ.கா: முதுகலை ஆசிரியர்" style="padding: 5px 8px; font-size: 0.84rem; font-weight: 700;" oninput="autoTranslateJudgeField('desig', 'ta')" required>
+                    </div>
+                    <div>
+                      <label style="display:block; font-size:0.73rem; font-weight:800; color:#334155; margin-bottom:2px;">🔤 Designation (In English) <span class="required">*</span></label>
+                      <input type="text" id="judgeDesigEnInp" class="form-control" value="P.G. Assistant" placeholder="e.g. P.G. Assistant" style="padding: 5px 8px; font-size: 0.84rem; font-weight: 700;" oninput="autoTranslateJudgeField('desig', 'en')" required>
+                    </div>
+                  </td>
+
+                  <!-- COLUMN 3: SCHOOL SELECTION DROPDOWN & TAMIL/ENGLISH SCHOOL NAME -->
+                  <td style="padding: 10px;">
+                    <div style="margin-bottom: 6px;">
+                      <label style="display:block; font-size:0.74rem; font-weight:800; color:#0f766e; margin-bottom:3px;">🏫 பள்ளியின் பெயரைத் தேர்ந்தெடுக்க (Select School):</label>
+                      <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                        <select id="judgeBlockFilterSel" class="form-control" style="width: 122px; flex-shrink: 0; padding: 4px 6px; font-size: 0.78rem; font-weight: 700; background: #f0fdf4; border-color: #86efac;" onchange="populateJudgeSchoolsDropdown()">
+                          <option value="ALL">அனைத்து வட்டாரம்</option>
+                          <option value="01 S.Pudur">01 S.Pudur</option>
+                          <option value="02 Singampunari">02 Singampunari</option>
+                          <option value="03 Thiruppathur">03 Thiruppathur</option>
+                          <option value="04 Kallal">04 Kallal</option>
+                          <option value="05 Sakkottai">05 Sakkottai</option>
+                          <option value="06 Devakottai">06 Devakottai</option>
+                          <option value="07 Kannangudi">07 Kannangudi</option>
+                          <option value="08 Kalayarkoil">08 Kalayarkoil</option>
+                          <option value="09 Ilayangudi">09 Ilayangudi</option>
+                          <option value="10 Manamadurai">10 Manamadurai</option>
+                          <option value="11 Thiruppuvanam">11 Thiruppuvanam</option>
+                          <option value="12 Sivagangai">12 Sivagangai</option>
+                        </select>
+                        <input type="text" id="judgeSchoolUno" class="form-control" placeholder="U.NO / UDISE" style="padding: 4px 7px; font-size: 0.8rem;" oninput="onJudgeUnoQuickInput(this.value)">
+                        <button type="button" class="btn-sm" style="background: #4f46e5; padding: 4px 8px; font-size: 0.76rem; white-space: nowrap;" onclick="lookupSchoolForJudgeForm()">🔍 பள்ளி நிரப்பு</button>
+                      </div>
+                      <select id="judgeSchoolSelectDropdown" class="form-control" style="padding: 5px 8px; font-size: 0.82rem; font-weight: 700; border-color: #10b981; background: #ecfdf5; color: #065f46;" onchange="onJudgeSchoolDropdownSelect(this.value)">
+                        <option value="">-- பட்டியலிலிருந்து பள்ளியின் பெயரைத் தேர்ந்தெடுக்கவும் --</option>
+                      </select>
+                    </div>
+                    <div style="margin-bottom: 6px;">
+                      <label style="display:block; font-size:0.73rem; font-weight:800; color:#1e3a8a; margin-bottom:2px;">🇮🇳 பள்ளியின் பெயர் (தமிழில்) <span class="required">*</span></label>
+                      <input type="text" id="judgeInstTa" class="form-control" placeholder="எ.கா: அரசு மேல்நிலைப்பள்ளி, சிவகங்கை" style="padding: 5px 8px; font-size: 0.84rem; font-weight: 700;" oninput="autoTranslateJudgeField('inst', 'ta')" required>
+                    </div>
+                    <div>
+                      <label style="display:block; font-size:0.73rem; font-weight:800; color:#334155; margin-bottom:2px;">🔤 School Name (In English) <span class="required">*</span></label>
+                      <input type="text" id="judgeInstEn" class="form-control" placeholder="e.g. Govt. Hr. Sec. School, Sivagangai" style="padding: 5px 8px; font-size: 0.84rem; font-weight: 700;" oninput="autoTranslateJudgeField('inst', 'en')" required>
+                    </div>
+                  </td>
+
+                  <!-- COLUMN 4: DISCIPLINE, CATEGORY, MOBILE & DATE -->
+                  <td style="padding: 10px;">
+                    <div style="margin-bottom: 6px;">
+                      <label style="display:block; font-size:0.73rem; font-weight:800; color:#1e3a8a; margin-bottom:2px;">🔬 பாடப்பிரிவு (Discipline) <span class="required">*</span></label>
+                      <select id="judgeDiscipline" class="form-control" style="padding: 5px 7px; font-size: 0.82rem; font-weight: 700;" required>
+                        <option value="Physics">இயற்பியல் (Physics)</option>
+                        <option value="Chemistry">வேதியியல் (Chemistry)</option>
+                        <option value="Mathematics">கணிதம் (Mathematics)</option>
+                        <option value="Environmental Science">சுற்றுச்சூழல் அறிவியல் (Environmental Science)</option>
+                        <option value="Engineering">பொறியியல் (Engineering)</option>
+                        <option value="Bioscience / Biochemistry">உயிரியல் / உயிர் வேதியியல் (Bioscience / Biochemistry)</option>
+                        <option value="Earth & Space Science">பூமி மற்றும் விண்வெளி அறிவியல் (Earth & Space Science)</option>
+                        <option value="Computer Science">கணினி அறிவியல் (Computer Science)</option>
+                        <option value="All Disciplines">அனைத்துப் பாடப்பிரிவுகள் (All Disciplines)</option>
+                      </select>
+                    </div>
+                    <div style="margin-bottom: 6px;">
+                      <label style="display:block; font-size:0.73rem; font-weight:800; color:#334155; margin-bottom:2px;">📂 போட்டிப் பிரிவு (Category):</label>
+                      <select id="judgeEvalCategory" class="form-control" style="padding: 5px 7px; font-size: 0.8rem;" required>
+                        <option value="ALL">அனைத்துப் பிரிவுகள் (தனிநபர், குழு & ஆசிரியர்)</option>
+                        <option value="Individual">பிரிவு 1: தனிநபர் வகை (Individual)</option>
+                        <option value="Group">பிரிவு 2: குழு வகை (Group)</option>
+                        <option value="Teacher">பிரிவு 3: ஆசிரியர் வகை (Teacher)</option>
+                      </select>
+                    </div>
+                    <div style="display: flex; gap: 5px;">
+                      <div style="flex: 1;">
+                        <label style="display:block; font-size:0.72rem; font-weight:800; color:#334155; margin-bottom:2px;">📞 கைபேசி:</label>
+                        <input type="tel" id="judgeMobile" class="form-control" placeholder="10 இலக்கம்" maxlength="10" style="padding: 5px 7px; font-size: 0.82rem;" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
+                      </div>
+                      <div style="width: 96px;">
+                        <label style="display:block; font-size:0.72rem; font-weight:800; color:#334155; margin-bottom:2px;">📅 நாள்:</label>
+                        <input type="text" id="judgeEventDate" class="form-control" value="03.11.2026" style="padding: 5px 6px; font-size: 0.8rem; font-weight: 700;">
+                      </div>
+                    </div>
+                  </td>
+
+                  <!-- COLUMN 5: SAVE / CLEAR ACTIONS -->
+                  <td style="padding: 10px; text-align: center; vertical-align: middle;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                      <button type="submit" id="btnSaveJudgeSubmit" class="btn-sm" style="background: #4f46e5; color: white; padding: 10px 12px; font-size: 0.84rem; font-weight: 800; justify-content: center; width: 100%; box-shadow: 0 3px 10px rgba(79,70,229,0.28);">
+                        ⚖️ நடுவர் விவரத்தைச் சேமிக்க (Save Judge)
+                      </button>
+                      <button type="button" class="btn-sm" style="background: #64748b; color: white; padding: 7px 10px; font-size: 0.8rem; justify-content: center; width: 100%;" onclick="resetJudgeForm()">
+                        மீட்டமை (Clear)
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <!-- Dynamic Additional Batch Rows Container -->
+              <tbody id="judgeBatchExtraRowsBody"></tbody>
+            </table>
           </div>
 
-          <div class="grid-3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 12px;">
-            <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">4. பள்ளி U.NO / UDISE (பள்ளி ஆசிரியர் எனில் நிரப்ப):</label>
-              <div style="display: flex; gap: 6px;">
-                <input type="text" id="judgeSchoolUno" class="form-control" placeholder="எ.கா: 501 (அல்லது காலி)">
-                <button type="button" class="btn-sm" style="background: #4f46e5; white-space: nowrap;" onclick="lookupSchoolForJudgeForm()">🔍 பள்ளி நிரப்பு</button>
-              </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+              <button type="button" class="btn-sm" style="background: #0d9488; color: #ffffff; padding: 7px 14px; font-size: 0.84rem; font-weight: 800;" onclick="addJudgeQuickBatchRow()">
+                ➕ அட்டவணையில் மேலும் ஒரு நடுவர் வரிசை சேர்க்க
+              </button>
+              <button type="button" id="btnSaveAllBatchJudges" class="btn-sm" style="display: none; background: #15803d; color: #ffffff; padding: 7px 16px; font-size: 0.85rem; font-weight: 800;" onclick="saveAllExtraBatchJudgeRows()">
+                💾 கூடுதல் வரிசைகளையும் சேர்த்துச் சேமிக்க (Save All Rows)
+              </button>
             </div>
-            <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">5. பணிபுரியும் பள்ளி / கல்லூரி & ஊர் (தமிழில்) <span class="required">*</span></label>
-              <input type="text" id="judgeInstTa" class="form-control" placeholder="எ.கா: அரசு மேல்நிலைப்பள்ளி, சிவகங்கை" oninput="autoTranslateJudgeField('inst', 'ta')" required>
-            </div>
-            <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">6. Institution / School & Place (ஆங்கிலத்தில்) <span class="required">*</span></label>
-              <input type="text" id="judgeInstEn" class="form-control" placeholder="e.g. Govt. Hr. Sec. School, Sivagangai" oninput="autoTranslateJudgeField('inst', 'en')" required>
-            </div>
-          </div>
-
-          <div class="grid-3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 14px;">
-            <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">7. நடுவராகப் பணியாற்றிய பாடப்பிரிவு (Discipline) <span class="required">*</span></label>
-              <select id="judgeDiscipline" class="form-control" required>
-                <option value="Physics">இயற்பியல் (Physics)</option>
-                <option value="Chemistry">வேதியியல் (Chemistry)</option>
-                <option value="Mathematics">கணிதம் (Mathematics)</option>
-                <option value="Environmental Science">சுற்றுச்சூழல் அறிவியல் (Environmental Science)</option>
-                <option value="Engineering">பொறியியல் (Engineering)</option>
-                <option value="Bioscience / Biochemistry">உயிரியல் / உயிர் வேதியியல் (Bioscience / Biochemistry)</option>
-                <option value="Earth & Space Science">பூமி மற்றும் விண்வெளி அறிவியல் (Earth & Space Science)</option>
-                <option value="Computer Science">கணினி அறிவியல் (Computer Science)</option>
-                <option value="All Disciplines">அனைத்துப் பாடப்பிரிவுகள் (All Disciplines)</option>
-              </select>
-            </div>
-            <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">8. மதிப்பீடு செய்த போட்டிப் பிரிவு (Category) <span class="required">*</span></label>
-              <select id="judgeEvalCategory" class="form-control" required>
-                <option value="ALL">அனைத்துப் பிரிவுகள் (தனிநபர், குழு & ஆசிரியர்)</option>
-                <option value="Individual">பிரிவு 1: தனிநபர் வகை (Individual)</option>
-                <option value="Group">பிரிவு 2: குழு வகை (Group)</option>
-                <option value="Teacher">பிரிவு 3: ஆசிரியர் வகை (Teacher)</option>
-              </select>
-            </div>
-            <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">9. கைபேசி எண் (Mobile No) & பணி நாள்:</label>
-              <div style="display: flex; gap: 6px;">
-                <input type="tel" id="judgeMobile" class="form-control" placeholder="10 இலக்க கைபேசி" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
-                <input type="text" id="judgeEventDate" class="form-control" value="03.11.2026" placeholder="03.11.2026" style="width: 115px; flex-shrink: 0; font-weight: 700;">
-              </div>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-            <button type="submit" id="btnSaveJudgeSubmit" class="btn-sm" style="background: #4f46e5; color: white; padding: 10px 22px; font-size: 0.95rem; font-weight: 800;">
-              ⚖️ நடுவர் விவரத்தைச் சேமிக்க (Save Judge)
-            </button>
-            <button type="button" class="btn-sm" style="background: #64748b; padding: 10px 16px; font-size: 0.9rem;" onclick="resetJudgeForm()">
-              மீட்டமை (Clear)
-            </button>
             <span id="judgeSaveMsg" style="font-weight: 800; font-size: 0.9rem; color: #15803d;"></span>
           </div>
         </form>
       </div>
 
-      <!-- Registered Judges List & Certificate Download Table -->
+      <!-- Registered Judges Master Table & Certificate Download -->
       <div class="admin-panel-box">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
           <h3 style="color: #1e3a8a; font-size: 1.05rem; margin: 0;">
-            ⚖️ பதிவு செய்யப்பட்ட நடுவர்கள் பட்டியல் & சான்றிதழ் வழங்கல் (Judges List & Certificate Download)
+            ⚖️ பதிவு செய்யப்பட்ட போட்டி நடுவர்கள் அட்டவணை & சான்றிதழ் வழங்கல் (Registered Judges Table & Certificates)
           </h3>
           <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-            <input type="text" id="admJudgeSearchInp" class="form-control" placeholder="🔍 நடுவர் பெயர், பள்ளி/கல்லூரி, துறை தேடுக..." style="width: 250px; padding: 6px 12px; font-size: 0.86rem;" oninput="renderAdminJudgesTable()">
+            <input type="text" id="admJudgeSearchInp" class="form-control" placeholder="🔍 நடுவர் பெயர், பதவி, பள்ளி, துறை தேடுக..." style="width: 260px; padding: 6px 12px; font-size: 0.86rem;" oninput="renderAdminJudgesTable()">
             <button type="button" class="btn-sm" style="background: #15803d; padding: 7px 14px; font-weight: 700;" onclick="exportJudgesCsv()">
               📊 நடுவர்கள் பட்டியல் Excel / CSV பதிவிறக்கம்
             </button>
@@ -2340,14 +2423,14 @@
           <table class="admin-table">
             <thead>
               <tr>
-                <th>வ.எண்</th>
-                <th>நடுவர் எண் (ID)</th>
-                <th>நடுவர் பெயர் & பதவி (Name & Designation)</th>
-                <th>பணிபுரியும் பள்ளி / கல்லூரி & ஊர் (Institution)</th>
-                <th>பாடப்பிரிவு & போட்டிப் பிரிவு</th>
-                <th>கைபேசி & நாள்</th>
+                <th style="width: 50px; text-align: center;">வ.எண்</th>
+                <th style="width: 110px;">நடுவர் எண் (ID)</th>
+                <th>நடுவரின் பெயர்<br><span style="font-size:0.74rem; color:#475569;">(தமிழ் மற்றும் ஆங்கிலம்)</span></th>
+                <th>பதவி / பணிநிலை<br><span style="font-size:0.74rem; color:#475569;">(தமிழ் மற்றும் ஆங்கிலம்)</span></th>
+                <th>பள்ளியின் பெயர் & ஊர்<br><span style="font-size:0.74rem; color:#475569;">(தமிழ் மற்றும் ஆங்கிலம்)</span></th>
+                <th>பாடப்பிரிவு & கைபேசி</th>
                 <th>📜 நடுவர் சான்றிதழ் பதிவிறக்கம் (Download Certificate PDF)</th>
-                <th>செயல்கள்</th>
+                <th style="width: 95px; text-align: center;">செயல்கள்</th>
               </tr>
             </thead>
             <tbody id="admJudgesTableBody">
@@ -11135,11 +11218,84 @@ ${n.message}
     return adminJudgesList;
   }
 
+  function populateJudgeSchoolsDropdown() {
+    const sel = document.getElementById("judgeSchoolSelectDropdown");
+    if (!sel || typeof MASTER_SCHOOLS === "undefined") return;
+    const blkFilter = document.getElementById("judgeBlockFilterSel")?.value || "ALL";
+    const prevVal = sel.value;
+
+    const list = MASTER_SCHOOLS.filter(s => {
+      if (blkFilter === "ALL") return true;
+      return String(s.block || "").toLowerCase() === blkFilter.toLowerCase();
+    });
+
+    sel.innerHTML = `<option value="">-- பட்டியலிலிருந்து பள்ளியின் பெயரைத் தேர்ந்தெடுக்கவும் (${list.length} பள்ளிகள்) --</option>` +
+      list.map(s => `<option value="${s.uNo}">U.NO: ${s.uNo} | ${s.nameTa || s.nameEn} (${s.nameEn || ""})</option>`).join("");
+
+    if (prevVal && list.some(s => s.uNo === prevVal)) {
+      sel.value = prevVal;
+    }
+  }
+
+  function onJudgeSchoolDropdownSelect(uNoVal) {
+    if (!uNoVal || typeof MASTER_SCHOOLS === "undefined") return;
+    const found = MASTER_SCHOOLS.find(s => s.uNo === String(uNoVal).trim());
+    if (!found) return;
+    const unoInp = document.getElementById("judgeSchoolUno");
+    if (unoInp) unoInp.value = found.uNo;
+    const instTaEl = document.getElementById("judgeInstTa");
+    const instEnEl = document.getElementById("judgeInstEn");
+    if (instTaEl) instTaEl.value = found.nameTa || "";
+    if (instEnEl) instEnEl.value = cleanSchoolNameEnForCert(found.nameEn || "");
+  }
+
+  function onJudgeUnoQuickInput(rawVal) {
+    const q = String(rawVal || "").trim().replace(/^0+/, "");
+    if (!q || typeof MASTER_SCHOOLS === "undefined") return;
+    const found = MASTER_SCHOOLS.find(s => s.uNo === q || s.udiseNo === q);
+    if (found) {
+      const sel = document.getElementById("judgeSchoolSelectDropdown");
+      if (sel) {
+        const blkSel = document.getElementById("judgeBlockFilterSel");
+        if (blkSel && blkSel.value !== "ALL" && blkSel.value !== found.block) {
+          blkSel.value = "ALL";
+          populateJudgeSchoolsDropdown();
+        }
+        sel.value = found.uNo;
+      }
+      const instTaEl = document.getElementById("judgeInstTa");
+      const instEnEl = document.getElementById("judgeInstEn");
+      if (instTaEl) instTaEl.value = found.nameTa || "";
+      if (instEnEl) instEnEl.value = cleanSchoolNameEnForCert(found.nameEn || "");
+    }
+  }
+
+  function onJudgeDesignationPresetChange() {
+    const sel = document.getElementById("judgeDesignation");
+    const taInp = document.getElementById("judgeDesigTaInp");
+    const enInp = document.getElementById("judgeDesigEnInp");
+    if (!sel || !taInp || !enInp) return;
+    if (sel.value === "CUSTOM") {
+      taInp.value = "";
+      enInp.value = "";
+      taInp.focus();
+      return;
+    }
+    const [dTa, dEn] = sel.value.split("|");
+    if (dTa) taInp.value = dTa;
+    if (dEn) enInp.value = dEn;
+  }
+
   function autoTranslateJudgeField(fieldType, sourceLang) {
-    const taId = fieldType === "name" ? "judgeNameTa" : "judgeInstTa";
-    const enId = fieldType === "name" ? "judgeNameEn" : "judgeInstEn";
-    const taEl = document.getElementById(taId);
-    const enEl = document.getElementById(enId);
+    const mapIds = {
+      "name": ["judgeNameTa", "judgeNameEn"],
+      "desig": ["judgeDesigTaInp", "judgeDesigEnInp"],
+      "inst": ["judgeInstTa", "judgeInstEn"]
+    };
+    const pair = mapIds[fieldType];
+    if (!pair) return;
+    const taEl = document.getElementById(pair[0]);
+    const enEl = document.getElementById(pair[1]);
     if (!taEl || !enEl) return;
 
     const timerKey = fieldType + "_" + sourceLang;
@@ -11170,18 +11326,18 @@ ${n.message}
         if (fieldType === "name" && typeof transliterateEnglishToTamilPhonetic === "function" && !taEl.value.trim()) {
           const trTa = await transliterateEnglishToTamilPhonetic(valEn);
           if (trTa) taEl.value = typeof formatNameInitialLastTa === "function" ? formatNameInitialLastTa(trTa) : trTa;
-        } else if (fieldType === "inst" && !taEl.value.trim() && typeof translateTextViaApi === "function") {
+        } else if ((fieldType === "inst" || fieldType === "desig") && !taEl.value.trim() && typeof translateTextViaApi === "function") {
           const trTa = await translateTextViaApi(valEn, "en", "ta");
           if (trTa) taEl.value = trTa;
         }
       }
-    }, 650);
+    }, 600);
   }
 
   function lookupSchoolForJudgeForm() {
     const q = (document.getElementById("judgeSchoolUno")?.value || "").trim().replace(/^0+/, "");
     if (!q) {
-      showSisfToast("⚠️ பள்ளியின் U.NO அல்லது UDISE எண்ணை உள்ளிடவும்.");
+      showSisfToast("⚠️ பள்ளியின் U.NO அல்லது UDISE எண்ணை உள்ளிடவும் அல்லது கீழே உள்ள பட்டியலில் பள்ளியைத் தேர்ந்தெடுக்கவும்.");
       return;
     }
     const found = (typeof MASTER_SCHOOLS !== "undefined")
@@ -11191,11 +11347,222 @@ ${n.message}
       showSisfToast("⚠️ இந்த U.NO / UDISE எண்ணிற்குப் பள்ளி விவரம் கிடைக்கவில்லை. நேரடியாகத் தட்டச்சு செய்யலாம்.");
       return;
     }
+    const blkSel = document.getElementById("judgeBlockFilterSel");
+    if (blkSel) blkSel.value = "ALL";
+    populateJudgeSchoolsDropdown();
+    const sel = document.getElementById("judgeSchoolSelectDropdown");
+    if (sel) sel.value = found.uNo;
     const instTaEl = document.getElementById("judgeInstTa");
     const instEnEl = document.getElementById("judgeInstEn");
     if (instTaEl) instTaEl.value = found.nameTa || "";
     if (instEnEl) instEnEl.value = cleanSchoolNameEnForCert(found.nameEn || "");
     showSisfToast(`✅ ${found.nameTa} விவரம் நிரப்பப்பட்டது!`);
+  }
+
+  let extraJudgeRowCounter = 1;
+
+  function addJudgeQuickBatchRow() {
+    const tbody = document.getElementById("judgeBatchExtraRowsBody");
+    if (!tbody || typeof MASTER_SCHOOLS === "undefined") return;
+    extraJudgeRowCounter++;
+    const rIdx = extraJudgeRowCounter;
+
+    const schoolOptionsHtml = `<option value="">-- பள்ளியைத் தேர்ந்தெடுக்கவும் (${MASTER_SCHOOLS.length} பள்ளிகள்) --</option>` +
+      MASTER_SCHOOLS.map(s => `<option value="${s.uNo}">U.NO: ${s.uNo} | ${s.nameTa || s.nameEn}</option>`).join("");
+
+    const tr = document.createElement("tr");
+    tr.className = "judge-extra-batch-row";
+    tr.setAttribute("data-row-idx", String(rIdx));
+    tr.style.background = "#ffffff";
+    tr.style.verticalAlign = "top";
+    tr.style.borderTop = "2px dashed #c7d2fe";
+
+    tr.innerHTML = `
+      <td style="text-align:center; font-weight:900; color:#4f46e5; padding-top:14px;">#${rIdx}</td>
+      <td style="padding:10px;">
+        <div style="display:flex; gap:5px; margin-bottom:6px;">
+          <select class="form-control jbatch-prefix" style="width:94px; padding:5px 4px; font-size:0.8rem; font-weight:700;">
+            <option value="திரு.|Mr.">திரு. (Mr.)</option>
+            <option value="திருமதி.|Mrs.">திருமதி. (Mrs.)</option>
+            <option value="செல்வி.|Ms.">செல்வி. (Ms.)</option>
+            <option value="முனைவர்|Dr.">முனைவர் (Dr.)</option>
+            <option value="பேராசிரியர்|Prof.">பேரா. (Prof.)</option>
+          </select>
+          <input type="text" class="form-control jbatch-name-ta" placeholder="பெயர் (தமிழில்) *" style="padding:5px 8px; font-size:0.84rem; font-weight:700;" oninput="onBatchJudgeNameInput(this, 'ta')">
+        </div>
+        <input type="text" class="form-control jbatch-name-en" placeholder="Name (In English) *" style="padding:5px 8px; font-size:0.84rem; font-weight:700;" oninput="onBatchJudgeNameInput(this, 'en')">
+      </td>
+      <td style="padding:10px;">
+        <select class="form-control jbatch-desig-preset" style="padding:5px 7px; font-size:0.8rem; font-weight:700; margin-bottom:5px; background:#eef2ff;" onchange="onBatchJudgeDesigPreset(this)">
+          <option value="முதுகலை ஆசிரியர்|P.G. Assistant">முதுகலை ஆசிரியர் (P.G. Assistant)</option>
+          <option value="பட்டதாரி ஆசிரியர்|B.T. Assistant">பட்டதாரி ஆசிரியர் (B.T. Assistant)</option>
+          <option value="உதவிப் பேராசிரியர்|Assistant Professor">உதவிப் பேராசிரியர் (Assistant Professor)</option>
+          <option value="இணைப் பேராசிரியர்|Associate Professor">இணைப் பேராசிரியர் (Associate Professor)</option>
+          <option value="பேராசிரியர்|Professor">பேராசிரியர் (Professor)</option>
+          <option value="தலைமையாசிரியர்|Headmaster">தலைமையாசிரியர் (Headmaster)</option>
+          <option value="பள்ளித் துணை ஆய்வாளர்|Deputy Inspector of Schools">பள்ளித் துணை ஆய்வாளர்</option>
+        </select>
+        <input type="text" class="form-control jbatch-desig-ta" value="முதுகலை ஆசிரியர்" placeholder="பதவி (தமிழில்) *" style="padding:5px 8px; font-size:0.82rem; font-weight:700; margin-bottom:5px;">
+        <input type="text" class="form-control jbatch-desig-en" value="P.G. Assistant" placeholder="Designation (English) *" style="padding:5px 8px; font-size:0.82rem; font-weight:700;">
+      </td>
+      <td style="padding:10px;">
+        <select class="form-control jbatch-school-sel" style="padding:5px 7px; font-size:0.8rem; font-weight:700; margin-bottom:5px; background:#ecfdf5; border-color:#10b981; color:#065f46;" onchange="onBatchJudgeSchoolSelect(this)">
+          ${schoolOptionsHtml}
+        </select>
+        <input type="text" class="form-control jbatch-inst-ta" placeholder="பள்ளியின் பெயர் (தமிழில்) *" style="padding:5px 8px; font-size:0.82rem; font-weight:700; margin-bottom:5px;">
+        <input type="text" class="form-control jbatch-inst-en" placeholder="School Name (In English) *" style="padding:5px 8px; font-size:0.82rem; font-weight:700;">
+      </td>
+      <td style="padding:10px;">
+        <select class="form-control jbatch-disc" style="padding:5px 7px; font-size:0.8rem; font-weight:700; margin-bottom:5px;">
+          <option value="Physics">இயற்பியல் (Physics)</option>
+          <option value="Chemistry">வேதியியல் (Chemistry)</option>
+          <option value="Mathematics">கணிதம் (Mathematics)</option>
+          <option value="Environmental Science">சுற்றுச்சூழல் அறிவியல்</option>
+          <option value="Engineering">பொறியியல் (Engineering)</option>
+          <option value="Bioscience / Biochemistry">உயிரியல் / உயிர் வேதியியல்</option>
+          <option value="Earth & Space Science">பூமி & விண்வெளி அறிவியல்</option>
+          <option value="Computer Science">கணினி அறிவியல்</option>
+          <option value="All Disciplines">அனைத்துப் பாடப்பிரிவுகள்</option>
+        </select>
+        <select class="form-control jbatch-cat" style="padding:5px 7px; font-size:0.78rem; margin-bottom:5px;">
+          <option value="ALL">அனைத்துப் பிரிவுகள் (All)</option>
+          <option value="Individual">பிரிவு 1: தனிநபர் (Individual)</option>
+          <option value="Group">பிரிவு 2: குழு (Group)</option>
+          <option value="Teacher">பிரிவு 3: ஆசிரியர் (Teacher)</option>
+        </select>
+        <input type="tel" class="form-control jbatch-mobile" placeholder="கைபேசி எண் (10 இலக்கம்)" maxlength="10" style="padding:5px 7px; font-size:0.8rem;" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
+      </td>
+      <td style="padding:10px; text-align:center; vertical-align:middle;">
+        <button type="button" class="btn-sm" style="background:#dc2626; color:#fff; padding:7px 10px; font-size:0.78rem; width:100%; justify-content:center;" onclick="removeBatchJudgeRow(this)">
+          🗑️ வரிசை நீக்கு
+        </button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+    const saveAllBtn = document.getElementById("btnSaveAllBatchJudges");
+    if (saveAllBtn) saveAllBtn.style.display = "inline-flex";
+  }
+
+  function removeBatchJudgeRow(btnEl) {
+    const tr = btnEl && btnEl.closest("tr");
+    if (tr && tr.parentNode) tr.parentNode.removeChild(tr);
+    const tbody = document.getElementById("judgeBatchExtraRowsBody");
+    const saveAllBtn = document.getElementById("btnSaveAllBatchJudges");
+    if (saveAllBtn && (!tbody || tbody.children.length === 0)) {
+      saveAllBtn.style.display = "none";
+    }
+  }
+
+  function onBatchJudgeDesigPreset(selEl) {
+    const tr = selEl.closest("tr");
+    if (!tr) return;
+    const [dTa, dEn] = (selEl.value || "|").split("|");
+    const taInp = tr.querySelector(".jbatch-desig-ta");
+    const enInp = tr.querySelector(".jbatch-desig-en");
+    if (taInp && dTa) taInp.value = dTa;
+    if (enInp && dEn) enInp.value = dEn;
+  }
+
+  function onBatchJudgeSchoolSelect(selEl) {
+    const tr = selEl.closest("tr");
+    if (!tr || typeof MASTER_SCHOOLS === "undefined") return;
+    const found = MASTER_SCHOOLS.find(s => s.uNo === selEl.value);
+    if (!found) return;
+    const taInp = tr.querySelector(".jbatch-inst-ta");
+    const enInp = tr.querySelector(".jbatch-inst-en");
+    if (taInp) taInp.value = found.nameTa || "";
+    if (enInp) enInp.value = cleanSchoolNameEnForCert(found.nameEn || "");
+  }
+
+  function onBatchJudgeNameInput(inpEl, lang) {
+    const tr = inpEl.closest("tr");
+    if (!tr) return;
+    const taInp = tr.querySelector(".jbatch-name-ta");
+    const enInp = tr.querySelector(".jbatch-name-en");
+    if (!taInp || !enInp) return;
+    if (lang === "ta") {
+      const vTa = taInp.value.trim();
+      if (vTa && typeof transliterateTamilToEnglishName === "function") {
+        const trEn = transliterateTamilToEnglishName(vTa);
+        if (trEn) enInp.value = typeof formatNameInitialLastEn === "function" ? formatNameInitialLastEn(trEn) : trEn;
+      }
+    }
+  }
+
+  function saveAllExtraBatchJudgeRows() {
+    loadJudgesListIntoMemory();
+    const rows = Array.from(document.querySelectorAll("#judgeBatchExtraRowsBody tr.judge-extra-batch-row"));
+    let savedCount = 0;
+
+    // Also save Row 1 if filled
+    const r1NameTa = (document.getElementById("judgeNameTa")?.value || "").trim();
+    const r1InstTa = (document.getElementById("judgeInstTa")?.value || "").trim();
+    if (r1NameTa && r1InstTa) {
+      handleAdminSaveJudgeSubmit(new Event("submit"));
+      savedCount++;
+    }
+
+    rows.forEach(tr => {
+      const prefixRaw = tr.querySelector(".jbatch-prefix")?.value || "திரு.|Mr.";
+      const [prefixTa, prefixEn] = prefixRaw.split("|");
+      let nameTa = (tr.querySelector(".jbatch-name-ta")?.value || "").trim();
+      let nameEn = (tr.querySelector(".jbatch-name-en")?.value || "").trim();
+      const desigTa = (tr.querySelector(".jbatch-desig-ta")?.value || "முதுகலை ஆசிரியர்").trim();
+      const desigEn = (tr.querySelector(".jbatch-desig-en")?.value || "P.G. Assistant").trim();
+      const uNo = (tr.querySelector(".jbatch-school-sel")?.value || "").trim();
+      const instTa = (tr.querySelector(".jbatch-inst-ta")?.value || "").trim();
+      const instEn = (tr.querySelector(".jbatch-inst-en")?.value || instTa).trim();
+      const discipline = tr.querySelector(".jbatch-disc")?.value || "Physics";
+      const evalCategory = tr.querySelector(".jbatch-cat")?.value || "ALL";
+      const mobile = (tr.querySelector(".jbatch-mobile")?.value || "").trim();
+
+      if (!nameTa && !nameEn) return;
+      if (typeof formatNameInitialLastTa === "function" && nameTa) nameTa = formatNameInitialLastTa(nameTa);
+      if (typeof formatNameInitialLastEn === "function" && nameEn) nameEn = formatNameInitialLastEn(nameEn);
+      if (!nameEn && nameTa && typeof transliterateTamilToEnglishName === "function") {
+        nameEn = formatNameInitialLastEn(transliterateTamilToEnglishName(nameTa));
+      }
+      if (!nameTa) nameTa = nameEn;
+
+      const nextNum = adminJudgesList.length + 1;
+      let judgeId = "SISF-JDG-" + String(nextNum).padStart(2, "0");
+      while (adminJudgesList.some(j => j.id === judgeId)) {
+        judgeId = "SISF-JDG-" + String(Math.floor(100 + Math.random() * 900));
+      }
+
+      adminJudgesList.push({
+        id: judgeId,
+        prefixRaw: prefixRaw,
+        prefixTa: prefixTa || "திரு.",
+        prefixEn: prefixEn || "Mr.",
+        nameTa: nameTa,
+        nameEn: nameEn,
+        designationRaw: `${desigTa}|${desigEn}`,
+        designationTa: desigTa,
+        designationEn: desigEn,
+        uNo: uNo,
+        instTa: instTa || "அரசு மேல்நிலைப்பள்ளி, சிவகங்கை",
+        instEn: instEn || "Government Higher Secondary School, Sivagangai",
+        discipline: discipline,
+        evalCategory: evalCategory,
+        mobile: mobile,
+        eventDate: "03.11.2026",
+        timestamp: new Date().toLocaleString("en-IN", { dateStyle: "short", timeStyle: "short" })
+      });
+      savedCount++;
+    });
+
+    if (savedCount > 0) {
+      saveJudgesListToAllStores(adminJudgesList);
+      renderAdminJudgesTable();
+      const tbody = document.getElementById("judgeBatchExtraRowsBody");
+      if (tbody) tbody.innerHTML = "";
+      const saveAllBtn = document.getElementById("btnSaveAllBatchJudges");
+      if (saveAllBtn) saveAllBtn.style.display = "none";
+      showSisfToast(`✅ ${savedCount} நடுவர்களின் விவரங்கள் அட்டவணையில் வெற்றிகரமாகச் சேமிக்கப்பட்டன!`);
+    } else {
+      showSisfToast("⚠️ சேமிப்பதற்குக் குறைந்தது ஒரு நடுவரின் பெயர் மற்றும் பள்ளி விவரத்தை உள்ளிடவும்.");
+    }
   }
 
   function resetJudgeForm() {
@@ -11205,6 +11572,11 @@ ${n.message}
     setV("judgeNameTa", "");
     setV("judgeNameEn", "");
     setV("judgeDesignation", "முதுகலை ஆசிரியர்|P.G. Assistant");
+    setV("judgeDesigTaInp", "முதுகலை ஆசிரியர்");
+    setV("judgeDesigEnInp", "P.G. Assistant");
+    setV("judgeBlockFilterSel", "ALL");
+    populateJudgeSchoolsDropdown();
+    setV("judgeSchoolSelectDropdown", "");
     setV("judgeSchoolUno", "");
     setV("judgeInstTa", "");
     setV("judgeInstEn", "");
@@ -11212,6 +11584,8 @@ ${n.message}
     setV("judgeEvalCategory", "ALL");
     setV("judgeMobile", "");
     setV("judgeEventDate", "03.11.2026");
+    const badge = document.getElementById("judgeEntryRowBadge");
+    if (badge) badge.innerText = "1";
     const btn = document.getElementById("btnSaveJudgeSubmit");
     if (btn) btn.innerHTML = "⚖️ நடுவர் விவரத்தைச் சேமிக்க (Save Judge)";
     const msg = document.getElementById("judgeSaveMsg");
@@ -11219,7 +11593,7 @@ ${n.message}
   }
 
   function handleAdminSaveJudgeSubmit(event) {
-    event.preventDefault();
+    if (event && typeof event.preventDefault === "function") event.preventDefault();
     loadJudgesListIntoMemory();
 
     const editId = (document.getElementById("judgeEditId")?.value || "").trim();
@@ -11235,10 +11609,12 @@ ${n.message}
     }
     if (!nameTa && nameEn) nameTa = nameEn;
 
-    const desigRaw = document.getElementById("judgeDesignation")?.value || "முதுகலை ஆசிரியர்|P.G. Assistant";
-    const [desigTa, desigEn] = desigRaw.split("|");
+    const desigPreset = document.getElementById("judgeDesignation")?.value || "முதுகலை ஆசிரியர்|P.G. Assistant";
+    const [presetTa, presetEn] = desigPreset.split("|");
+    const desigTa = (document.getElementById("judgeDesigTaInp")?.value || presetTa || "முதுகலை ஆசிரியர்").trim();
+    const desigEn = (document.getElementById("judgeDesigEnInp")?.value || presetEn || "P.G. Assistant").trim();
 
-    const schoolUno = (document.getElementById("judgeSchoolUno")?.value || "").trim().replace(/^0+/, "");
+    const schoolUno = (document.getElementById("judgeSchoolUno")?.value || document.getElementById("judgeSchoolSelectDropdown")?.value || "").trim().replace(/^0+/, "");
     const instTa = (document.getElementById("judgeInstTa")?.value || "").trim();
     const instEn = (document.getElementById("judgeInstEn")?.value || "").trim() || instTa;
     const discipline = document.getElementById("judgeDiscipline")?.value || "Physics";
@@ -11264,9 +11640,9 @@ ${n.message}
       prefixEn: prefixEn || "Mr.",
       nameTa: nameTa,
       nameEn: nameEn,
-      designationRaw: desigRaw,
-      designationTa: desigTa || "முதுகலை ஆசிரியர்",
-      designationEn: desigEn || "P.G. Assistant",
+      designationRaw: `${desigTa}|${desigEn}`,
+      designationTa: desigTa,
+      designationEn: desigEn,
       uNo: schoolUno,
       instTa: instTa,
       instEn: instEn,
@@ -11300,7 +11676,7 @@ ${n.message}
     resetJudgeForm();
     const msg = document.getElementById("judgeSaveMsg");
     if (msg) {
-      msg.innerText = `✅ நடுவர் ${judgeObj.prefixTa} ${judgeObj.nameTa} (${judgeObj.id}) விவரம் சேமிக்கப்பட்டது!`;
+      msg.innerText = `✅ நடுவர் ${judgeObj.prefixTa} ${judgeObj.nameTa} (${judgeObj.id}) விவரம் அட்டவணையில் சேமிக்கப்பட்டது!`;
       setTimeout(() => { if (msg) msg.innerText = ""; }, 4500);
     }
     showSisfToast(`✅ நடுவர் ${judgeObj.prefixTa} ${judgeObj.nameTa} விவரம் வெற்றிகரமாகச் சேமிக்கப்பட்டது!`);
@@ -11311,13 +11687,24 @@ ${n.message}
     const j = adminJudgesList.find(item => item.id === judgeId);
     if (!j) return;
 
+    populateJudgeSchoolsDropdown();
     const setV = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
     setV("judgeEditId", j.id);
     setV("judgePrefix", j.prefixRaw || `${j.prefixTa || "திரு."}|${j.prefixEn || "Mr."}`);
     setV("judgeNameTa", j.nameTa || "");
     setV("judgeNameEn", j.nameEn || "");
-    setV("judgeDesignation", j.designationRaw || `${j.designationTa || "முதுகலை ஆசிரியர்"}|${j.designationEn || "P.G. Assistant"}`);
+
+    const desigCombo = `${j.designationTa || "முதுகலை ஆசிரியர்"}|${j.designationEn || "P.G. Assistant"}`;
+    const desigSel = document.getElementById("judgeDesignation");
+    if (desigSel) {
+      const hasPreset = Array.from(desigSel.options).some(opt => opt.value === desigCombo);
+      desigSel.value = hasPreset ? desigCombo : "CUSTOM";
+    }
+    setV("judgeDesigTaInp", j.designationTa || "முதுகலை ஆசிரியர்");
+    setV("judgeDesigEnInp", j.designationEn || "P.G. Assistant");
+
     setV("judgeSchoolUno", j.uNo || "");
+    setV("judgeSchoolSelectDropdown", j.uNo || "");
     setV("judgeInstTa", j.instTa || "");
     setV("judgeInstEn", j.instEn || "");
     setV("judgeDiscipline", j.discipline || "Physics");
@@ -11325,8 +11712,10 @@ ${n.message}
     setV("judgeMobile", j.mobile || "");
     setV("judgeEventDate", j.eventDate || "03.11.2026");
 
+    const badge = document.getElementById("judgeEntryRowBadge");
+    if (badge) badge.innerText = "✏️";
     const btn = document.getElementById("btnSaveJudgeSubmit");
-    if (btn) btn.innerHTML = `💾 நடுவர் விவரத்தைப் புதுப்பிக்க (${j.id})`;
+    if (btn) btn.innerHTML = `💾 மாற்றத்தைச் சேமி (${j.id})`;
     const subTab = document.getElementById("admSubTabJudges");
     if (subTab) subTab.scrollIntoView({ behavior: "smooth", block: "start" });
   }
@@ -11341,7 +11730,7 @@ ${n.message}
       <div><strong>🆔 நடுவர் எண்:</strong> <span style="color:#4f46e5; font-weight:800;">${j.id}</span></div>
       <div><strong>⚖️ நடுவர் பெயர்:</strong> ${j.prefixTa || ""} ${j.nameTa || "-"} / ${j.prefixEn || ""} ${j.nameEn || "-"}</div>
       <div><strong>🎓 பதவி:</strong> ${j.designationTa || "-"} (${j.designationEn || "-"})</div>
-      <div><strong>🏫 பள்ளி / கல்லூரி:</strong> ${j.instTa || "-"}</div>
+      <div><strong>🏫 பள்ளி / கல்லூரி:</strong> ${j.instTa || "-"} (${j.instEn || "-"})</div>
       <div><strong>🔬 பாடப்பிரிவு:</strong> ${j.discipline || "-"}</div>
     `;
 
@@ -11359,6 +11748,7 @@ ${n.message}
   }
 
   function renderAdminJudgesTable() {
+    populateJudgeSchoolsDropdown();
     const tbody = document.getElementById("admJudgesTableBody");
     if (!tbody) return;
     loadJudgesListIntoMemory();
@@ -11371,7 +11761,7 @@ ${n.message}
     });
 
     if (filtered.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:22px; color:#64748b; font-weight:600;">நடுவர்கள் விவரம் ஏதும் பதிவு செய்யப்படவில்லை. மேலே உள்ள படிவத்தில் நடுவர் விவரங்களைப் உள்ளிட்டுச் சேமிக்கவும்.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:22px; color:#64748b; font-weight:600;">நடுவர்கள் விவரம் ஏதும் பதிவு செய்யப்படவில்லை. மேலே உள்ள அட்டவணையில் நடுவர் பெயர், பதவி மற்றும் பள்ளியின் பெயரைத் தேர்ந்தெடுத்துச் சேமிக்கவும்.</td></tr>`;
       return;
     }
 
@@ -11399,21 +11789,22 @@ ${n.message}
         <td style="font-weight:800; text-align:center;">${idx + 1}</td>
         <td><span style="background:#eef2ff; color:#3730a3; border:1px solid #c7d2fe; padding:3px 8px; border-radius:6px; font-weight:800; font-size:0.8rem;">${j.id}</span></td>
         <td>
-          <div style="font-weight:800; color:#1e3a8a; font-size:0.92rem;">${j.prefixTa || ""} ${j.nameTa || "-"}</div>
-          <div style="font-size:0.8rem; color:#475569; font-weight:600;">${j.prefixEn || ""} ${j.nameEn || "-"}</div>
-          <div style="margin-top:3px;"><span style="background:#f0fdf4; color:#166534; border:1px solid #bbf7d0; padding:1px 7px; border-radius:999px; font-size:0.74rem; font-weight:800;">🎓 ${j.designationTa || "-"}</span></div>
+          <div style="font-weight:800; color:#1e3a8a; font-size:0.92rem;">🇮🇳 ${j.prefixTa || ""} ${j.nameTa || "-"}</div>
+          <div style="font-size:0.82rem; color:#334155; font-weight:700; margin-top:2px;">🔤 ${j.prefixEn || ""} ${j.nameEn || "-"}</div>
         </td>
         <td>
-          <div style="font-weight:700; color:#0f172a;">${j.instTa || "-"}</div>
-          <div style="font-size:0.78rem; color:#64748b;">${j.instEn || "-"}</div>
+          <div style="font-weight:800; color:#0f766e; font-size:0.88rem;">🇮🇳 ${j.designationTa || "-"}</div>
+          <div style="font-size:0.8rem; color:#475569; font-weight:700; margin-top:2px;">🔤 ${j.designationEn || "-"}</div>
+        </td>
+        <td>
+          ${j.uNo ? `<span style="background:#dcfce7; color:#166534; font-size:0.72rem; font-weight:800; padding:1px 6px; border-radius:4px; display:inline-block; margin-bottom:2px;">U.NO: ${j.uNo}</span>` : ""}
+          <div style="font-weight:800; color:#0f172a; font-size:0.88rem;">🏫 ${j.instTa || "-"}</div>
+          <div style="font-size:0.8rem; color:#475569; font-weight:600; margin-top:2px;">🔤 ${j.instEn || "-"}</div>
         </td>
         <td>
           <div style="font-weight:800; color:#047857; font-size:0.84rem;">🔬 ${discLabelMap[j.discipline] || j.discipline || "-"}</div>
           <div style="font-size:0.76rem; color:#475569; margin-top:2px;">📂 ${catLabelMap[j.evalCategory] || j.evalCategory || "-"}</div>
-        </td>
-        <td>
-          <div style="font-weight:700; color:#1e293b;">📞 ${j.mobile || "-"}</div>
-          <div style="font-size:0.76rem; color:#64748b;">📅 ${j.eventDate || "03.11.2026"}</div>
+          <div style="font-size:0.78rem; color:#1e293b; font-weight:700; margin-top:2px;">📞 ${j.mobile || "-"} &nbsp;|&nbsp; 📅 ${j.eventDate || "03.11.2026"}</div>
         </td>
         <td>
           <div style="display:flex; gap:5px; flex-wrap:wrap;">
@@ -11428,8 +11819,8 @@ ${n.message}
             </button>
           </div>
         </td>
-        <td>
-          <div style="display:flex; gap:5px;">
+        <td style="text-align:center;">
+          <div style="display:flex; gap:5px; justify-content:center;">
             <button type="button" class="btn-sm" style="background:#2b6cb0; padding:5px 9px; font-size:0.76rem;" onclick="editJudgeRecord('${j.id}')" title="திருத்து">✏️</button>
             <button type="button" class="btn-sm" style="background:#dc2626; padding:5px 9px; font-size:0.76rem;" onclick="adminPromptDeleteJudge('${j.id}')" title="அழி">🗑️</button>
           </div>
@@ -11444,10 +11835,10 @@ ${n.message}
       showSisfToast("⚠️ பதிவிறக்கம் செய்ய நடுவர்கள் விவரம் ஏதுமில்லை.");
       return;
     }
-    const headers = ["S.No", "Judge ID", "Prefix (Ta)", "Judge Name (Ta)", "Prefix (En)", "Judge Name (En)", "Designation (Ta)", "Designation (En)", "Institution (Ta)", "Institution (En)", "Discipline", "Evaluated Category", "Mobile", "Event Date"];
+    const headers = ["S.No", "Judge ID", "Prefix (Ta)", "Judge Name (Ta)", "Prefix (En)", "Judge Name (En)", "Designation (Ta)", "Designation (En)", "School U.NO", "School / Institution (Ta)", "School / Institution (En)", "Discipline", "Evaluated Category", "Mobile", "Event Date"];
     const esc = (v) => `"${String(v || "").replace(/"/g, '""')}"`;
     const rows = adminJudgesList.map((j, i) => [
-      i + 1, j.id, j.prefixTa, j.nameTa, j.prefixEn, j.nameEn, j.designationTa, j.designationEn, j.instTa, j.instEn, j.discipline, j.evalCategory, j.mobile, j.eventDate
+      i + 1, j.id, j.prefixTa, j.nameTa, j.prefixEn, j.nameEn, j.designationTa, j.designationEn, j.uNo || "", j.instTa, j.instEn, j.discipline, j.evalCategory, j.mobile, j.eventDate
     ].map(esc).join(","));
     const csvContent = "\uFEFF" + [headers.map(esc).join(","), ...rows].join("\r\n");
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
